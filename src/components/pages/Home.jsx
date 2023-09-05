@@ -22,7 +22,7 @@ class Home extends React.Component {
                 </div>
             </div>
             
-            <div id="MesasLS" className="card" style={{margin: "2%", zIndex:"-1"}}>
+            <div id="MesasLS" className="card" style={{margin: "2%"}}>
                 <div style={{margin: "2%"}}>
                     <h3><b>Mesas</b></h3>
                     <div className="card" style={{margin: "2%", opacity: "0.9"}}>
@@ -37,6 +37,5 @@ class Home extends React.Component {
     );
   } 
 }
-
 
 export default withRouter(Home);
