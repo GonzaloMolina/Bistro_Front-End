@@ -1,15 +1,24 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import CardList from '../component/CardList';
+import API from '../../service/api'
 
 class Home extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
-                        nombre: "Nombre",
-                        apellido: "Apellido",
-                        mesasAsignadas:[1,2,3,4,5,6,7]
+                        nombre: "",
+                        apellido: "",
+                        mesas:[]
                     }
+    }
+
+    componentDidMount(){
+        API.get('/mozo/'+4)
+            .then(res => 
+                this.setState(res.data)
+            )
+            .catch(err => console.log(err))
     }
         
    render() {
@@ -22,12 +31,12 @@ class Home extends React.Component {
                 </div>
             </div>
             
-            <div id="MesasLS" className="card" style={{margin: "2%", zIndex:"-1"}}>
+            <div id="MesasLS" className="card" style={{margin: "2%"}}>
                 <div style={{margin: "2%"}}>
                     <h3><b>Mesas</b></h3>
                     <div className="card" style={{margin: "2%", opacity: "0.9"}}>
                         <div style={{margin: "1%", marginBottom: "0%"}}>
-                            <CardList contents={this.state.mesasAsignadas}/>
+                            <CardList mozo={this.state} contents={this.state.mesas}/>
                         </div>
                     </div>
                 </div>    
@@ -37,6 +46,5 @@ class Home extends React.Component {
     );
   } 
 }
-
 
 export default withRouter(Home);
