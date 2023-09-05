@@ -6,7 +6,8 @@ import { withRouter } from 'react-router';
 class Card extends React.Component{
     
     handleOnClick(){
-        console.log(this.props.content);
+        this.props.mozo.mesaId = this.props.content;
+        this.props.history.push('/table', this.props.mozo);
     }
 
     render(){

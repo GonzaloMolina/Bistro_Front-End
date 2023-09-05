@@ -10,7 +10,7 @@ class CardList extends React.Component{
                 <div className="btn-group flex-wrap" data-toggle="buttons" style={{marginBottom: '4px'}}>
                     {this.props.contents.map(
                         (elem, i) => 
-                        <Card className="column" content={elem} key={i}/>
+                        <Card className="column" mozo={this.props.mozo} content={elem} key={i}/>
                     )}
                 </div>
             </React.Fragment>

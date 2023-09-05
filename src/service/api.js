@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const server = "http://localhost:8080/";
+const server = 'http://localhost:8080/';
 
 const API = {
     get: path => axios.get(`${server}${path}`).then(response => response),
