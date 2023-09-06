@@ -3,6 +3,7 @@ import Table from './pages/Table';
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
+import CreateOrder from './pages/CreateOrder';
 
 
 export default class App extends React.Component{
@@ -10,6 +11,10 @@ export default class App extends React.Component{
         return (
             <BrowserRouter>
                 <Switch>
+                    <Route path="/createOrder" render=
+                        {props=> <CreateOrder content={ props.location.state }/>}
+                    />
+
                     <Route path="/table" render=
                         {props=> <Table mozo={ props.location.state }/>}
                     />
