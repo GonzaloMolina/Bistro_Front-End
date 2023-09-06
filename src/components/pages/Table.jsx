@@ -19,18 +19,21 @@ class Table extends React.Component {
     }
 
     componentDidMount(){
-        this.setState(prevState => ({tableId: this.props.mozo.mesaId}));
-        this.setState(prevState => ({capacidad: 4}));
+        console.log(this.props)
 
         API.get('orden/'+10)
         .then(res => {
+            this.setState(prevState => ({tableId: this.props.mozo.mesaId}));
+            this.setState(prevState => ({capacidad: 4}));
             this.handleChange(res.data, 'orden')
         })
         .catch(err => console.log(err.message));
     }
 
+    componentDidUpdate(){}
+
     handleOnClick(){
-        console.log(this.state.orden);
+        this.props.history.push('/createOrder', {mozo: this.props.mozo, mesa: this.state});
     }
 
     handleOnClickUpdate(){
@@ -40,6 +43,8 @@ class Table extends React.Component {
     handleOnClickDelete(){
         API.delete('orden/10').then(res => {
             console.log(res);
+            this.setState(state => ({orden: !this.state.orden}))
+            this.setState(state => ({orden: undefined}))
         }).catch(err => console.log(err.message));
     }
 
@@ -73,8 +78,8 @@ class Table extends React.Component {
                     </div>
                     
                     <div id="name" className="card" style={{margin: "2%"}}>
-                        <div className='d-flex justify-content-center'>
-                            <div id="name" className="btn-group" style={{margin: "2%"}}>
+                        <div className='d-flex justify-content-center flex-wrap'>
+                            <div id="name" className="btn-group flex-row" style={{margin: "2%"}}>
                                     <button type='button' className='btn btn-primary' 
                                         onClick = {() => {this.handleOnClick()}} style={{marginRight:'3px'}}
                                     >
