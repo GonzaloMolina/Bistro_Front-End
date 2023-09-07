@@ -41,6 +41,9 @@ class Table extends React.Component {
                 API.get('orden/'+ this.props.content.ordenId)
                 .then(res => {
                     this.handleChange(res.data, 'orden')
+                    this.setState(prevState => ({orden: !res.data}));
+                    this.setState(prevState => ({orden: res.data}));
+
                     this.setState(prevState => ({cuenta: this.calculateAmount(res.data.platos, res.data.bebidas)}));
                 })
                 .catch(err => console.log(err.message));
@@ -57,11 +60,11 @@ class Table extends React.Component {
     }
 
     handleOnClickUpdate(){
-        console.log("update the order", this.state.orden);
+        console.log("state: ", this.state);
     }
 
     handleOnClickDelete(){
-        if(this.state.orden.id === undefined){
+        if(this.state.orden.id !== undefined){
             API.delete('orden/'+ this.state.orden.id).then(res => {
                 console.log(res);
                 this.setState(state => ({orden: !this.state.orden}))
