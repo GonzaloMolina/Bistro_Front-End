@@ -11,22 +11,25 @@ class CreateOrder extends React.Component{
         }
     }
 
+    componentDidMount(){
+        console.log(this.props.content);
+        if(this.props.content === undefined){
+            this.props.history.push('/home', {});
+        }
+    }
+
     formComponent = (error, success) => <Consumibles error={error} success={success} create={this.doCreate} {...this.props}/>
 
     doCreate = (platos, bebidas) =>{
-        console.log(platos);
-        console.log(bebidas);
         API.post('orden/new', {
             mesaId: this.props.content.mesa.tableId,
             mozoId: this.props.content.mozo.id,
             bebidas: bebidas,
             platos: platos
         }).then(res => {
-            console.log(res.data);
             this.props.history.push('/table', 
                 {mozo: this.props.content.mozo, ordenId: res.data, tableId: this.props.content.mesa.tableId});
         }).catch(err => console.log(err.message));
-        
     }
 
     render(){

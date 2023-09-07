@@ -7,8 +7,8 @@ class Table extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            tableId: '',
-            capacidad: 0,
+            tableId: this.props.content.tableId,
+            capacidad: 4,
             cuenta: 0,
             orden: undefined
         }
@@ -26,21 +26,34 @@ class Table extends React.Component {
     }
 
     componentDidMount(){
-        console.log(this.props);
-        API.get('orden/'+42)
-        .then(res => {
-            this.setState(prevState => ({tableId: this.props.mozo.mesaId}));
-            this.setState(prevState => ({capacidad: 4}));
-            this.handleChange(res.data, 'orden')
-            this.setState(prevState => ({cuenta: this.calculateAmount(res.data.platos, res.data.bebidas)}));
-        })
-        .catch(err => console.log(err.message));
+        if(this.props.content === undefined){this.props.history.push('/home', {})}
+        else{
+            if(this.props.content.tableId === undefined){
+                console.log('SUS');
+            }else{
+                this.setState(prevState => ({tableId: !this.props.content.tableId}));
+                this.setState(prevState => ({tableId: this.props.content.tableId}));
+                this.setState(prevState => ({capacidad: !4}));
+                this.setState(prevState => ({capacidad: 4}));
+                console.log(this.state)
+            }
+            if(this.props.content.ordenId !== undefined){
+                API.get('orden/'+ this.props.content.ordenId)
+                .then(res => {
+                    this.handleChange(res.data, 'orden')
+                    this.setState(prevState => ({cuenta: this.calculateAmount(res.data.platos, res.data.bebidas)}));
+                })
+                .catch(err => console.log(err.message));
+            }else{
+                this.setState(prevState => ({orden: undefined}));
+            }
+        }
     }
 
     componentDidUpdate(){}
 
     handleOnClick(){
-        this.props.history.push('/createOrder', {mozo: this.props.mozo, mesa: this.state});
+        this.props.history.push('/createOrder', {mozo: this.props.content.mozo, mesa: this.state});
     }
 
     handleOnClickUpdate(){
@@ -48,12 +61,16 @@ class Table extends React.Component {
     }
 
     handleOnClickDelete(){
-        API.delete('orden/'+42).then(res => {
-            console.log(res);
-            this.setState(state => ({orden: !this.state.orden}))
-            this.setState(state => ({orden: undefined}))
-            this.setState(prevState => ({cuenta: 0}));
-        }).catch(err => console.log(err.message));
+        if(this.state.orden.id === undefined){
+            API.delete('orden/'+ this.state.orden.id).then(res => {
+                console.log(res);
+                this.setState(state => ({orden: !this.state.orden}))
+                this.setState(state => ({orden: undefined}))
+                this.setState(prevState => ({cuenta: 0}));
+            }).catch(err => console.log(err.message));
+        }else{
+            console.log("empty ID in state")
+        }
     }
 
     renderSUS(){
@@ -75,19 +92,21 @@ class Table extends React.Component {
         return (
             <React.Fragment>
                 <div>
-                    <div id="name" className="card" style={{margin: "2%", zIndex:"-1"}}>
-                        <div style={{margin: "2%"}}>
-                            <h1>{"Mesa Nro: " + this.state.tableId}</h1>
-                        </div>
-                    </div>
-
-                    <div id="name" className="card" style={{margin: "2%", zIndex:"-1"}}>
-                        <div style={{margin: "2%"}}>
-                                <h4>{"Capacidad de la mesa: "+ this.state.capacidad + " personas"}</h4>
-                            </div>
-
+                    <div>
+                        <div id="name" className="card" style={{margin: "2%", zIndex:"-1"}}>
                             <div style={{margin: "2%"}}>
-                                <h4>{"Cuenta a pagar: " + this.state.cuenta}</h4>
+                                <h1>{"Mesa Nro: " + this.state.tableId}</h1>
+                            </div>
+                        </div>
+
+                        <div id="name" className="card" style={{margin: "2%", zIndex:"-1"}}>
+                            <div style={{margin: "2%"}}>
+                                    <h4>{"Capacidad de la mesa: "+ this.state.capacidad + " personas"}</h4>
+                                </div>
+
+                                <div style={{margin: "2%", marginTop: '0px'}}>
+                                    <h4>{"Cuenta a pagar: " + this.state.cuenta}</h4>
+                            </div>
                         </div>
                     </div>
                     

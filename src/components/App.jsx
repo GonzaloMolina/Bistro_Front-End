@@ -16,7 +16,7 @@ export default class App extends React.Component{
                     />
 
                     <Route path="/table" render=
-                        {props=> <Table mozo={ props.location.state }/>}
+                        {props=> <Table content={ props.location.state }/>}
                     />
 
                     <Route path="/" render=
