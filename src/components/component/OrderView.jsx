@@ -16,6 +16,8 @@ class OrderView extends React.Component{
 
     componentDidMount(){
         this.setState(this.props.orden)
+        this.setState(state => ({ordenId: !this.props.orden.id}))
+        this.setState(state => ({ordenId: this.props.orden.id}))
     }
 
     render(){
@@ -28,12 +30,6 @@ class OrderView extends React.Component{
                 </div>
 
                 <div id="name" className="card" style={{margin: "2%"}}>
-                    <div id="name" className="card" style={{margin: "2%"}}>
-                        <div style={{margin: "2%"}}>
-                            <h5>{"Cuenta: "}</h5>
-                        </div>
-                    </div>
-
                     <div style={{margin: "2%"}}>
                         <h4>{"Platos: "}</h4>
                         <div id="name" className="card" style={{margin: "2%"}}>
