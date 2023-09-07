@@ -18,14 +18,21 @@ class Table extends React.Component {
         this.setState(prevState => ({ ...prevState, [prop]: value }))
     }
 
-    componentDidMount(){
-        console.log(this.props)
+    calculateAmount(platos, bebidas){
+        var amount = 0;
+        bebidas.map(bebida => amount= amount + bebida.precio);
+        platos.map(plato => amount= amount + plato.precio);
+        return amount;
+    }
 
-        API.get('orden/'+10)
+    componentDidMount(){
+        console.log(this.props);
+        API.get('orden/'+42)
         .then(res => {
             this.setState(prevState => ({tableId: this.props.mozo.mesaId}));
             this.setState(prevState => ({capacidad: 4}));
             this.handleChange(res.data, 'orden')
+            this.setState(prevState => ({cuenta: this.calculateAmount(res.data.platos, res.data.bebidas)}));
         })
         .catch(err => console.log(err.message));
     }
@@ -41,10 +48,11 @@ class Table extends React.Component {
     }
 
     handleOnClickDelete(){
-        API.delete('orden/10').then(res => {
+        API.delete('orden/'+42).then(res => {
             console.log(res);
             this.setState(state => ({orden: !this.state.orden}))
             this.setState(state => ({orden: undefined}))
+            this.setState(prevState => ({cuenta: 0}));
         }).catch(err => console.log(err.message));
     }
 
@@ -53,7 +61,13 @@ class Table extends React.Component {
             return <OrderView orden={this.state.orden}/>
         }
         else{
-            return <h2>there is no order to show</h2>
+            return (
+                <div id="name" className="card" style={{margin: "2%", textAlign:"center"}}>
+                    <div style={{margin: "2%"}}>
+                        <h4>No hay informacion para mostrar</h4>
+                    </div>
+                </div>
+            );
         }
     }
 

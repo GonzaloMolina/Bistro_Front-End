@@ -7,7 +7,7 @@ class Card extends React.Component{
     
     handleOnClick(){
         this.props.mozo.mesaId = this.props.content;
-        this.props.history.push('/table', this.props.mozo);
+        this.props.history.push('/table', {mozo:this.props.mozo, tableId:this.props.mozo.mesaId, orderId: undefined});
     }
 
     render(){

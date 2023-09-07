@@ -10,57 +10,68 @@ class Consumibles extends React.Component{
                     type: "Chico",
                     contents: [
                         {
-                            "id": 11,
-                            "nombre": "Pepsi 500ml",
-                            "precio": 800,
+                            "id": 13,
+                            "nombre": "Coca-Cola 500ml",
+                            "precio": 600,
                             "tamanio": "CHICO"
                         },
                         {
-                            "id": 11,
+                            "id": 14,
                             "nombre": "Fanta 500ml",
-                            "precio": 800,
+                            "precio": 600,
                             "tamanio": "CHICO"
                         },
                         {
-                            "id": 11,
-                            "nombre": "Coca-cola 500ml",
-                            "precio": 800,
+                            "id": 17,
+                            "nombre": "Sprite 500ml",
+                            "precio": 600,
                             "tamanio": "CHICO"
                         },
                         {
-                            "id": 11,
-                            "nombre": "Manaos 500ml",
-                            "precio": 800,
+                            "id": 20,
+                            "nombre": "Pepsi 500ml",
+                            "precio": 600,
+                            "tamanio": "CHICO"
+                        },
+                        {
+                            "id": 23,
+                            "nombre": "7up 500ml",
+                            "precio": 600,
                             "tamanio": "CHICO"
                         }
-
                     ]
                 },
                 {
                     type: "MEDIANO",
                     contents: [
                         {
-                            "id": 11,
-                            "nombre": "Pepsi 1,5l",
-                            "precio": 800,
+                            "id": 12,
+                            "nombre": "Coca-Cola 1,5l",
+                            "precio": 700,
                             "tamanio": "MEDIANO"
                         },
                         {
-                            "id": 11,
+                            "id": 15,
                             "nombre": "Fanta 1,5l",
-                            "precio": 800,
+                            "precio": 700,
                             "tamanio": "MEDIANO"
                         },
                         {
-                            "id": 11,
-                            "nombre": "Coca-cola 1,5l",
-                            "precio": 800,
+                            "id": 18,
+                            "nombre": "Sprite 1,5l",
+                            "precio": 700,
                             "tamanio": "MEDIANO"
                         },
                         {
-                            "id": 11,
-                            "nombre": "Manaos 1,5l",
-                            "precio": 800,
+                            "id": 21,
+                            "nombre": "Pepsi 1,5l",
+                            "precio": 700,
+                            "tamanio": "MEDIANO"
+                        },
+                        {
+                            "id": 24,
+                            "nombre": "7up 1,5l",
+                            "precio": 700,
                             "tamanio": "MEDIANO"
                         }
                     ]
@@ -70,104 +81,182 @@ class Consumibles extends React.Component{
                     contents: [
                         {
                             "id": 11,
-                            "nombre": "Pepsi 2,25l",
+                            "nombre": "Coca-Cola 3l",
                             "precio": 800,
                             "tamanio": "GRANDE"
-                        },
+                        },   
                         {
-                            "id": 11,
-                            "nombre": "Pepsi 3l",
-                            "precio": 800,
-                            "tamanio": "GRANDE"
-                        },
-                        {
-                            "id": 11,
+                            "id": 16,
                             "nombre": "Fanta 3l",
                             "precio": 800,
                             "tamanio": "GRANDE"
                         },
                         {
-                            "id": 11,
-                            "nombre": "Coca-cola 3l",
+                            "id": 19,
+                            "nombre": "Sprite 3l",
                             "precio": 800,
                             "tamanio": "GRANDE"
                         },
                         {
-                            "id": 11,
-                            "nombre": "Manaos 3l",
+                            "id": 22,
+                            "nombre": "Pepsi 3l",
+                            "precio": 800,
+                            "tamanio": "GRANDE"
+                        },
+                        {
+                            "id": 25,
+                            "nombre": "7up 3l",
                             "precio": 800,
                             "tamanio": "GRANDE"
                         }
-
                     ]
                 },
                 {
                     type: "PASTA",
                     contents: [
                         {
-                            "id": 11,
+                            "id": 30,
                             "nombre": "Canelones",
-                            "precio": 800,
-                            "tipo": "PASTA"
-                        },
-                        {
-                            "id": 11,
-                            "nombre": "Spagetti",
-                            "precio": 800,
-                            "tipo": "PASTA"
-                        },
-                        {
-                            "id": 11,
+                            "precio": 10200,
+                            "tipo": "PASTA",
+                            "acompanamiento": null,
+                            "salsa": null
+                          },
+                          {
+                            "id": 31,
+                            "nombre": "Espagueti",
+                            "precio": 5230,
+                            "tipo": "PASTA",
+                            "acompanamiento": null,
+                            "salsa": null
+                          },
+                          {
+                            "id": 32,
+                            "nombre": "Fettuccini",
+                            "precio": 684,
+                            "tipo": "PASTA",
+                            "acompanamiento": null,
+                            "salsa": null
+                          },
+                          {
+                            "id": 33,
                             "nombre": "Ñoquis",
-                            "precio": 800,
-                            "tipo": "PASTA"
-                        }
+                            "precio": 5372,
+                            "tipo": "PASTA",
+                            "acompanamiento": null,
+                            "salsa": null
+                          }
+                    ]
+                },
+                {
+                    type: "PESCADO",
+                    contents: [
+                        {
+                            "id": 34,
+                            "nombre": "Salmon",
+                            "precio": 7544,
+                            "tipo": "PESCADO",
+                            "acompanamiento": null,
+                            "salsa": null
+                        },
+                        {
+                            "id": 35,
+                            "nombre": "Atun",
+                            "precio": 5682,
+                            "tipo": "PESCADO",
+                            "acompanamiento": null,
+                            "salsa": null
+                          },
+                          {
+                            "id": 36,
+                            "nombre": "Trucha",
+                            "precio": 7950,
+                            "tipo": "PESCADO",
+                            "acompanamiento": null,
+                            "salsa": null
+                          },
+                          {
+                            "id": 37,
+                            "nombre": "Pejerey",
+                            "precio": 8954,
+                            "tipo": "PESCADO",
+                            "acompanamiento": null,
+                            "salsa": null
+                          }
                     ]
                 },
                 {
                     type: "CARNE",
                     contents: [
                         {
-                            "id": 11,
-                            "nombre": "Pechuga de pollo",
-                            "precio": 800,
-                            "tipo": "CARNE"
-                        },
-                        {
-                            "id": 11,
-                            "nombre": "milanesa",
-                            "precio": 800,
-                            "tipo": "CARNE"
-                        },
-                        {
-                            "id": 11,
-                            "nombre": "Churrasco",
-                            "precio": 800,
-                            "tipo": "CARNE"
-                        },
-                        {
-                            "id": 11,
-                            "nombre": "Cesos",
-                            "precio": 800,
-                            "tipo": "CARNE"
-                        }
+                            "id": 26,
+                            "nombre": "Milanesa",
+                            "precio": 1234,
+                            "tipo": "CARNE",
+                            "acompanamiento": null,
+                            "salsa": null
+                          },
+                          {
+                            "id": 27,
+                            "nombre": "pechuga de pollo",
+                            "precio": 1032,
+                            "tipo": "CARNE",
+                            "acompanamiento": null,
+                            "salsa": null
+                          },
+                          {
+                            "id": 28,
+                            "nombre": "costilla de cerdo",
+                            "precio": 4531,
+                            "tipo": "CARNE",
+                            "acompanamiento": null,
+                            "salsa": null
+                          },
+                          {
+                            "id": 29,
+                            "nombre": "cesos de vaca",
+                            "precio": 0,
+                            "tipo": "CARNE",
+                            "acompanamiento": null,
+                            "salsa": null
+                          }
                     ]
                 },
                 {
                     type: "POSTRE",
                     contents: [
                         {
-                            "id": 11,
-                            "nombre": "Postre 1",
-                            "precio": 800,
-                            "tipo": "POSTRE"
-                        },
-                        {
-                            "id": 11,
-                            "nombre": "Postre 2",
-                            "precio": 800,
-                            "tipo": "POSTRE"
-                        }
+                            "id": 38,
+                            "nombre": "Tiramisu",
+                            "precio": 345430,
+                            "tipo": "POSTRE",
+                            "acompanamiento": null,
+                            "salsa": null
+                          },
+                          {
+                            "id": 39,
+                            "nombre": "Budin de chocolate",
+                            "precio": 3242,
+                            "tipo": "POSTRE",
+                            "acompanamiento": null,
+                            "salsa": null
+                          },
+                          {
+                            "id": 40,
+                            "nombre": "Sufle",
+                            "precio": 2312,
+                            "tipo": "POSTRE",
+                            "acompanamiento": null,
+                            "salsa": null
+                          },
+                          {
+                            "id": 41,
+                            "nombre": "3bochas de helado",
+                            "precio": 3543,
+                            "tipo": "POSTRE",
+                            "acompanamiento": null,
+                            "salsa": null
+                          }
                     ]
                 }
             ],
@@ -180,14 +269,18 @@ class Consumibles extends React.Component{
         document.getElementById(sec).scrollIntoView();
     };
 
-    handleChange = (e, cant) =>{
+    handleChange = (e, n) =>{
         if(e.tamanio === undefined){
-            this.setState(state => ({orden: !this.state.platos}))
-            this.setState(state => ({orden: this.state.platos.push(e)}))
+            for (var i = 0; i < n; i++){
+                this.setState(state => ({orden: !this.state.platos}))
+                this.setState(state => ({orden: this.state.platos.push(e.id)}))
+            }
         }
         else{
-            this.setState(state => ({orden: !this.state.bebidas}))
-            this.setState(state => ({orden: this.state.bebidas.push(e)}))
+            for (var j = 0; j < n; j++){
+                this.setState(state => ({orden: !this.state.bebidas}))
+                this.setState(state => ({orden: this.state.bebidas.push(e.id)}))
+            }
         }
     }
 
