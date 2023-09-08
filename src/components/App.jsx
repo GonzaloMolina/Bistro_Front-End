@@ -1,5 +1,6 @@
 import Home from './pages/Home';
 import Table from './pages/Table';
+import Employee from './pages/Employee';
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
@@ -16,11 +17,14 @@ export default class App extends React.Component{
                     />
 
                     <Route path="/table" render=
-                        {props=> <Table mozo={ props.location.state }/>}
+                        {props=> <Table content={ props.location.state }/>}
                     />
 
+                    <Route path="/employee" render=
+                        {props=> <Employee content={ props.location.state }/>}
+                    />
                     <Route path="/" render=
-                        {props => <Home user={ props.location.state }/>} 
+                        {props => <Home {...props}/>} 
                     />
                 </Switch>
             </BrowserRouter>

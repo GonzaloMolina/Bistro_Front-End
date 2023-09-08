@@ -1,42 +1,54 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import CardList from '../component/CardList';
+import EmployeeCardList from '../component/EmployeeCardList';
 import API from '../../service/api'
 
 class Home extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
-                        nombre: "",
-                        apellido: "",
-                        mesas:[]
-                    }
+            employees: []
+        }
     }
 
     componentDidMount(){
-        API.get('/mozo/'+4)
-            .then(res => 
-                this.setState(res.data)
-            )
-            .catch(err => console.log(err))
+        API.get('mozo/list')
+            .then(res => {
+                //this.setState(state => ({employees: !res.data}))
+                this.setState(state => ({employees: res.data}))
+            }).catch(err => console.log(err))
     }
-        
+    
+    renderEmpty(){
+        if(this.state.employees.length === 0){
+            return (
+                <div id="name" className="card" style={{margin: "2%", textAlign:"center"}}>
+                    <div style={{margin: "2%"}}>
+                        <h4>No hay informacion para mostrar</h4>
+                    </div>
+                </div>
+            )
+        }else{
+            return (
+                <div id="name" className="card" style={{margin: "2%"}}>
+                    <div style={{margin: "2%"}}>
+                        <EmployeeCardList contents={this.state.employees}/>
+                    </div>
+                </div>
+            )
+        }
+    }
+
    render() {
     return (
       <React.Fragment>
         <div>
-            <div id="name" className="card" style={{margin: "2%", zIndex:"-1"}}>
-                <div style={{margin: "2%"}}>
-                    <h1>{this.state.apellido + ", "+this.state.nombre}</h1>
-                </div>
-            </div>
-            
             <div id="MesasLS" className="card" style={{margin: "2%"}}>
                 <div style={{margin: "2%"}}>
-                    <h3><b>Mesas</b></h3>
-                    <div className="card" style={{margin: "2%", opacity: "0.9"}}>
+                    <h3><b>Listado de empleados</b></h3>
+                    <div>
                         <div style={{margin: "1%", marginBottom: "0%"}}>
-                            <CardList mozo={this.state} contents={this.state.mesas}/>
+                            {this.renderEmpty()}
                         </div>
                     </div>
                 </div>    
