@@ -1,58 +1,54 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import EmployeeCardList from '../component/EmployeeCardList';
-import API from '../../service/api'
+import Sidebar from '../component/Sidebar';
 
 class Home extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
-            employees: []
+            nombre: "Fidel",
+            apellido: "Martinez",
+            email: "admin@mail.com",
+            password: "public123",
+            mesas: [
+                5,
+                6
+            ],
+            peticiones: [
+                {
+                    "id": 7,
+                    "asunto": "Licencia por enfermedad",
+                    "estado": false
+                }
+            ]
         }
     }
 
     componentDidMount(){
-        API.get('mozo/list')
-            .then(res => {
-                //this.setState(state => ({employees: !res.data}))
-                this.setState(state => ({employees: res.data}))
-            }).catch(err => console.log(err))
+        /*
+        this.setState(state => ({nombre: !this.props.user.nombre}));
+        this.setState(state => ({nombre: this.props.user.nombre}));
+        this.setState(state => ({apellido: !this.props.user.apellido}));
+        this.setState(state => ({apellido: this.props.user.apellido}));
+        this.setState(state => ({email: !this.props.user.email}));
+        this.setState(state => ({email: this.props.user.email}));
+        this.setState(state => ({password: !this.props.user.password}));
+        this.setState(state => ({password: this.props.user.password}));
+        this.setState(state => ({mesas: !this.props.user.mesas}));
+        this.setState(state => ({mesas: this.props.user.mesas}));
+        this.setState(state => ({peticiones: !this.props.user.peticiones}));
+        this.setState(state => ({peticiones: this.props.user.peticiones}));*/
     }
     
-    renderEmpty(){
-        if(this.state.employees.length === 0){
-            return (
-                <div id="name" className="card" style={{margin: "2%", textAlign:"center"}}>
-                    <div style={{margin: "2%"}}>
-                        <h4>No hay informacion para mostrar</h4>
-                    </div>
-                </div>
-            )
-        }else{
-            return (
-                <div id="name" className="card" style={{margin: "2%"}}>
-                    <div style={{margin: "2%"}}>
-                        <EmployeeCardList contents={this.state.employees}/>
-                    </div>
-                </div>
-            )
-        }
-    }
-
    render() {
     return (
       <React.Fragment>
         <div>
-            <div id="MesasLS" className="card" style={{margin: "2%"}}>
-                <div style={{margin: "2%"}}>
-                    <h3><b>Listado de empleados</b></h3>
-                    <div>
-                        <div style={{margin: "1%", marginBottom: "0%"}}>
-                            {this.renderEmpty()}
-                        </div>
-                    </div>
-                </div>    
-            </div>
+            
+        </div>
+
+        <div>
+            <Sidebar mesas={this.state.mesas} peticiones={this.state.peticiones}/>
         </div>
       </React.Fragment>
     );

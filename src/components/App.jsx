@@ -1,10 +1,8 @@
-import Home from './pages/Home';
-import Table from './pages/Table';
-import Employee from './pages/Employee';
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
-import CreateOrder from './pages/CreateOrder';
+import Home from './pages/Home';
+import LogIn from './pages/LogIn';
 
 
 export default class App extends React.Component{
@@ -12,19 +10,14 @@ export default class App extends React.Component{
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route path="/createOrder" render=
-                        {props=> <CreateOrder content={ props.location.state }/>}
+                    <Route path="/home" render=
+                        {props => <Home  user={props.location.state}/>} 
                     />
+                </Switch>
 
-                    <Route path="/table" render=
-                        {props=> <Table content={ props.location.state }/>}
-                    />
-
-                    <Route path="/employee" render=
-                        {props=> <Employee content={ props.location.state }/>}
-                    />
-                    <Route path="/" render=
-                        {props => <Home {...props}/>} 
+                <Switch>
+                    <Route exact path="/" render=
+                        {props => <LogIn {...props}/>} 
                     />
                 </Switch>
             </BrowserRouter>
