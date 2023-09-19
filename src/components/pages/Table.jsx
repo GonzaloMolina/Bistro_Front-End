@@ -1,90 +1,67 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import API from '../../service/api';
-import OrderView from '../component/OrderView';
+import Sidebar from '../component/Sidebar';
+import ErrorMessage from '../component/ErrorMessage';
+import '../../styles/table.css'
+//import API from '../../service/api';
+//import OrderView from '../component/OrderView';
+import {AiOutlinePlus, AiOutlineReload, AiOutlineMinus} from 'react-icons/ai';
 
 class Table extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            tableId: this.props.content.tableId,
-            capacidad: 4,
-            cuenta: 0,
+            content: {
+                credenciales: { email: "admin@mail.com", pass: "public123" },
+                mesaId: 5,
+                mesas: [ 5, 6 ],
+                peticiones: [ { id: 7, asunto: "Licencia por enfermedad", estado: false } ]
+            },
             orden: undefined
         }
     }
 
-    handleChange(value, prop){
-        this.setState(prevState => ({ ...prevState, [prop]: value }))
-    }
-
-    calculateAmount(platos, bebidas){
-        var amount = 0;
-        bebidas.map(bebida => amount= amount + bebida.precio);
-        platos.map(plato => amount= amount + plato.precio);
-        return amount;
-    }
-
     componentDidMount(){
-        if(this.props.content === undefined){this.props.history.push('/home', {})}
+        if(this.props.content === undefined){
+            console.log("go to logIn")
+        }
         else{
-            if(this.props.content.tableId === undefined){
-                console.log('SUS');
-            }else{
-                this.setState(prevState => ({tableId: !this.props.content.tableId}));
-                this.setState(prevState => ({tableId: this.props.content.tableId}));
-                this.setState(prevState => ({capacidad: !4}));
-                this.setState(prevState => ({capacidad: 4}));
-                console.log(this.state)
-            }
-            if(this.props.content.ordenId !== undefined){
-                API.get('orden/'+ this.props.content.ordenId)
-                .then(res => {
-                    this.handleChange(res.data, 'orden')
-                    this.setState(prevState => ({orden: !res.data}));
-                    this.setState(prevState => ({orden: res.data}));
-
-                    this.setState(prevState => ({cuenta: this.calculateAmount(res.data.platos, res.data.bebidas)}));
-                })
-                .catch(err => console.log(err.message));
-            }else{
-                this.setState(prevState => ({orden: undefined}));
-            }
+            console.log('state on mount', this.state.content);
         }
     }
 
     componentDidUpdate(){}
 
     handleOnClick(){
-        this.props.history.push('/createOrder', {mozo: this.props.content.mozo, mesa: this.state});
+        console.log("Create state: ", this.state);
     }
 
     handleOnClickUpdate(){
-        console.log("state: ", this.state);
+        console.log("Update state: ", this.state);
     }
 
     handleOnClickDelete(){
-        if(this.state.orden.id !== undefined){
-            API.delete('orden/'+ this.state.orden.id).then(res => {
-                console.log(res);
-                this.setState(state => ({orden: !this.state.orden}))
-                this.setState(state => ({orden: undefined}))
-                this.setState(prevState => ({cuenta: 0}));
-            }).catch(err => console.log(err.message));
-        }else{
-            console.log("empty ID in state")
-        }
+        console.log("Delete state: ", this.state);
     }
 
-    renderSUS(){
-        if (this.state.orden !== undefined){
-            return <OrderView orden={this.state.orden}/>
+    renderOrden(){
+        if(this.state.orden === undefined){
+            return (
+                <div className='contenedor'>
+                    <ErrorMessage error={"no hay una orden que mostrar"}/>
+                </div>
+            );
         }
         else{
             return (
-                <div id="name" className="card" style={{margin: "2%", textAlign:"center"}}>
-                    <div style={{margin: "2%"}}>
-                        <h4>No hay informacion para mostrar</h4>
+                <div className="contenedor">
+                    <div className='card'>
+                        <h1>{'Orden Nro: '}{this.state.orden.id}</h1>
+                    </div>
+                    <div>
+                        <div className="contenedorB">
+                            <button type='button' className='btn btn-secondary' style={{}}>Ver Orden</button>
+                        </div>
                     </div>
                 </div>
             );
@@ -92,55 +69,41 @@ class Table extends React.Component {
     }
 
     render(){
+        console.log(this.props.content)
         return (
             <React.Fragment>
-                <div>
-                    <div>
-                        <div id="name" className="card" style={{margin: "2%", zIndex:"-1"}}>
-                            <div style={{margin: "2%"}}>
-                                <h1>{"Mesa Nro: " + this.state.tableId}</h1>
-                            </div>
-                        </div>
-
-                        <div id="name" className="card" style={{margin: "2%", zIndex:"-1"}}>
-                            <div style={{margin: "2%"}}>
-                                    <h4>{"Capacidad de la mesa: "+ this.state.capacidad + " personas"}</h4>
-                                </div>
-
-                                <div style={{margin: "2%", marginTop: '0px'}}>
-                                    <h4>{"Cuenta a pagar: " + this.state.cuenta}</h4>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="name" className="card" style={{margin: "2%"}}>
-                        <div className='d-flex justify-content-center flex-wrap'>
-                            <div id="name" className="btn-group flex-row" style={{margin: "2%"}}>
-                                    <button type='button' className='btn btn-primary' 
-                                        onClick = {() => {this.handleOnClick()}} style={{marginRight:'3px'}}
-                                    >
-                                        {"crear Orden"}
-                                    </button>
-
-                                    <button type='button' className='btn btn-warning' 
-                                        onClick = {() => {this.handleOnClickUpdate()}} style={{marginRight:'3px'}}
-                                    >
-                                        {"Modificar Orden"}
-                                    </button>
-
-                                    <button type='button' className='btn btn-danger'
-                                        onClick = {() => {this.handleOnClickDelete()}}
-                                    >
-                                        {"Eliminar Orden"}
-                                    </button>
-                            </div>
-                        </div>
-
-                        {this.renderSUS()}
-                    </div>
-                    
-                    
+                <div style={{zIndex:9}}>
+                    <Sidebar 
+                        mesas={this.state.content.mesas}
+                        peticiones={this.state.content.peticiones}
+                        credenciales={this.state.content.credenciales}
+                    />
                 </div>
+
+                <div className='contenedor'>
+                    <div className='card'>
+                        <h1><b>{'Mesa Nro. '}</b> {this.state.content.mesaId}</h1>
+                    </div>
+
+                    <div style={{margin:'15px', zIndex: -1}}>
+                        {this.renderOrden()}
+                    </div>
+                </div>
+
+                <div className="container">
+                    <div className='btn-holder'>
+                        <div className="">
+                            <button className="btnc"><AiOutlinePlus/></button>
+                        </div>
+                        <div className="">
+                            <button className="btnu"><AiOutlineReload/></button>
+                        </div>
+                        <div className="">
+                            <button className="btnd"><AiOutlineMinus/></button>
+                        </div>
+                    </div>
+                </div>
+
             </React.Fragment>
         );
     }

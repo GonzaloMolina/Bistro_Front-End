@@ -48,7 +48,11 @@ class Home extends React.Component {
         </div>
 
         <div>
-            <Sidebar mesas={this.state.mesas} peticiones={this.state.peticiones}/>
+            <Sidebar 
+                mesas={this.state.mesas} 
+                peticiones={this.state.peticiones}
+                credenciales={{email:this.state.email, pass:this.state.password}}
+            />
         </div>
       </React.Fragment>
     );

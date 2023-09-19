@@ -47,7 +47,7 @@ class Sidebar extends React.Component {
                             </li>
                             
                             <li className='nav-text' onClick={this.toggleMesas}>
-                                <Link to='#'>
+                                <Link>
                                 <BsPencilSquare />
                                 <span style={{ fontFamily: 'Cinzel' }} className='head'>Mesas</span>
                                 </Link>
@@ -57,7 +57,15 @@ class Sidebar extends React.Component {
                                 // Renderizar elementos de "Mesa Nro" cuando las mesas son visibles
                                 this.props.mesas.map((elem, i) => (
                                 <li key={i} className='nav-text' onClick={() => this.showSidebar()}>
-                                    <Link to={elem.path}>
+                                    <Link to={{
+                                        pathname: '/table',
+                                        state: { 
+                                            credenciales: this.props.credenciales, 
+                                            mesas: this.props.mesas, 
+                                            mesaId: elem, 
+                                            peticiones: this.props.peticiones 
+                                        },
+                                    }}>
                                     <span style={{ fontFamily: 'Cinzel', fontSize:15}}> {'Mesa Nro. ' + elem}</span>
                                     </Link>
                                 </li>
