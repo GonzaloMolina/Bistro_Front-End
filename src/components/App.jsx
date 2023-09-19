@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import LogIn from './pages/LogIn';
+import Table from './pages/Table';
 
 
 export default class App extends React.Component{
@@ -12,6 +13,12 @@ export default class App extends React.Component{
                 <Switch>
                     <Route path="/home" render=
                         {props => <Home  user={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/table" render=
+                        {props => <Table  content={props.location.state}/>} 
                     />
                 </Switch>
 
