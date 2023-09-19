@@ -11,15 +11,27 @@ import { BsPencilSquare } from 'react-icons/bs';
 class Sidebar extends React.Component {
     constructor(props){
         super(props);
-        this.state = { sidebar: false }
+        this.state = { 
+            sidebarVisible: false,
+            anchoNav: '200px',
+            mesasVisible: false
+        }
     }
 
     showSidebar = () => {
-        this.setState(prev => ({sidebar: !this.state.sidebar}))
-        this.setState(prev => ({sidebar: !this.state.sidebar}))
+        this.setState(prevState => ({sidebarVisible: !prevState.sidebarVisible}))
     }
 
+    toggleMesas = () => {
+        this.setState({ mesasVisible: !this.state.mesasVisible });
+    };
+      
+
     render(){
+        const estiloNav = {
+            width: this.state.anchoNav
+        }
+        const { sidebarVisible } = this.state;
         return (
             <React.Fragment>
                 <IconContext.Provider value={{color: '#faf60e' }}>
@@ -28,35 +40,41 @@ class Sidebar extends React.Component {
                             <FaBars onClick={() => {this.showSidebar()}}/>
                         </Link>
                     </div>
-                    <nav className={this.state.sidebar ? 'nav-menu active' : 'nav-menu'}>
-                        <ul className='nav-menu-items' onClick={() => this.showSidebar()}>
+                    <nav style={estiloNav} className={`nav-menu ${sidebarVisible ? 'active' : ''}`}>
+                        <ul className='nav-menu-items' style={{ paddingLeft: '10px' }}>
                             <li className='navbar-toggle'>
-                                <AiFillCloseCircle /> <span> <h2>Bistro</h2></span>
+                                <AiFillCloseCircle onClick={() => this.showSidebar()}/> <span> <h2>Bistro</h2></span>
+                            </li>
+                            
+                            <li className='nav-text' onClick={this.toggleMesas}>
+                                <Link to='#'>
+                                <BsPencilSquare />
+                                <span style={{ fontFamily: 'Cinzel' }} className='head'>Mesas</span>
+                                </Link>
                             </li>
 
-                            <li className='nav-text'>
-                                <BsPencilSquare/><span className='head'>Mesas</span>
-                            </li>
-
-                            {this.props.mesas.map((elem, i) => {
-                                return (
-                                <li key={i} className='nav-text'>
+                            {this.state.mesasVisible && (
+                                // Renderizar elementos de "Mesa Nro" cuando las mesas son visibles
+                                this.props.mesas.map((elem, i) => (
+                                <li key={i} className='nav-text' onClick={() => this.showSidebar()}>
                                     <Link to={elem.path}>
-                                        <span> {'mesa Nro. ' +elem}</span>
+                                    <span style={{ fontFamily: 'Cinzel' }}> {'Mesa Nro. ' + elem}</span>
                                     </Link>
-                                </li>)
-                            })}
+                                </li>
+                                ))
+                            )}
 
                             {sidebarData.map((elem, index) => {
                                 return (
-                                    <li key={index} className={elem.cName}>
+                                    <li key={index} span className='nav-text' onClick={() => this.showSidebar()}>
                                         <Link to={elem.path}>
                                             {elem.icon}
-                                            <span> {elem.title}</span>
+                                            <span style={{ fontFamily: 'Cinzel' }}> {elem.title}</span>
                                         </Link>
                                     </li>
                                 )
                             })}
+
                         </ul>
                     </nav>
                 </IconContext.Provider>
