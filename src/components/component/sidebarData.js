@@ -7,19 +7,19 @@ export const sidebarData =[
     {
         title: 'Peticiones',
         path: '#peticiones',
-        icon: <AiOutlineMail/>,
+        icon: <AiOutlineMail size={20}/>,
         cName: 'nav-text'
     },
     {
         title: 'Info del Restaurante',
         path: '#info',
-        icon: <AiOutlineInfoCircle/>,
+        icon: <AiOutlineInfoCircle size={30}/>,
         cName: 'nav-text'
     },
     {
         title: 'Ajustes',
         path: '#ajustes',
-        icon: <AiFillSetting/>,
+        icon: <AiFillSetting size={20}/>,
         cName: 'nav-text'
     }
 ]

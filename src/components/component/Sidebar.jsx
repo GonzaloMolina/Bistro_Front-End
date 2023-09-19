@@ -58,7 +58,7 @@ class Sidebar extends React.Component {
                                 this.props.mesas.map((elem, i) => (
                                 <li key={i} className='nav-text' onClick={() => this.showSidebar()}>
                                     <Link to={elem.path}>
-                                    <span style={{ fontFamily: 'Cinzel' }}> {'Mesa Nro. ' + elem}</span>
+                                    <span style={{ fontFamily: 'Cinzel', fontSize:15}}> {'Mesa Nro. ' + elem}</span>
                                     </Link>
                                 </li>
                                 ))
