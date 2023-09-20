@@ -89,11 +89,16 @@ class Table extends React.Component {
                         {this.renderOrden()}
                     </div>
                 </div>
-
+{/**extraer como componenete */}
                 <div className="container">
                     <div className='btn-holder'>
                         <div className="">
-                            <button className="btnc"><AiOutlinePlus/></button>
+                            <button 
+                                className="btnc"
+                                onClick={() => this.props.history.push('/create', this.state.content)}
+                            >
+                                <AiOutlinePlus/>
+                            </button>
                         </div>
                         <div className="">
                             <button className="btnu"><AiOutlineReload/></button>
