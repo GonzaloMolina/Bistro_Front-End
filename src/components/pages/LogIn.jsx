@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import LogInForm from "../component/LogInForm";
 import API from "../../service/api";
 
-import logo from "../img/logo192.png";
+import logo from "../img/Bistro_logo.png";
 
 class LogIn extends React.Component {
     constructor(props) {
@@ -34,14 +34,14 @@ class LogIn extends React.Component {
     render() {
       return (
         <React.Fragment>
-            <div>
+            <div style={{height: '100vh' ,backgroundColor:'#004000'}}>
               <div align="center">
                 <img 
                     src={logo} 
                     alt="logo"
                 />
                 </div>
-              <div align="center" style={{marginTop: "10%"}}>
+              <div align="center" style={{marginTop: "10%", zIndex: 0, backgroundColor:'#004000'}}>
                   {this.state.form}
               </div>
             </div>

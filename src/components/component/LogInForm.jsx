@@ -36,8 +36,8 @@ class LogInForm extends React.Component{
     render(){//width='device-width,height=device-height initial-scale=1'
         return(
             <React.Fragment>
-            <div align="center">
-                <div  className="card" style={{margin: "10%", backgroundColor: "rgba(43, 143, 50, 0.9)"}} >
+            <div align="center" style={{backgroundColor:'#004000'}}>
+                <div  className="card" style={{margin: "10%", backgroundColor: "rgba(43, 143, 50, 0.9)", zIndex:0}} >
                     <ErrorMessage error={this.state.error}/>
                     <div>
                         <form style={{margin: "5%"}}>  
