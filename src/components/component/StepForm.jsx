@@ -10,16 +10,49 @@ class StepForm extends React.Component {
         this.state = {
             page: 0,
             titles: ["Seleccion", "Acompañamiento", "Check"],
-            components: []
+            components: [],
+            orden: [],
+            selectedPlate: {},
+            acomp: {},
+            cantidad: 0
         }
     }
 
     componentDidMount(){
         this.setState(state => ({components: [
-            <SelectStep {...this.props}/>, 
-            <AcomStep {...this.props}/>, 
-            <CheckStep {...this.props}/>
+            <SelectStep select={this.selectPlate} {...this.props}/>, 
+            <AcomStep 
+                plate={this.getSelected} cant={this.getCant} 
+                setCant={this.setCant} {...this.props}/>, 
+            <CheckStep 
+                plate={this.getSelected} cant={this.getCant} 
+                orden={this.getOrden} setOrden={this.setOrden}
+                {...this.props}/>
         ]}))
+    }
+
+    componentDidUpdate(){
+    }
+
+    getSelected = () => this.state.selectedPlate
+    
+    selectPlate = (elem) => {
+        this.setState(state => ({selectedPlate: !elem}));
+        this.setState(state => ({selectedPlate: elem}));
+    }
+
+    getCant = () => this.state.cantidad
+
+    setCant = (newCant) => {
+        this.setState(state => ({cantidad: !newCant}));
+        this.setState(state => ({cantidad: newCant}));
+    }
+    
+    getOrden = () => this.state.orden
+
+    setOrden = (newOrden) => {
+        this.setState(state => ({orden: !newOrden}));
+        this.setState(state => ({orden: newOrden}));
     }
 
     setPage = (value) => {this.setState(state => ({page: !value}));this.setState(state => ({page: value}));}
@@ -40,6 +73,7 @@ class StepForm extends React.Component {
                     <div className='form-container'>
                         <div className='header'>
                             <h1>{this.state.titles[this.state.page]}</h1>
+                            <hr></hr>
                         </div>
                         <div className='body'>
                             {this.state.components[this.state.page]}
