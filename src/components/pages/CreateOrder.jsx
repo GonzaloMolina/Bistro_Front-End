@@ -1,24 +1,22 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import API from '../../service/api';
-import Consumibles from '../component/Consumibles';
+import StepForm from '../component/StepForm';
 
 class CreateOrder extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            form: this.formComponent()
+            form: this.formComponent(),
+            menu: undefined
         }
     }
 
-    componentDidMount(){
-        console.log(this.props.content);
-        if(this.props.content === undefined){
-            this.props.history.push('/home', {});
-        }
+    componentDidMount(){//if menu !== undefined no deberia de hacer la request
+        console.log('TODOO:: menu Request')       
     }
 
-    formComponent = (error, success) => <Consumibles error={error} success={success} create={this.doCreate} {...this.props}/>
+    formComponent = () => <StepForm {...this.props}/>//<StepForm menu={this.state.menu} create={doCreate} {...this.props}/>
 
     doCreate = (platos, bebidas) =>{
         API.post('orden/new', {
