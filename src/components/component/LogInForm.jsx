@@ -20,14 +20,14 @@ class LogInForm extends React.Component{
 
     logIn = () => {
         if (this.state.email.length === 0){
-            this.setState({ error: "debe completar el campo email"});
+            this.setState({ error: "Debe completar el campo E-mail"});
             return;
         }
 
         if (!this.state.email.includes('@gmail.com') &&
             !this.state.email.includes('@outlook.com') && !this.state.email.includes('@mail.com') &&
             !this.state.email.includes('@admin.com')){
-            this.setState({ error: "el campo email debe contener un email valido"});
+            this.setState({ error: "El campo E-email debe contener un email válido"});
             return;
         }
         this.props.login(this.state)
@@ -68,9 +68,11 @@ class LogInForm extends React.Component{
                             <button 
                                 className="btn btn-primary"
                                 type="button" 
-                                id="LogIn" 
-                                onClick={() => {this.logIn()}}>
-                                    <b>LogIn</b>
+                                id="Log In" 
+                                onClick={() => {this.logIn()}}
+                                style={{maxWidth: '100%'}}>
+                                    <b>Iniciar Sesion</b>
+                                    
                             </button>
                         </div>
                     </form>

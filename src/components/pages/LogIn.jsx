@@ -39,9 +39,12 @@ class LogIn extends React.Component {
                 <img 
                     src={logo} 
                     alt="logo"
+                    style={{ maxWidth: '100%'}}
                 />
-                </div>
-              <div align="center" style={{marginTop: "10%", zIndex: 0, backgroundColor:'#004000'}}>
+              </div>
+              <col></col>
+              <div align="center" style={{marginTop: "10%", zIndex: 0, backgroundColor:'#004000', maxWidth:"40%", position:'center',
+                                          marginLeft: 'auto', marginRight: 'auto'}}>
                   {this.state.form}
               </div>
             </div>
