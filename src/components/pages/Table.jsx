@@ -48,7 +48,7 @@ class Table extends React.Component {
         if(this.state.orden === undefined){
             return (
                 <div className='contenedor'>
-                    <ErrorMessage error={"no hay una orden que mostrar"}/>
+                    <ErrorMessage error={"No hay una orden que mostrar"}/>
                 </div>
             );
         }
@@ -104,7 +104,7 @@ class Table extends React.Component {
                             <button className="btnu"><AiOutlineReload/></button>
                         </div>
                         <div className="">
-                            <button className="btnd"><AiOutlineMinus/></button>
+                            <button className="btnd" style={{ fontSize: '24px' }}><AiOutlineMinus/></button>
                         </div>
                     </div>
                 </div>
