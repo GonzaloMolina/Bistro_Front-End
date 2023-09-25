@@ -6,47 +6,36 @@ class Home extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
-            nombre: "Fidel",
-            apellido: "Martinez",
-            email: "admin@mail.com",
+            nombre: "",
+            apellido: "",
+            email: "",
             password: "public123",
-            mesas: [
-                5,
-                6
-            ],
-            peticiones: [
-                {
-                    "id": 7,
-                    "asunto": "Licencia por enfermedad",
-                    "estado": false
-                }
-            ]
+            mesas: [],
+            peticiones: []
         }
     }
 
     componentDidMount(){
-        /*
-        this.setState(state => ({nombre: !this.props.user.nombre}));
-        this.setState(state => ({nombre: this.props.user.nombre}));
-        this.setState(state => ({apellido: !this.props.user.apellido}));
-        this.setState(state => ({apellido: this.props.user.apellido}));
-        this.setState(state => ({email: !this.props.user.email}));
-        this.setState(state => ({email: this.props.user.email}));
-        this.setState(state => ({password: !this.props.user.password}));
-        this.setState(state => ({password: this.props.user.password}));
-        this.setState(state => ({mesas: !this.props.user.mesas}));
-        this.setState(state => ({mesas: this.props.user.mesas}));
-        this.setState(state => ({peticiones: !this.props.user.peticiones}));
-        this.setState(state => ({peticiones: this.props.user.peticiones}));*/
+        if(this.props.user === undefined){this.props.history.push('/')}
+        else{
+            this.setState(state => ({nombre: !this.props.user.nombre}));
+            this.setState(state => ({nombre: this.props.user.nombre}));
+            this.setState(state => ({apellido: !this.props.user.apellido}));
+            this.setState(state => ({apellido: this.props.user.apellido}));
+            this.setState(state => ({email: !this.props.user.email}));
+            this.setState(state => ({email: this.props.user.email}));
+            this.setState(state => ({password: !this.props.user.password}));
+            this.setState(state => ({password: this.props.user.password}));
+            this.setState(state => ({mesas: !this.props.user.mesas}));
+            this.setState(state => ({mesas: this.props.user.mesas}));
+            this.setState(state => ({peticiones: !this.props.user.peticiones}));
+            this.setState(state => ({peticiones: this.props.user.peticiones}));
+        }
     }
     
    render() {
     return (
       <React.Fragment>
-        <div>
-            
-        </div>
-
         <div>
             <Sidebar 
                 mesas={this.state.mesas} 
@@ -54,6 +43,7 @@ class Home extends React.Component {
                 credenciales={{email:this.state.email, pass:this.state.password}}
             />
         </div>
+
       </React.Fragment>
     );
   } 

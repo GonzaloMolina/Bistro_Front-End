@@ -17,14 +17,16 @@ class LogIn extends React.Component {
     formComponent = (error) => <LogInForm error={error} login={this.doLogIn} {...this.props}/>
     
     doLogIn = ({email, password}) => {
-      API.post('mozo/logIn', {email: email, password: password})
-      .then(response => {
-          let res = response.data
-          res.password = password
-          this.props.history.push('/home', res)
+      const headers= {
+        auth: {username: 'admin@mail.com',password: 'public123'}
+      }
+      API.logIn('mozo/logIn', {email: email, password: password}, headers)
+      .then(res => {
+          console.log(res);
+          this.props.history.push('/home', res.data)
       })
       .catch(error => {
-        console.log(error.response.data)
+        console.log(error)
         this.setState({form: !this.formComponent(error.response.data.title)})
         this.setState({form: this.formComponent(error.response.data.title)})
       })
