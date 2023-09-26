@@ -6,6 +6,7 @@ import '../../styles/table.css'
 import API from '../../service/api';
 //import OrderView from '../component/OrderView';
 import {AiOutlinePlus, AiOutlineReload, AiOutlineMinus} from 'react-icons/ai';
+//import OrderView from '../component/OrderView';
 
 class Table extends React.Component {
     constructor(props){
@@ -17,7 +18,7 @@ class Table extends React.Component {
                 mesas: [],
                 peticiones: []
             },
-            mesa: undefined,
+            cuenta: 0,
             orden: undefined,
         }
     }
@@ -34,6 +35,8 @@ class Table extends React.Component {
             API.getAuth('mesa/'+this.props.content.mesaId, headers)
             .then(res => {
                 console.log(res.data);
+                this.setState(state => ({orden: res.data.orden}));
+                this.setState(state => ({cuenta: res.data.cuenta}));
             })
             .catch(error => {
                 console.log(error)
@@ -47,8 +50,8 @@ class Table extends React.Component {
         }
     }
 
-    handleOnClick(){
-        console.log("Create state: ", this.state);
+    handleOnClickCreate(){
+        this.props.history.push('/create', this.state.content);
     }
 
     handleOnClickUpdate(){
@@ -56,11 +59,19 @@ class Table extends React.Component {
     }
 
     handleOnClickDelete(){
-        console.log("Delete state: ", this.state);
+        if(!(this.state.orden === undefined || this.state.orden === null)){
+            const headers= {
+                auth: {username: 'admin@mail.com',password: 'public123'}
+            }
+            const path = "orden/"+this.state.content.mesaId+"/"+this.state.orden.id;
+            API.deleteAuth(path, headers)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+        }
     }
 
     renderOrden(){
-        if(this.state.orden === undefined){
+        if(this.state.orden === undefined || this.state.orden === null){
             return (
                 <div className='contenedor'>
                     <ErrorMessage error={"No hay una orden que mostrar"}/>
@@ -71,14 +82,27 @@ class Table extends React.Component {
             return (
                 <div className="contenedor">
                     <div className='card'>
-                        <h1>{'cuenta: '}{this.state.mesa.cuenta}</h1>
+                        <h1>{'Cuenta:  $'}{this.state.cuenta}</h1>
                     </div>
+                    <br/>
                     <div className='card'>
                         <h1>{'Orden Nro: '}{this.state.orden.id}</h1>
                     </div>
+
                     <div>
                         <div className="contenedorB">
-                            <button type='button' className='btn btn-secondary' style={{}}>Ver Orden</button>
+                            <button type='button' 
+                                className='btn btn-secondary' 
+                                style={{}}
+                                onClick={() => this.props.history.push('/view', 
+                                    {
+                                        "info":this.state.content, 
+                                        "orden":this.state.orden
+                                    })
+                                }
+                            >
+                                Ver Orden
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -112,7 +136,7 @@ class Table extends React.Component {
                         <div className="">
                             <button 
                                 className="btnc"
-                                onClick={() => this.props.history.push('/create', this.state.content)}
+                                onClick={() => this.handleOnClickCreate()}
                             >
                                 <AiOutlinePlus/>
                             </button>
@@ -121,7 +145,13 @@ class Table extends React.Component {
                             <button className="btnu"><AiOutlineReload/></button>
                         </div>
                         <div className="">
-                            <button className="btnd" style={{ fontSize: '24px' }}><AiOutlineMinus/></button>
+                            <button 
+                                className="btnd" 
+                                style={{ fontSize: '24px' }}
+                                onClick={() => this.handleOnClickDelete()}
+                            >
+                                <AiOutlineMinus/>
+                            </button>
                         </div>
                     </div>
                 </div>
