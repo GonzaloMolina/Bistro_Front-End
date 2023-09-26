@@ -8,26 +8,32 @@ class CreateOrder extends React.Component{
         super(props);
         this.state = {
             form: this.formComponent(),
-            menu: undefined
+            content: {}
         }
     }
 
     componentDidMount(){//if menu !== undefined no deberia de hacer la request
-        console.log('TODOO:: menu Request')       
+        if(this.props.content === undefined){this.props.history.push('/');}
+        else{
+            this.setState(state => ({content: this.props.content}));
+            console.log(this.props.content);
+        }
     }
 
-    formComponent = () => <StepForm {...this.props}/>//<StepForm menu={this.state.menu} create={doCreate} {...this.props}/>
+    formComponent = () => <StepForm menu={'menu'} create={this.doCreate} {...this.props}/>
 
     doCreate = (platos, bebidas) =>{
+        const headers= {
+            auth: {username: 'admin@mail.com',password: 'public123'}
+        }
         API.post('orden/new', {
-            mesaId: this.props.content.mesa.tableId,
-            mozoId: this.props.content.mozo.id,
-            bebidas: bebidas,
-            platos: platos
-        }).then(res => {
-            this.props.history.push('/table', 
-                {mozo: this.props.content.mozo, ordenId: res.data, tableId: this.props.content.mesa.tableId});
-        }).catch(err => console.log(err.message));
+            mesaId: this.props.content.mesaId,
+            mozoId: 53,
+            bebidas: [],
+            platos: []
+        }, headers)
+        .then(res => {console.log(res);this.props.history.push('/table', this.state.content)})
+        .catch(err => console.log(err.message));
     }
 
     render(){

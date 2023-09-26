@@ -272,7 +272,7 @@ class SelectStep extends React.Component {
     }
 
     componentDidMount(){
-        console.log(this.state.selected)
+        console.log('select_mount', this.props)
     }
 
     esBebida(){return this.state.selected === 'GRANDE' || this.state.selected === 'CHICO' || this.state.selected === 'MEDIANO'}

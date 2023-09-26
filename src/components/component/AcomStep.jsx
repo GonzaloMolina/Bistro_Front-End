@@ -11,7 +11,7 @@ class AcompStep extends React.Component {
     }
 
     componentDidMount(){
-        console.log(this.props.plate())
+        console.log(this.props)
     }
 
     update = (cant) => {

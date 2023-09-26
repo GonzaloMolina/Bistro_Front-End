@@ -59,12 +59,13 @@ class StepForm extends React.Component {
 
     prevPage = () => this.setPage(this.state.page -1)
 
-    nextPage = () => this.state.page === (this.state.titles.length-1)?console.log('doCreate'): this.setPage(this.state.page +1)
+    nextPage = () => this.state.page === (this.state.titles.length-1)? this.props.create(): this.setPage(this.state.page +1)
 
     butomNextText = () => this.state.page === (this.state.titles.length-1) ? 'Crear Orden': 'Siguiente'
         
 
     render(){
+        console.log(this.props);
         return(
             <React.Fragment>
                 <div className='form'>

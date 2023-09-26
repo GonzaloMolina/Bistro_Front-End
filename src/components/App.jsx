@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import LogIn from './pages/LogIn';
 import Table from './pages/Table';
 import CreateOrder from './pages/CreateOrder';
+import View from './pages/View';
 
 
 export default class App extends React.Component{
@@ -14,6 +15,12 @@ export default class App extends React.Component{
                 <Switch>
                     <Route path="/home" render=
                         {props => <Home  user={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route path="/view" render=
+                        {props => <View  content={props.location.state}/>} 
                     />
                 </Switch>
 
