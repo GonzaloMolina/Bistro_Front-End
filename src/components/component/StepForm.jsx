@@ -20,14 +20,14 @@ class StepForm extends React.Component {
 
     componentDidMount(){
         this.setState(state => ({components: [
-            <SelectStep select={this.selectPlate} {...this.props}/>, 
-            <AcomStep 
+            <SelectStep menu={this.props.menu} select={this.selectPlate} {...this.props}/>, 
+            /*<AcomStep 
                 plate={this.getSelected} cant={this.getCant} 
                 setCant={this.setCant} {...this.props}/>, 
             <CheckStep 
                 plate={this.getSelected} cant={this.getCant} 
                 orden={this.getOrden} setOrden={this.setOrden}
-                {...this.props}/>
+                {...this.props}/>*/
         ]}))
     }
 
@@ -65,7 +65,6 @@ class StepForm extends React.Component {
         
 
     render(){
-        console.log(this.props);
         return(
             <React.Fragment>
                 <div className='form'>

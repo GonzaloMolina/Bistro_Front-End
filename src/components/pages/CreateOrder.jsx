@@ -8,19 +8,25 @@ class CreateOrder extends React.Component{
         super(props);
         this.state = {
             form: this.formComponent(),
-            content: {}
+            content: {},
         }
     }
 
-    componentDidMount(){//if menu !== undefined no deberia de hacer la request
+    componentDidMount(){
         if(this.props.content === undefined){this.props.history.push('/');}
         else{
             this.setState(state => ({content: this.props.content}));
-            console.log(this.props.content);
         }
     }
 
-    formComponent = () => <StepForm menu={'menu'} create={this.doCreate} {...this.props}/>
+    getMenu = () => {
+        const headers= {
+            auth: {username: 'admin@mail.com',password: 'public123'}
+        }
+        return API.getAuth('menu/'+7, headers)
+    }
+
+    formComponent = () => <StepForm menu={this.getMenu} create={this.doCreate} {...this.props}/>
 
     doCreate = (platos, bebidas) =>{
         const headers= {
