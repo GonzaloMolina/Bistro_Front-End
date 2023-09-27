@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 class OrderView extends React.Component{
     constructor(props){
@@ -60,12 +61,12 @@ class OrderView extends React.Component{
                 <div className="container">
                     <div className='btn-holder'>
                         <div className="">
-                            <button 
+                            <AiOutlineArrowLeft 
                                 className="btnc"
                                 onClick={() => this.props.history.push('/table', this.props.content.info)}
                             >
-                                volver
-                            </button>
+                                Volver
+                            </AiOutlineArrowLeft>
                         </div>
                     </div>
                 </div>
