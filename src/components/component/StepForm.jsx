@@ -13,25 +13,27 @@ class StepForm extends React.Component {
             components: [],
             orden: [],
             selectedPlate: {},
-            acomp: {},
-            cantidad: 0
+            values: [],
+            amount: 0
         }
     }
 
     componentDidMount(){
         this.setState(state => ({components: [
             <SelectStep menu={this.props.menu} select={this.selectPlate} {...this.props}/>, 
-            /*<AcomStep 
-                plate={this.getSelected} cant={this.getCant} 
-                setCant={this.setCant} {...this.props}/>, 
-            <CheckStep 
-                plate={this.getSelected} cant={this.getCant} 
-                orden={this.getOrden} setOrden={this.setOrden}
-                {...this.props}/>*/
+            <AcomStep plate={this.getSelected} setOther={[this.setCant, this.setValues]} {...this.props}/>, 
+            <CheckStep cant={this.ordenValues} />
         ]}))
     }
 
-    componentDidUpdate(){
+    componentDidUpdate(){}
+
+    ordenValues = () => {
+        return {
+            elem: this.state.selectedPlate,
+            values: this.state.values,
+            amount: this.state.amount
+        }
     }
 
     getSelected = () => this.state.selectedPlate
@@ -41,13 +43,11 @@ class StepForm extends React.Component {
         this.setState(state => ({selectedPlate: elem}));
     }
 
-    getCant = () => this.state.cantidad
+    esBebida = (s) => s === 'CHICO' || s === 'MEDIANO'|| s === 'GRANDE'
 
-    setCant = (newCant) => {
-        this.setState(state => ({cantidad: !newCant}));
-        this.setState(state => ({cantidad: newCant}));
-    }
-    
+    setCant = (newElem) => this.setState(state => ({amount: newElem}));
+    setValues = (newElem) => this.setState(state => ({values: newElem}));
+
     getOrden = () => this.state.orden
 
     setOrden = (newOrden) => {
