@@ -11,27 +11,30 @@ class StepForm extends React.Component {
             page: 0,
             titles: ["Seleccion", "Acompañamiento", "Check"],
             components: [],
-            orden: [],
             selectedPlate: {},
-            acomp: {},
-            cantidad: 0
+            values: [],
+            amount: 0,
+            platos:[],
+            bebidas: []
         }
     }
 
     componentDidMount(){
         this.setState(state => ({components: [
-            <SelectStep select={this.selectPlate} {...this.props}/>, 
-            <AcomStep 
-                plate={this.getSelected} cant={this.getCant} 
-                setCant={this.setCant} {...this.props}/>, 
-            <CheckStep 
-                plate={this.getSelected} cant={this.getCant} 
-                orden={this.getOrden} setOrden={this.setOrden}
-                {...this.props}/>
+            <SelectStep menu={this.props.menu} select={this.selectPlate}/>, 
+            <AcomStep plate={this.getSelected} setOther={[this.setCant, this.setValues]}/>, 
+            <CheckStep elem={this.ordenValues} getLs={[this.getP, this.getB]} setLs={[this.setP, this.setB]}/>
         ]}))
     }
 
-    componentDidUpdate(){
+    componentDidUpdate(){}
+
+    ordenValues = () => {
+        return {
+            elem: this.state.selectedPlate,
+            values: this.state.values,
+            amount: this.state.amount
+        }
     }
 
     getSelected = () => this.state.selectedPlate
@@ -41,31 +44,37 @@ class StepForm extends React.Component {
         this.setState(state => ({selectedPlate: elem}));
     }
 
-    getCant = () => this.state.cantidad
+    esBebida = (s) => s === 'CHICO' || s === 'MEDIANO'|| s === 'GRANDE'
 
-    setCant = (newCant) => {
-        this.setState(state => ({cantidad: !newCant}));
-        this.setState(state => ({cantidad: newCant}));
-    }
-    
-    getOrden = () => this.state.orden
+    setCant = (newElem) => this.setState(state => ({amount: newElem}));
+    setValues = (newElem) => this.setState(state => ({values: newElem}));
 
-    setOrden = (newOrden) => {
-        this.setState(state => ({orden: !newOrden}));
-        this.setState(state => ({orden: newOrden}));
-    }
+    getP = () => this.state.platos
+    getB = () => this.state.bebidas
+
+    setP = (newElem) => this.setState(state => ({platos: newElem}));
+    setB = (newElem) => this.setState(state => ({bebidas: newElem}));
 
     setPage = (value) => {this.setState(state => ({page: !value}));this.setState(state => ({page: value}));}
 
-    prevPage = () => this.setPage(this.state.page -1)
+    prevPage = () => {
+        if(this.state.page === (this.state.titles.length-1)){this.setPage(0);}
+        else{
+            if(this.state.page === 0){console.log('volver a la mesa')}
+            else{this.setPage(this.state.page -1)}
+        }
+    }
 
-    nextPage = () => this.state.page === (this.state.titles.length-1)? this.props.create(): this.setPage(this.state.page +1)
+    nextPage = () => this.state.page === (this.state.titles.length-1)? 
+        this.props.create(this.state.platos, this.state.bebidas): this.setPage(this.state.page +1)
 
     butomNextText = () => this.state.page === (this.state.titles.length-1) ? 'Crear Orden': 'Siguiente'
+    butomPrevText = () => 
+        this.state.page === (this.state.titles.length-1) ? 'Agregar otro': 
+        this.state.page === 0 ? 'volver a la mesa' : 'prev'
         
 
     render(){
-        console.log(this.props);
         return(
             <React.Fragment>
                 <div className='form'>
@@ -83,17 +92,17 @@ class StepForm extends React.Component {
                             <button 
                                 type='button'
                                 className='btn btn-primary'
-                                disabled={this.state.page === 0}
                                 onClick={() => {
                                     this.prevPage()
                                 }}
                             >   
-                                anterior
+                                {this.butomPrevText()}
                             </button>
 
                             <button 
                                 type='button'
                                 className='btn btn-primary'
+                                disabled={this.state.selectedPlate.id === undefined}
                                 onClick={() => {
                                     this.nextPage()
                                 }}

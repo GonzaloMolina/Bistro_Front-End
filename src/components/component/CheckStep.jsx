@@ -5,29 +5,50 @@ class CheckStep extends React.Component {
     constructor(props){
         super(props)
         this.state={
-            orden: this.props.orden()
+            platos: [],
+            bebidas: []
         }
     }
 
-    checkList(){
-        var temp =this.props.orden()
-        temp.push(
-            {
-                'plate':this.props.plate(),
-                'cantidad': this.props.cant()
+    componentDidMount(){
+        console.log(this.props);
+        const selected = this.props.elem().elem;
+        const cantidad = this.props.elem().amount;
+        const values = this.props.elem().values;
+        if(this.props.elem().elem.tamanio === undefined){
+            let temp = {
+                "key": selected.id,
+                "values": values.map(a => a.id)
             }
-        );
-        console.log(temp);
-        return temp;
+            this.setState(state => ({platos: this.props.getLs[0]().concat([temp])}));
+            this.props.setLs[0](this.props.getLs[0]().concat([temp]))
+        }else{
+            let temp = {
+                "key": selected.id,
+                "amount": cantidad
+            }
+            this.setState(state => ({bebidas:  this.props.getLs[1]().concat([temp])}));
+            this.props.setLs[1](this.props.getLs[1]().concat([temp]))
+        }
+
     }
 
     render(){
         return(
             <React.Fragment>
                 <div className='check-container'>
-                    {this.checkList().map((e,i) => {
-                        return <p key={i}>{e.plate.nombre +"  "+ e.cantidad} </p>
-                    })}    
+                    {this.state.platos.map((e, i) => {
+                        return (
+                            <div key={i}>
+                                <h2>{e.key.nombre}</h2>
+                                {e.values.map((a, j) => {
+                                    return (
+                                        <h4 key={j}>{a.nombre}</h4>
+                                    );
+                                })}
+                            </div>
+                        );
+                    })}
                 </div>
             </React.Fragment>
         );
