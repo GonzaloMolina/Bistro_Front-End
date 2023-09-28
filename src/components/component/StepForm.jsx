@@ -11,18 +11,19 @@ class StepForm extends React.Component {
             page: 0,
             titles: ["Seleccion", "Acompañamiento", "Check"],
             components: [],
-            orden: [],
             selectedPlate: {},
             values: [],
-            amount: 0
+            amount: 0,
+            platos:[],
+            bebidas: []
         }
     }
 
     componentDidMount(){
         this.setState(state => ({components: [
-            <SelectStep menu={this.props.menu} select={this.selectPlate} {...this.props}/>, 
-            <AcomStep plate={this.getSelected} setOther={[this.setCant, this.setValues]} {...this.props}/>, 
-            <CheckStep cant={this.ordenValues} />
+            <SelectStep menu={this.props.menu} select={this.selectPlate}/>, 
+            <AcomStep plate={this.getSelected} setOther={[this.setCant, this.setValues]}/>, 
+            <CheckStep elem={this.ordenValues} getLs={[this.getP, this.getB]} setLs={[this.setP, this.setB]}/>
         ]}))
     }
 
@@ -48,20 +49,29 @@ class StepForm extends React.Component {
     setCant = (newElem) => this.setState(state => ({amount: newElem}));
     setValues = (newElem) => this.setState(state => ({values: newElem}));
 
-    getOrden = () => this.state.orden
+    getP = () => this.state.platos
+    getB = () => this.state.bebidas
 
-    setOrden = (newOrden) => {
-        this.setState(state => ({orden: !newOrden}));
-        this.setState(state => ({orden: newOrden}));
-    }
+    setP = (newElem) => this.setState(state => ({platos: newElem}));
+    setB = (newElem) => this.setState(state => ({bebidas: newElem}));
 
     setPage = (value) => {this.setState(state => ({page: !value}));this.setState(state => ({page: value}));}
 
-    prevPage = () => this.setPage(this.state.page -1)
+    prevPage = () => {
+        if(this.state.page === (this.state.titles.length-1)){this.setPage(0);}
+        else{
+            if(this.state.page === 0){console.log('volver a la mesa')}
+            else{this.setPage(this.state.page -1)}
+        }
+    }
 
-    nextPage = () => this.state.page === (this.state.titles.length-1)? this.props.create(): this.setPage(this.state.page +1)
+    nextPage = () => this.state.page === (this.state.titles.length-1)? 
+        this.props.create(this.state.platos, this.state.bebidas): this.setPage(this.state.page +1)
 
     butomNextText = () => this.state.page === (this.state.titles.length-1) ? 'Crear Orden': 'Siguiente'
+    butomPrevText = () => 
+        this.state.page === (this.state.titles.length-1) ? 'Agregar otro': 
+        this.state.page === 0 ? 'volver a la mesa' : 'prev'
         
 
     render(){
@@ -82,17 +92,17 @@ class StepForm extends React.Component {
                             <button 
                                 type='button'
                                 className='btn btn-primary'
-                                disabled={this.state.page === 0}
                                 onClick={() => {
                                     this.prevPage()
                                 }}
                             >   
-                                anterior
+                                {this.butomPrevText()}
                             </button>
 
                             <button 
                                 type='button'
                                 className='btn btn-primary'
+                                disabled={this.state.selectedPlate.id === undefined}
                                 onClick={() => {
                                     this.nextPage()
                                 }}
