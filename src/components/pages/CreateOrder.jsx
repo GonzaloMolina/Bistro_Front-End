@@ -28,15 +28,17 @@ class CreateOrder extends React.Component{
 
     formComponent = () => <StepForm menu={this.getMenu} create={this.doCreate} {...this.props}/>
 
-    doCreate = (platos, bebidas) =>{
+    doCreate = (plt, beb) =>{
+        console.log(plt);
+        console.log(beb);
         const headers= {
             auth: {username: 'admin@mail.com',password: 'public123'}
         }
         API.post('orden/new', {
             mesaId: this.props.content.mesaId,
             mozoId: 53,
-            bebidas: [],
-            platos: []
+            bebidas: beb,
+            platos: plt
         }, headers)
         .then(res => {console.log(res);this.props.history.push('/table', this.state.content)})
         .catch(err => console.log(err.message));

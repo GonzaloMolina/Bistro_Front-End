@@ -27,7 +27,6 @@ class AcompStep extends React.Component {
     addelem(zs){
         console.log('zs_', zs);
         this.setState(state => ({ls: zs}));
-        console.log('state_', this.state.ls);
         this.props.setOther[1](zs);
     }
 
@@ -66,8 +65,7 @@ class AcompStep extends React.Component {
                     type='button'
                     className='btn btn-secondary'
                     onClick={() => {
-                        console.log(elem.id);
-                        this.addelem(this.state.ls.concat([elem.id]));
+                        this.addelem(this.state.ls.concat([elem]));
                     }}
                 >
                     {elem.nombre}
