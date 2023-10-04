@@ -12,9 +12,9 @@ class CheckStep extends React.Component {
 
     componentDidMount(){
         console.log(this.props);
-        const selected = this.props.elem().elem;
+        const selected = this.props.elem().elem;console.log("elem:", selected);
         const cantidad = this.props.elem().amount;
-        const values = this.props.elem().values;
+        const values = this.props.elem().values;console.log("values: ",values);
         if(this.props.elem().elem.tamanio === undefined){
             let temp = {
                 "key": selected.id,

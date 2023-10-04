@@ -27,6 +27,10 @@ class StepForm extends React.Component {
         ]}))
     }
 
+    setComp = () => {
+        this.setState(state => ({values: []}))
+    }
+
     componentDidUpdate(){}
 
     ordenValues = () => {
@@ -58,7 +62,7 @@ class StepForm extends React.Component {
     setPage = (value) => {this.setState(state => ({page: !value}));this.setState(state => ({page: value}));}
 
     prevPage = () => {
-        if(this.state.page === (this.state.titles.length-1)){this.setPage(0);}
+        if(this.state.page === (this.state.titles.length-1)){this.setPage(0);this.setComp()}
         else{
             if(this.state.page === 0){console.log('volver a la mesa')}
             else{this.setPage(this.state.page -1)}
