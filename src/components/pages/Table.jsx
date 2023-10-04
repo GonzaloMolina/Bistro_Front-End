@@ -12,25 +12,31 @@ class Table extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            content: {
-                credenciales: { email: "admin@mail.com", pass: "public123" },
-                mesaId: 0,
-                mesas: [],
-                peticiones: []
-            },
+            email: "", 
+            pass: "",
+            mesaId: 0,
+            mesas: [],
+            peticiones: [],
             cuenta: 0,
             orden: undefined,
         }
     }
 
     componentDidMount(){
+        this.setState(state => ({
+            email: this.props.content.email,
+            pass: this.props.content.pass,
+            mesaId: this.props.content.mesaId,
+            mesas: this.props.content.mesas,
+            peticiones: this.props.content.peticiones
+        }))
         if(this.props.content === undefined){
             this.props.history.push("/");
         }
         else{
             this.setState(state => ({content: this.props.content}))
             const headers= {
-                auth: {username: 'admin@mail.com',password: 'public123'}
+                auth: {username: this.state.email,password: this.state.pass}
             }
             API.getAuth('mesa/'+this.props.content.mesaId, headers)
             .then(res => {
@@ -45,8 +51,27 @@ class Table extends React.Component {
     }
 
     componentDidUpdate(){
-        if(this.props.content !== undefined && this.props.content.mesaId !== this.state.content.mesaId){
-            window.location.reload();
+        if(this.props.content !== undefined && this.props.content.mesaId !== this.state.mesaId){
+            this.setState(state => ({
+                email: this.props.content.email,
+                pass: this.props.content.pass,
+                mesaId: this.props.content.mesaId,
+                mesas: this.props.content.mesas,
+                peticiones: this.props.content.peticiones
+            }))
+            this.setState(state => ({content: this.props.content}))
+            const headers= {
+                auth: {username: this.state.email,password: this.state.pass}
+            }
+            API.getAuth('mesa/'+this.props.content.mesaId, headers)
+            .then(res => {
+                console.log(res.data);
+                this.setState(state => ({orden: res.data.orden}));
+                this.setState(state => ({cuenta: res.data.cuenta}));
+            })
+            .catch(error => {
+                console.log(error)
+            })
         }
     }
 
@@ -61,11 +86,14 @@ class Table extends React.Component {
     handleOnClickDelete(){
         if(!(this.state.orden === undefined || this.state.orden === null)){
             const headers= {
-                auth: {username: 'admin@mail.com',password: 'public123'}
+                auth: {username: this.state.email, password: this.state.pass}
             }
             const path = "orden/"+this.state.content.mesaId+"/"+this.state.orden.id;
             API.deleteAuth(path, headers)
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res.status)
+                this.setState(state => ({orden: undefined}))
+            })
             .catch(err => console.log(err))
         }
     }
@@ -115,15 +143,16 @@ class Table extends React.Component {
             <React.Fragment>
                 <div style={{zIndex:9}}>
                     <Sidebar 
-                        mesas={this.state.content.mesas}
-                        peticiones={this.state.content.peticiones}
-                        credenciales={this.state.content.credenciales}
+                        mesas={this.state.mesas}
+                        peticiones={this.state.peticiones}
+                        email={this.state.email}
+                        pass={this.state.password}
                     />
                 </div>
 
                 <div className='contenedor'>
                     <div className='card'>
-                        <h1><b>{'Mesa Nro. '}</b> {this.state.content.mesaId}</h1>
+                        <h1><b>{'Mesa Nro. '}</b> {this.state.mesaId}</h1>
                     </div>
 
                     <div style={{margin:'15px', zIndex: -1}}>

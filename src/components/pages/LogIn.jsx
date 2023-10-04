@@ -18,12 +18,20 @@ class LogIn extends React.Component {
     
     doLogIn = ({email, password}) => {
       const headers= {
-        auth: {username: 'admin@mail.com',password: 'public123'}
+        auth: {username: email,password: password}
       }
       API.logIn('mozo/logIn', {email: email, password: password}, headers)
       .then(res => {
-          console.log(res);
-          this.props.history.push('/home', res.data)
+          let content = {
+            nombre: res.data.nombre,
+            apellido: res.data.apellido,
+            email: email,
+            password: password,
+            mesas: res.data.mesas,
+            peticiones: res.data.peticiones
+          }
+          console.log(content);
+          this.props.history.push('/home', content)
       })
       .catch(error => {
         console.log(error)

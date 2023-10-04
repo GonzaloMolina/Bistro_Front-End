@@ -9,7 +9,7 @@ class Home extends React.Component {
             nombre: "",
             apellido: "",
             email: "",
-            password: "public123",
+            password: "",
             mesas: [],
             peticiones: []
         }
@@ -40,7 +40,8 @@ class Home extends React.Component {
             <Sidebar 
                 mesas={this.state.mesas} 
                 peticiones={this.state.peticiones}
-                credenciales={{email:this.state.email, pass:this.state.password}}
+                email={this.state.email}
+                pass={this.state.password}
             />
         </div>
 
