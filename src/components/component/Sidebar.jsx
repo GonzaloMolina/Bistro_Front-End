@@ -60,12 +60,13 @@ class Sidebar extends React.Component {
                                     <Link to={{
                                         pathname: '/table',
                                         state: { 
-                                            credenciales: this.props.credenciales, 
+                                            email: this.props.email,
+                                            pass: this.props.pass,
                                             mesas: this.props.mesas, 
                                             mesaId: elem, 
                                             peticiones: this.props.peticiones 
-                                        },
-                                    }}>
+                                        }}}
+                                    >
                                     <span style={{ fontFamily: 'Cinzel', fontSize:15}}> {'Mesa Nro. ' + elem}</span>
                                     </Link>
                                 </li>
