@@ -20,14 +20,14 @@ class LogInForm extends React.Component{
 
     logIn = () => {
         if (this.state.email.length === 0){
-            this.setState({ error: "Debe completar el campo E-mail"});
+            this.setState({ error: "complete el campo E-mail"});
             return;
         }
 
         if (!this.state.email.includes('@gmail.com') &&
             !this.state.email.includes('@outlook.com') && !this.state.email.includes('@mail.com') &&
             !this.state.email.includes('@admin.com')){
-            this.setState({ error: "El campo E-email debe contener un email válido"});
+            this.setState({ error: "A introducido email no válido"});
             return;
         }
         this.props.login(this.state)
@@ -36,11 +36,11 @@ class LogInForm extends React.Component{
     render(){//width='device-width,height=device-height initial-scale=1'
         return(
             <React.Fragment>
-            <div align="center" style={{backgroundColor:'#004000'}}>
-                <div  className="card" style={{margin: "10%", backgroundColor: "rgba(43, 143, 50, 0.9)", zIndex:0}} >
+            <div align="center">
+                <div  className="card" style={{margin: "5%", marginTop: "0", backgroundColor: "rgba(43, 143, 50, 0.7)", zIndex:10}} >
                     <ErrorMessage error={this.state.error}/>
                     <div>
-                        <form style={{margin: "5%"}}>  
+                        <form style={{margin: "4%"}}>  
                         <div align="left" className="form-group" style={{opacity: "", marginBottom: "10px"}}>
                             <input
                                 className="form-control"

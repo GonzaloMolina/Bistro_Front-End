@@ -101,19 +101,19 @@ class Table extends React.Component {
     renderOrden(){
         if(this.state.orden === undefined || this.state.orden === null){
             return (
-                <div className='contenedor'>
-                    <ErrorMessage error={"No hay una orden que mostrar"}/>
+                <div style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
+                    <ErrorMessage error={"No hay una orden que mostrar"} />
                 </div>
             );
         }
         else{
             return (
                 <div className="contenedor">
-                    <div className='card'>
+                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
                         <h1>{'Cuenta:  $'}{this.state.cuenta}</h1>
                     </div>
                     <br/>
-                    <div className='card'>
+                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
                         <h1>{'Orden Nro: '}{this.state.orden.id}</h1>
                     </div>
 
@@ -141,7 +141,8 @@ class Table extends React.Component {
     render(){
         return (
             <React.Fragment>
-                <div style={{zIndex:9}}>
+            <div  className='base'>
+            <div style={{zIndex:9}}>
                     <Sidebar 
                         mesas={this.state.mesas}
                         peticiones={this.state.peticiones}
@@ -151,7 +152,7 @@ class Table extends React.Component {
                 </div>
 
                 <div className='contenedor'>
-                    <div className='card'>
+                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
                         <h1><b>{'Mesa Nro. '}</b> {this.state.mesaId}</h1>
                     </div>
 
@@ -185,6 +186,7 @@ class Table extends React.Component {
                     </div>
                 </div>
 
+            </div>
             </React.Fragment>
         );
     }
