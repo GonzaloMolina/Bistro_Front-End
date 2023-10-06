@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import SelectStep from './SelectStep';
 import AcomStep from './AcomStep';
 import CheckStep from './CheckStep';
+import '../../styles/table.css';
 
 class StepForm extends React.Component {
     constructor(props){
@@ -81,41 +82,51 @@ class StepForm extends React.Component {
     render(){
         return(
             <React.Fragment>
-                <div className='form'>
-                    <div className='progressbar'>
+                <div className='base'>
+                    <div className='navbar' style={{
+                        backgroundColor: 'green',
+                        height: '80px',
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        zIndex: 10,
+                        marginBottom:'3%'
+                    }}>
                     </div>
-                    <div className='form-container'>
-                        <div className='header'>
-                            <h1>{this.state.titles[this.state.page]}</h1>
-                            <hr></hr>
+                    <div className='form'>
+                        <div className='progressbar'>
                         </div>
-                        <div className='body'>
-                            {this.state.components[this.state.page]}
-                        </div>
-                        <div className='footer'>
-                            <button 
-                                type='button'
-                                className='btn btn-primary'
-                                onClick={() => {
-                                    this.prevPage()
-                                }}
-                            >   
-                                {this.butomPrevText()}
-                            </button>
+                        <div className='form-container'>
+                            <div className='card' style={{zIndex: '0', marginBottom: '0',backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}> 
+                                <h1>{this.state.titles[this.state.page]}</h1>
+                            </div>
+                            <div className='body'>
+                                {this.state.components[this.state.page]}
+                            </div>
+                            <div className='footer'>
+                                <button 
+                                    type='button'
+                                    className='btn btn-primary'
+                                    onClick={() => {
+                                        this.prevPage()
+                                    }}
+                                >   
+                                    {this.butomPrevText()}
+                                </button>
 
-                            <button 
-                                type='button'
-                                className='btn btn-primary'
-                                disabled={this.state.selectedPlate.id === undefined}
-                                onClick={() => {
-                                    this.nextPage()
-                                }}
-                            >
-                                {this.butomNextText()}
-                            </button>
+                                <button 
+                                    type='button'
+                                    className='btn btn-primary'
+                                    disabled={this.state.selectedPlate.id === undefined}
+                                    onClick={() => {
+                                        this.nextPage()
+                                    }}
+                                >
+                                    {this.butomNextText()}
+                                </button>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </React.Fragment>
         );
