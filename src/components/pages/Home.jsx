@@ -45,7 +45,7 @@ class Home extends React.Component {
                         backgroundSize: 'auto cover',
                         backgroundRepeat: 'no-repeat',
                         width: '100vw',
-                        height: '100%',
+                        height: '100vh',
                         zIndex: '-10'
         }}
         >
