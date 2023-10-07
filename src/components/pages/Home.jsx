@@ -42,10 +42,10 @@ class Home extends React.Component {
         <div style={{
                         backgroundImage: `url(${logo})`,
                         backgroundPosition: 'center',
-                        backgroundSize: 'cover',
+                        backgroundSize: 'auto cover',
                         backgroundRepeat: 'no-repeat',
                         width: '100vw',
-                        height: '100vh',
+                        height: '100%',
                         zIndex: '-10'
         }}
         >
@@ -57,7 +57,7 @@ class Home extends React.Component {
                     pass={this.state.password}
                 />
 
-                <div className='card' style={{margin: '5%', marginLeft:'20%', marginRight:'20%', zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
+                <div className='card' style={{margin: '5%', marginLeft:'20%', marginRight:'20%', zIndex: '0', backgroundColor: 'white'}}>
                     <h2>Bienvenido</h2>
                     <h4>{this.state.apellido+ ', '+ this.state.nombre}</h4>
                 </div>
