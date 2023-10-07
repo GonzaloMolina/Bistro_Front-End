@@ -44,7 +44,7 @@ class SelectStep extends React.Component {
           return (
           <div
               className='card'
-              style={{marginTop:'3%', zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}
+              style={{marginTop:'1%', zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: '#236104',minWidth:'90%'}}
           >
               {this.getContent().map((elem, key) => 
                   (
@@ -52,8 +52,8 @@ class SelectStep extends React.Component {
                       key={key}
                       style={{
                         alignContent: 'center',
-                        marginTop: '2%',
-                        marginBottom: '2%'
+                        marginTop: '1%',
+                        marginBottom: '1%'
                       }}>
                       <button className='btn btn-secondary' 
                       onClick={() => this.props.select(elem)}
@@ -62,6 +62,8 @@ class SelectStep extends React.Component {
                         padding: '0',
                         fontSize:'20px',
                         width: '100%',
+                        backgroundColor: 'white',
+                        color:'black'
                       }}>
                           {elem.nombre}
                       </button>
@@ -78,32 +80,35 @@ class SelectStep extends React.Component {
               <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" 
                 style={{flexDirection: 'column', marginTop: '2%'}}>
                     <div className="btn-group mr-2 flex-wrap" role="group" aria-label="First group"
-                    style={{marginBottom: '0px'}}>
+                    style={{margin: '30px',marginBottom:'0px',marginTop:'2px'}}>
                       {this.state.bebidasR.map((bebida, key) => 
                         <button 
                           key={key}
                           type="button" 
                           className="btn btn-secondary"
                           onClick={() => this.setState(state => ({selected: bebida.type}))}
+                          style={{backgroundColor: 'white',color:'black'}}
                         >
                           {bebida.type}
                         </button>
                       )}
                     </div>
-                    <div className="btn-group mr-2 flex-wrap" role="group" aria-label="First group">
+                    <div className="btn-group mr-2 flex-wrap" role="group" aria-label="First group"
+                         style={{margin: '30px',marginTop:'0px',marginBottom:'5px'}}>
                         {this.state.platosR.map((plato, key) => 
                           <button 
                             key={key}
                             type="button" 
                             className="btn btn-secondary"
                             onClick={() => {this.setState(state => ({selected: plato.type}))}}
+                            style={{backgroundColor: 'white',color:'black'}}
                           >
                             {plato.type}
                           </button>
                         )}
                     </div>
                 </div>
-              <div className='selected-list' style={{marginBottom: '10px'}}>
+              <div className='selected-list' style={{marginBottom: '10px',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                   {this.renderSelectedContent()}
               </div>
           </div>

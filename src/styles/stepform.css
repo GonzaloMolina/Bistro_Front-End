@@ -1,0 +1,58 @@
+.step-numbers {
+    display: flex;
+    justify-content: space-evenly; /* Espaciado uniforme entre los números de paso */
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .step-number {
+    position: relative; /* Permite posicionar elementos secundarios */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #a19090;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    color: #a19090;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0 10px; /* Espaciado horizontal entre los números de paso */
+  }
+  
+  .step-number::before {
+    content: ''; /* Agregar contenido pseudo ::before */
+    position: absolute; /* Posición absoluta relativa al número de paso */
+    top: 50%; /* Colocar la línea en el centro vertical del número */
+    left: 100%; /* Colocar la línea a la derecha del número */
+    width: 100px; /* Ancho de la línea blanca */
+    height: 2px; /* Altura de la línea blanca */
+    background-color: white; /* Color de la línea blanca */
+  }
+  
+  .active-step {
+    border-color: #339900; /* Color del paso activo */
+    color: #339900;
+  }
+
+/* Estilos CSS para la barra de progreso central */
+.progress-bar {
+  height: 10px;
+  background-color: #ccc; /* Color de fondo de la barra de progreso */
+  max-width: 80%;
+}
+
+.progressbar{
+    align-items: center;
+}
+
+.progress{
+    margin-left: 55px;
+    margin-bottom: 5px;
+}
+
+.step-number.no-line::before {
+    display: none; /* Ocultar la línea */
+  }

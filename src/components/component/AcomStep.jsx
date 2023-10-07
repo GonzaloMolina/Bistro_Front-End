@@ -38,10 +38,11 @@ class AcompStep extends React.Component {
       <div className="cantidad">
         <div className="card"
           style={{
-            margin: '2%',
+            margin: '10px',
+            marginBottom:'0px',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'rgba(179, 241, 178, 0.5)'
+            backgroundColor: 'white'
           }}
         >
           <h1>{this.state.selected.nombre}</h1>
@@ -49,14 +50,15 @@ class AcompStep extends React.Component {
         <div
           className="card"
           style={{
-            margin: '2%',
+            margin: '10px',
             marginBottom: '1%',
+            martinTop:'0px',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'rgba(179, 241, 178, 0.5)'
+            backgroundColor: 'white'
           }}
         >
-          <h4>seleccione una cantidad</h4>
+          <h4>Seleccione una cantidad</h4>
         </div>
         <div className="card"
           style={{
@@ -65,19 +67,10 @@ class AcompStep extends React.Component {
             marginLeft: '15%',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'rgba(179, 241, 178, 0.5)',
+            backgroundColor: 'white',
           }}
         >
           <div style={{display: 'flex', alignItems: 'center', justifyContent:'center', margin:'5%'}}>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => this.update(this.state.cantidad + 1)}
-          
-            >
-              <AiOutlinePlus />
-            </button>
-            <h2 style={{marginRight: '10%', marginLeft: '10%'}}>{this.state.cantidad}</h2>
             <button
               type="button"
               className="btn btn-danger"
@@ -86,6 +79,16 @@ class AcompStep extends React.Component {
             >
               <AiOutlineMinus />
             </button>
+            <h2 style={{marginRight: '10%', marginLeft: '10%'}}>{this.state.cantidad}</h2>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => this.update(this.state.cantidad + 1)}
+          
+            >
+              <AiOutlinePlus />
+            </button>
+
           </div>
         </div>
       </div>
@@ -117,7 +120,7 @@ class AcompStep extends React.Component {
             margin: '2%',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'rgba(179, 241, 178, 0.5)'
+            backgroundColor: 'white'
           }}
           >
             <h1>{this.state.selected.nombre}</h1>
@@ -128,7 +131,7 @@ class AcompStep extends React.Component {
               margin: '2%',
               zIndex: '0', 
               backdropFilter: 'blur(10px)',
-              backgroundColor: 'rgba(179, 241, 178, 0.5)'
+              backgroundColor: 'white'
             }}
           >
             <h4>seleccione una salsa</h4>
@@ -137,7 +140,7 @@ class AcompStep extends React.Component {
             style={{
               zIndex: '0', 
               backdropFilter: 'blur(10px)', 
-              backgroundColor: 'rgba(179, 241, 178, 0.5)',
+              backgroundColor: 'white',
               margin:'5%'
             }}
           >
@@ -162,7 +165,7 @@ class AcompStep extends React.Component {
             margin: '2%',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'rgba(179, 241, 178, 0.5)'
+            backgroundColor: 'white'
           }}
         >
           <h1>{this.state.selected.nombre}</h1>
@@ -173,7 +176,7 @@ class AcompStep extends React.Component {
             margin: '2%',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'rgba(179, 241, 178, 0.5)'
+            backgroundColor: 'white'
           }}
         >
           <h4>seleccione un acompañamiento</h4>

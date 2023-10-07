@@ -43,63 +43,56 @@ class OrderView extends React.Component{
                         zIndex: 10
                     }}>
                         <div className='btn-holder'>
-                            <div className="">
                                 <AiOutlineArrowLeft 
                                     className="btnc"
                                     onClick={() => this.props.history.push('/table', this.props.content.info)}
-                                    style={{backgroundColor: '#faf60e'}}
+                                    style={{backgroundColor: '#faf60e', marginLeft:'20%'}}
                                 />
-                            </div>
                         </div>
                     </div>
-                    <div id="name" className="card" style={{margin: "2%", backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
+                    <div id="name" className="card" style={{margin: "2%", backdropFilter: 'blur(10px)', backgroundColor: 'white'}}>
                         <div style={{margin: "2%"}}>
                             <h3><b>{"Orden: " + this.state.orden.id}</b></h3>
                         </div>
                     </div>
 
-                    <div id="name" className="card" style={{margin: "2%",  backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
+                    <div id="name" className="card" style={{margin: "2%",  backdropFilter: 'blur(10px)', backgroundColor: 'white'}}>
                         <div style={{margin: "2%"}}>
-                            <h4><b>{"Consumidos: "}</b></h4>
-                            <div id="name" className="card" style={{margin: "2%"}}>
-                                <div style={{margin: "2%"}}>
-                                    <table className="table">
-                                        <thead>
+                            <h4><b>{"Pedido: "}</b></h4>
+                            <div id="name" className="card" style={{overflowX: 'auto',margin: "2%"}}>
+                                    <table style={{ width: '100%' }} className="table">
+                                        <thead >
                                             <tr>
-                                                <th scope="col">Consumible</th>
-                                                <th scope="col">adicional</th>
-                                                <th scope="col">Precio</th>
+                                                <th style={{backgroundColor: '#009933'}}scope="col">Consumible</th>
+                                                <th style={{backgroundColor: '#009933'}} scope="col">Acompañamiento</th>
+                                                <th style={{backgroundColor: '#009933'}} scope="col">Precio</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {this.props.content.orden.platos.map(
                                                 (e, i) => {
                                                     return (<tr key={i}>
-                                                        <td style={{fontSize: '15px'}}>{e.nombre}</td>
-                                                        <td style={{fontSize: '15px'}}>{this.adicional(e)}</td>
-                                                        <td style={{fontSize: '20px'}}>{'$'+e.precio}</td>
+                                                        <td style={{fontSize: '15px',backgroundColor: 'rgb(211,211,211)'}}>{e.nombre}</td>
+                                                        <td style={{fontSize: '15px',backgroundColor: 'rgb(211,211,211)'}}>{this.adicional(e)}</td>
+                                                        <td style={{fontSize: '18px',backgroundColor: 'rgb(211,211,211)'}}>{'$'+e.precio}</td>
                                                     </tr>)
                                                 }
                                             )}
                                             {this.props.content.orden.bebidas.map(
                                                 (e, i) => {
                                                     return (<tr key={i}>
-                                                        <td style={{fontSize: '15px'}}>{e.nombre}</td>
-                                                        <td></td>
-                                                        <td style={{fontSize: '20px'}}>{'$'+e.precio}</td>
+                                                        <td style={{fontSize: '15px',backgroundColor: 'rgb(211,211,211)'}}>{e.nombre}</td>
+                                                        <td style={{backgroundColor: 'rgb(211,211,211)'}}></td>
+                                                        <td style={{fontSize: '18px',backgroundColor: 'rgb(211,211,211)'}}>{'$'+e.precio}</td>
                                                     </tr>)
                                                 }
                                             )}
                                         </tbody>
                                     </table>
-                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="container">
-                        
-                    </div>
                 </div>
             </React.Fragment>
         )

@@ -109,16 +109,15 @@ class Table extends React.Component {
         else{
             return (
                 <div className="contenedor">
-                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
+                    <div className='card' style={{zIndex: '0', backgroundColor: 'white'}}>
                         <h1>{'Cuenta:  $'}{this.state.cuenta}</h1>
                     </div>
                     <br/>
-                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
+                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'white'}}>
                         <h1>{'Orden Nro: '}{this.state.orden.id}</h1>
                     </div>
 
-                    <div>
-                        <div className="contenedorB">
+                    <div className="contenedorB">
                             <button type='button' 
                                 className='btn btn-secondary' 
                                 style={{}}
@@ -131,7 +130,6 @@ class Table extends React.Component {
                             >
                                 Ver Orden
                             </button>
-                        </div>
                     </div>
                 </div>
             );
@@ -152,7 +150,7 @@ class Table extends React.Component {
                 </div>
 
                 <div className='contenedor'>
-                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
+                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'white'}}>
                         <h1><b>{'Mesa Nro. '}</b> {this.state.mesaId}</h1>
                     </div>
 
