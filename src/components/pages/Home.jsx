@@ -2,6 +2,9 @@ import React from 'react';
 import {withRouter} from 'react-router';
 import Sidebar from '../component/Sidebar';
 
+import logo from "../img/bistrot.jpg";
+
+
 class Home extends React.Component {
     constructor(props){
         super(props);
@@ -9,7 +12,7 @@ class Home extends React.Component {
             nombre: "",
             apellido: "",
             email: "",
-            password: "public123",
+            password: "",
             mesas: [],
             peticiones: []
         }
@@ -36,14 +39,31 @@ class Home extends React.Component {
    render() {
     return (
       <React.Fragment>
-        <div>
-            <Sidebar 
-                mesas={this.state.mesas} 
-                peticiones={this.state.peticiones}
-                credenciales={{email:this.state.email, pass:this.state.password}}
-            />
-        </div>
+        <div style={{
+                        backgroundImage: `url(${logo})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'cover',
+                        backgroundRepeat: 'no-repeat',
+                        width: '100vw',
+                        height: '100vh',
+                        zIndex: '-10'
+        }}
+        >
+            <div>
+                <Sidebar 
+                    mesas={this.state.mesas} 
+                    peticiones={this.state.peticiones}
+                    email={this.state.email}
+                    pass={this.state.password}
+                />
 
+                <div className='card' style={{margin: '5%', marginLeft:'20%', marginRight:'20%', zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
+                    <h2>Bienvenido</h2>
+                    <h4>{this.state.apellido+ ', '+ this.state.nombre}</h4>
+                </div>
+            </div>
+        </div>
+        
       </React.Fragment>
     );
   } 
