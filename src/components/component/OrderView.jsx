@@ -64,7 +64,7 @@ class OrderView extends React.Component{
                                         <thead >
                                             <tr>
                                                 <th style={{backgroundColor: '#009933'}}scope="col">Consumible</th>
-                                                <th style={{backgroundColor: '#009933'}} scope="col">Acompañamiento</th>
+                                                <th style={{backgroundColor: '#009933'}} scope="col">Adicional</th>
                                                 <th style={{backgroundColor: '#009933'}} scope="col">Precio</th>
                                             </tr>
                                         </thead>

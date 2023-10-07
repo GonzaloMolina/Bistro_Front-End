@@ -87,15 +87,8 @@ class StepForm extends Component {
     }
   }
 
-  nextPage = () => {
-    if (this.state.page === this.state.titles.length - 1) {
-      this.props.create(this.state.platos, this.state.bebidas);
-    } else {
-      this.setState(prevState => ({
-        page: prevState.page + 1
-      }));
-    }
-  }
+  nextPage = () => this.state.page === (this.state.titles.length - 1) ?
+  this.props.create(this.state.platos, this.state.bebidas) : this.setPage(this.state.page + 1)
 
   butomNextText = () => this.state.page === (this.state.titles.length - 1) ? 'Crear Orden' : 'Siguiente';
   butomPrevText = () => this.state.page === (this.state.titles.length - 1) ? 'Agregar otro' : 'Anterior';
@@ -157,8 +150,7 @@ class StepForm extends Component {
                 >
                   {this.butomPrevText()}
                 </button>
-                {this.state.page === 0 ? (
-                    <button
+                <button
                     type='button'
                     className='btn btn-primary'
                     disabled={this.state.selectedPlate.id === undefined}
@@ -167,21 +159,8 @@ class StepForm extends Component {
                     }}
                     style={{ float: 'right', marginRight: '2%' }}
                     >
-                    Siguiente
-                    </button>
-                ) : this.state.page === 1 ? (
-                    <button
-                    type='button'
-                    className='btn btn-primary'
-                    disabled={this.state.cantidad === 0}
-                    onClick={() => {
-                        this.nextPage()
-                    }}
-                    style={{ float: 'right', marginRight: '2%' }}
-                    >
-                    Siguiente
-                    </button>
-                ) : null}
+                    {this.butomNextText()}
+                </button>
 
 
 

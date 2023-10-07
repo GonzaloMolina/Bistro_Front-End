@@ -61,44 +61,86 @@ class CheckStep extends React.Component {
             this.setState(state => ({bebidasView: this.props.getLs[3]().concat(tempView)}));
         }
     }
+
+    renderAcompañamiento(pla,i){
+        if(pla.values.length === 0){
+            return (
+                <div className='card'
+                    style={{
+                        zIndex: '0', 
+                        backdropFilter: 'blur(10px)', 
+                        backgroundColor: 'white',
+                        margin: '30px',
+                        marginTop:'0px',
+                        marginBottom:'0px'
+                    }}
+                >
+                    <li span className='nav-text'>
+                        <span style={{ fontFamily: 'Cinzel' }}> {pla.key.nombre}</span>
+                        <div style={{overflow: 'auto'}}>
+                            <button 
+                                type='button'
+                                className='btn'
+                                onClick={() => {
+                                    console.log(this.state)
+                                }}
+                                style={{
+                                    color: 'red',
+                                    float:'right'
+                                }}
+                            >
+                                <AiOutlineCloseSquare/>
+                            </button>
+                        </div>
+                    </li>
+                </div>
+            )
+        } else{
+            return pla.values.map((acom, k) => {
+                return (
+                    <div className='card'
+                        style={{
+                            zIndex: '0', 
+                            backdropFilter: 'blur(10px)', 
+                            backgroundColor: 'white',
+                            margin: '30px',
+                            marginTop:'0px',
+                            marginBottom:'0px'
+                        }}
+                    >
+                        <li key={k} span className='nav-text'>
+                            <span style={{ fontFamily: 'Cinzel' }}> {pla.key.nombre}</span>
+                            <span style={{ fontFamily: 'Cinzel' }}> {acom.nombre}</span>
+                            <div style={{overflow: 'auto'}}>
+                                <button 
+                                    type='button'
+                                    className='btn'
+                                    onClick={() => {
+                                        console.log(this.state)
+                                    }}
+                                    style={{
+                                        color: 'red',
+                                        float:'right'
+                                    }}
+                                >
+                                    <AiOutlineCloseSquare/>
+                                </button>
+                            </div>
+                        </li>
+                    </div>
+                )
+        })
+    }
+}
+
     render(){
         return(
             <React.Fragment>
                 <div className='check-container'>
                 <IconContext.Provider value={{ className: "shared-class", size: 40 }}>
                     {this.props.getLs[2]().map((pla, i) => {
-                        return pla.values.map((acom, k) => {
-                            return (
-                                <div className='card'
-                                    style={{
-                                        zIndex: '0', 
-                                        backdropFilter: 'blur(10px)', 
-                                        backgroundColor: 'rgba(179, 241, 178, 0.5)',
-                                        margin: '1%'
-                                    }}
-                                >
-                                    <li key={k} span className='nav-text'>
-                                        <span style={{ fontFamily: 'Cinzel' }}> {pla.key.nombre}</span>
-                                        <span style={{ fontFamily: 'Cinzel' }}> {acom.nombre}</span>
-                                        <div style={{overflow: 'auto'}}>
-                                            <button 
-                                                type='button'
-                                                className='btn'
-                                                onClick={() => {
-                                                    console.log(this.state)
-                                                }}
-                                                style={{
-                                                    color: 'red',
-                                                    float:'right'
-                                                }}
-                                            >
-                                                <AiOutlineCloseSquare/>
-                                            </button>
-                                        </div>
-                                    </li>
-                                </div>
-                            )
-                        })
+                        console.log(pla)
+                        return this.renderAcompañamiento(pla,i)
                     })}
                     {this.props.getLs[3]().map(b => {
                         return (
