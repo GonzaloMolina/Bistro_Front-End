@@ -43,16 +43,26 @@ class SelectStep extends React.Component {
       else{
           return (
           <div
-              className={this.state.selected}
+              className='card'
+              style={{marginTop:'3%', zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}
           >
               {this.getContent().map((elem, key) => 
                   (
                   <div
                       key={key}
-                  >
-                      <button className='' 
+                      style={{
+                        alignContent: 'center',
+                        marginTop: '2%',
+                        marginBottom: '2%'
+                      }}>
+                      <button className='btn btn-secondary' 
                       onClick={() => this.props.select(elem)}
-                      style={{padding: '0',whiteSpace: 'normal', border:'none'}}>
+                      style={{
+                        alignContent: 'center',
+                        padding: '0',
+                        fontSize:'20px',
+                        width: '100%',
+                      }}>
                           {elem.nombre}
                       </button>
                   </div>
@@ -66,9 +76,9 @@ class SelectStep extends React.Component {
   renderMenu() {
     return <div className='select-container'>
               <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" 
-                style={{flexDirection: 'column'}}>
+                style={{flexDirection: 'column', marginTop: '2%'}}>
                     <div className="btn-group mr-2 flex-wrap" role="group" aria-label="First group"
-                    style={{marginBottom: '5px'}}>
+                    style={{marginBottom: '0px'}}>
                       {this.state.bebidasR.map((bebida, key) => 
                         <button 
                           key={key}

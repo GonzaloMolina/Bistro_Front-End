@@ -20,10 +20,6 @@ class AcompStep extends React.Component {
     }));
   }
 
-  componentDidUpdate(){
-    console.log(this.state);
-  }
-
   getls = () => this.state.ls;
 
   update = (cant) => {
@@ -40,26 +36,57 @@ class AcompStep extends React.Component {
   renderBebidas() {
     return (
       <div className="cantidad">
-        <h1>{this.state.selected.nombre}</h1>
-        <br />
-        <h4>seleccione una cantidad</h4>
-        <div className="" style={{ flexDirection: "column" }}>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => this.update(this.state.cantidad + 1)}
-          >
-            <AiOutlinePlus />
-          </button>
-          <h2>{this.state.cantidad}</h2>
-          <button
-            type="button"
-            className="btn btn-danger"
-            disabled={this.state.cantidad === 0}
-            onClick={() => this.update(this.state.cantidad - 1)}
-          >
-            <AiOutlineMinus />
-          </button>
+        <div className="card"
+          style={{
+            margin: '2%',
+            zIndex: '0', 
+            backdropFilter: 'blur(10px)',
+            backgroundColor: 'rgba(179, 241, 178, 0.5)'
+          }}
+        >
+          <h1>{this.state.selected.nombre}</h1>
+        </div>
+        <div
+          className="card"
+          style={{
+            margin: '2%',
+            marginBottom: '1%',
+            zIndex: '0', 
+            backdropFilter: 'blur(10px)',
+            backgroundColor: 'rgba(179, 241, 178, 0.5)'
+          }}
+        >
+          <h4>seleccione una cantidad</h4>
+        </div>
+        <div className="card"
+          style={{
+            marginBottom: '5%',
+            marginRight: '15%',
+            marginLeft: '15%',
+            zIndex: '0', 
+            backdropFilter: 'blur(10px)',
+            backgroundColor: 'rgba(179, 241, 178, 0.5)',
+          }}
+        >
+          <div style={{display: 'flex', alignItems: 'center', justifyContent:'center', margin:'5%'}}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => this.update(this.state.cantidad + 1)}
+          
+            >
+              <AiOutlinePlus />
+            </button>
+            <h2 style={{marginRight: '10%', marginLeft: '10%'}}>{this.state.cantidad}</h2>
+            <button
+              type="button"
+              className="btn btn-danger"
+              disabled={this.state.cantidad === 0}
+              onClick={() => this.update(this.state.cantidad - 1)}
+            >
+              <AiOutlineMinus />
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -73,7 +100,7 @@ class AcompStep extends React.Component {
           className="btn btn-secondary"
           onClick={() => {
             this.addelem(this.state.ls.concat([elem]));
-          }}
+          }} style={{margin: '10px'}}
         >
           {elem.nombre}
         </button>
@@ -85,23 +112,74 @@ class AcompStep extends React.Component {
     if (this.state.selected.tipo === "PASTA") {
       return (
         <div className="cantidad">
-          <h3>{this.state.selected.nombre}</h3>
-          <br />
-          <h4>seleccione una salsa</h4>
-          <div className="" style={{ flexDirection: "column" }}>
-            {this.state.selected.salsa.map((elem, key) =>
-              this.acompField(elem, key)
-            )}
+          <div className="card"
+          style={{
+            margin: '2%',
+            zIndex: '0', 
+            backdropFilter: 'blur(10px)',
+            backgroundColor: 'rgba(179, 241, 178, 0.5)'
+          }}
+          >
+            <h1>{this.state.selected.nombre}</h1>
+          </div>
+
+          <div className="card"
+            style={{
+              margin: '2%',
+              zIndex: '0', 
+              backdropFilter: 'blur(10px)',
+              backgroundColor: 'rgba(179, 241, 178, 0.5)'
+            }}
+          >
+            <h4>seleccione una salsa</h4>
+          </div>
+          <div className="card" 
+            style={{
+              zIndex: '0', 
+              backdropFilter: 'blur(10px)', 
+              backgroundColor: 'rgba(179, 241, 178, 0.5)',
+              margin:'5%'
+            }}
+          >
+            <div
+              style={{
+                display: 'flex', 
+                alignItems: 'center',  
+                margin:'5%'
+              }}>
+                {this.state.selected.salsa.map((elem, key) =>
+                  this.acompField(elem, key)
+                )}
+            </div>
           </div>
         </div>
       );
     } else {
       return (
         <div className="cantidad">
-          <h3>{this.state.selected.nombre}</h3>
-          <br />
+          <div className="card"
+          style={{
+            margin: '2%',
+            zIndex: '0', 
+            backdropFilter: 'blur(10px)',
+            backgroundColor: 'rgba(179, 241, 178, 0.5)'
+          }}
+        >
+          <h1>{this.state.selected.nombre}</h1>
+        </div>
+
+        <div className="card"
+          style={{
+            margin: '2%',
+            zIndex: '0', 
+            backdropFilter: 'blur(10px)',
+            backgroundColor: 'rgba(179, 241, 178, 0.5)'
+          }}
+        >
           <h4>seleccione un acompañamiento</h4>
-          <div className="" style={{ flexDirection: "column" }}>
+        </div>
+
+        <div className="" style={{ flexDirection: "column" }}>
             {this.state.selected.acompanamiento.map((elem, key) =>
               this.acompField(elem, key)
             )}
