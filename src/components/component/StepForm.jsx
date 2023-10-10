@@ -133,7 +133,7 @@ class StepForm extends Component {
             <div className='form'>
             <div className='progress' style={{ width: `${(this.state.page + 1) * 26}%` }}></div>
             <div className='form-container'>
-              <div className='card' style={{ zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'white',margin: '20px',marginBottom:'0px' }}>
+              <div className='card' style={{ zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor:'rgba(179, 241, 178, 0.5)',margin: '20px',marginTop:'5px',marginBottom:'0px' }}>
                 <h1>{this.state.titles[this.state.page]}</h1>
               </div>
               <div className='body'>
@@ -161,12 +161,6 @@ class StepForm extends Component {
                     >
                     {this.butomNextText()}
                 </button>
-
-
-
-
-
-
               </div>
             </div>
           </div>

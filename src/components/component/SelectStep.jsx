@@ -62,7 +62,7 @@ class SelectStep extends React.Component {
                         padding: '0',
                         fontSize:'20px',
                         width: '100%',
-                        backgroundColor: 'white',
+                        backgroundColor:'rgba(179, 241, 178, 0.5)',
                         color:'black'
                       }}>
                           {elem.nombre}
@@ -76,7 +76,7 @@ class SelectStep extends React.Component {
 
 
   renderMenu() {
-    return <div className='select-container'>
+    return <div className='card' style={{backgroundColor:'rgba(179, 241, 178, 0.5)', margin: '10px', marginTop:'1px'}}>
               <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" 
                 style={{flexDirection: 'column', marginTop: '2%'}}>
                     <div className="btn-group mr-2 flex-wrap" role="group" aria-label="First group"
@@ -87,7 +87,7 @@ class SelectStep extends React.Component {
                           type="button" 
                           className="btn btn-secondary"
                           onClick={() => this.setState(state => ({selected: bebida.type}))}
-                          style={{backgroundColor: 'white',color:'black'}}
+                          style={{borderRadius: '20px', margin: '2px', marginBottom:'0px', marginTop:'1px'}}
                         >
                           {bebida.type}
                         </button>
@@ -101,7 +101,7 @@ class SelectStep extends React.Component {
                             type="button" 
                             className="btn btn-secondary"
                             onClick={() => {this.setState(state => ({selected: plato.type}))}}
-                            style={{backgroundColor: 'white',color:'black'}}
+                            style={{borderRadius: '20px', margin: '2px', marginBottom:'0px', marginTop:'1px'}}
                           >
                             {plato.type}
                           </button>

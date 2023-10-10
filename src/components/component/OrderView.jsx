@@ -50,13 +50,13 @@ class OrderView extends React.Component{
                                 />
                         </div>
                     </div>
-                    <div id="name" className="card" style={{margin: "2%", backdropFilter: 'blur(10px)', backgroundColor: 'white'}}>
+                    <div id="name" className="card" style={{margin: "2%", backdropFilter: 'blur(10px)', backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
                         <div style={{margin: "2%"}}>
                             <h3><b>{"Orden: " + this.state.orden.id}</b></h3>
                         </div>
                     </div>
 
-                    <div id="name" className="card" style={{margin: "2%",  backdropFilter: 'blur(10px)', backgroundColor: 'white'}}>
+                    <div id="name" className="card" style={{margin: "2%",  backdropFilter: 'blur(10px)', backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
                         <div style={{margin: "2%"}}>
                             <h4><b>{"Pedido: "}</b></h4>
                             <div id="name" className="card" style={{overflowX: 'auto',margin: "2%"}}>

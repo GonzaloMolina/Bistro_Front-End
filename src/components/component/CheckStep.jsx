@@ -69,7 +69,7 @@ class CheckStep extends React.Component {
                     style={{
                         zIndex: '0', 
                         backdropFilter: 'blur(10px)', 
-                        backgroundColor: 'white',
+                        backgroundColor:'rgba(179, 241, 178, 0.5)',
                         margin: '30px',
                         marginTop:'0px',
                         marginBottom:'0px'
@@ -102,7 +102,7 @@ class CheckStep extends React.Component {
                         style={{
                             zIndex: '0', 
                             backdropFilter: 'blur(10px)', 
-                            backgroundColor: 'white',
+                            backgroundColor:'rgba(179, 241, 178, 0.5)',
                             margin: '30px',
                             marginTop:'0px',
                             marginBottom:'0px'
@@ -148,7 +148,7 @@ class CheckStep extends React.Component {
                                 style={{
                                     zIndex: '0', 
                                     backdropFilter: 'blur(10px)', 
-                                    backgroundColor: 'white',
+                                    backgroundColor:'rgba(179, 241, 178, 0.5)',
                                     margin: '30px',
                                     marginTop:'0px',
                                     marginBottom:'0px'
