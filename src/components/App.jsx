@@ -6,6 +6,7 @@ import LogIn from './pages/LogIn';
 import Table from './pages/Table';
 import CreateOrder from './pages/CreateOrder';
 import View from './pages/View';
+import Request from './pages/Request';
 
 
 export default class App extends React.Component{
@@ -33,6 +34,12 @@ export default class App extends React.Component{
                 <Switch>
                     <Route exact path="/table" render=
                         {props => <Table  content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/solicitudes" render=
+                        {props => <Request  user={props.location.state}/>} 
                     />
                 </Switch>
 
