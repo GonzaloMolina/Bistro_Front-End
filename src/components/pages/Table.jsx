@@ -109,11 +109,11 @@ class Table extends React.Component {
         else{
             return (
                 <div className="contenedor">
-                    <div className='card' style={{zIndex: '0', backgroundColor: 'white'}}>
+                    <div className='card' style={{zIndex: '0', backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
                         <h1>{'Cuenta:  $'}{this.state.cuenta}</h1>
                     </div>
                     <br/>
-                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'white'}}>
+                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
                         <h1>{'Orden Nro: '}{this.state.orden.id}</h1>
                     </div>
 
@@ -150,7 +150,7 @@ class Table extends React.Component {
                 </div>
 
                 <div className='contenedor'>
-                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'white'}}>
+                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
                         <h1><b>{'Mesa Nro. '}</b> {this.state.mesaId}</h1>
                     </div>
 

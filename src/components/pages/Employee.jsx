@@ -26,13 +26,13 @@ class Employee extends React.Component {
     return (
       <React.Fragment>
         <div>
-            <div id="name" className="card" style={{margin: "2%", zIndex:"-1"}}>
+            <div id="name" className="card" style={{margin: "2%", zIndex:"-1", backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
                 <div style={{margin: "2%"}}>
                     <h1>{this.state.apellido + ", "+this.state.nombre}</h1>
                 </div>
             </div>
             
-            <div id="MesasLS" className="card" style={{margin: "2%"}}>
+            <div id="MesasLS" className="card" style={{margin: "2%", backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
                 <div style={{margin: "2%"}}>
                     <h3><b>Mesas</b></h3>
                     <div className="card" style={{margin: "2%", opacity: "0.9"}}>

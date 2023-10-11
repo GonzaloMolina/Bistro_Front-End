@@ -42,7 +42,7 @@ class AcompStep extends React.Component {
             marginBottom:'0px',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'white'
+            backgroundColor:'rgba(179, 241, 178, 0.5)'
           }}
         >
           <h1>{this.state.selected.nombre}</h1>
@@ -55,7 +55,7 @@ class AcompStep extends React.Component {
             martinTop:'0px',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'white'
+            backgroundColor:'rgba(179, 241, 178, 0.5)'
           }}
         >
           <h4>Seleccione una cantidad</h4>
@@ -67,7 +67,7 @@ class AcompStep extends React.Component {
             marginLeft: '15%',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'white',
+            backgroundColor:'rgba(179, 241, 178, 0.5)'
           }}
         >
           <div style={{display: 'flex', alignItems: 'center', justifyContent:'center', margin:'5%'}}>
@@ -120,7 +120,7 @@ class AcompStep extends React.Component {
             margin: '2%',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'white'
+            backgroundColor:'rgba(179, 241, 178, 0.5)'
           }}
           >
             <h1>{this.state.selected.nombre}</h1>
@@ -131,7 +131,7 @@ class AcompStep extends React.Component {
               margin: '2%',
               zIndex: '0', 
               backdropFilter: 'blur(10px)',
-              backgroundColor: 'white'
+              backgroundColor:'rgba(179, 241, 178, 0.5)'
             }}
           >
             <h4>seleccione una salsa</h4>
@@ -140,7 +140,7 @@ class AcompStep extends React.Component {
             style={{
               zIndex: '0', 
               backdropFilter: 'blur(10px)', 
-              backgroundColor: 'white',
+              backgroundColor:'rgba(179, 241, 178, 0.5)',
               margin:'5%'
             }}
           >
@@ -165,7 +165,7 @@ class AcompStep extends React.Component {
             margin: '2%',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'white'
+            backgroundColor:'rgba(179, 241, 178, 0.5)'
           }}
         >
           <h1>{this.state.selected.nombre}</h1>
@@ -176,7 +176,7 @@ class AcompStep extends React.Component {
             margin: '2%',
             zIndex: '0', 
             backdropFilter: 'blur(10px)',
-            backgroundColor: 'white'
+            backgroundColor:'rgba(179, 241, 178, 0.5)'
           }}
         >
           <h4>seleccione un acompañamiento</h4>

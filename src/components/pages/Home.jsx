@@ -1,7 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import Sidebar from '../component/Sidebar';
-
+import Feed from '../component/Feed';
 import logo from "../img/bistrot.jpg";
 
 
@@ -14,7 +14,7 @@ class Home extends React.Component {
             email: "",
             password: "",
             mesas: [],
-            peticiones: []
+            solicitudes: []
         }
     }
 
@@ -31,18 +31,18 @@ class Home extends React.Component {
             this.setState(state => ({password: this.props.user.password}));
             this.setState(state => ({mesas: !this.props.user.mesas}));
             this.setState(state => ({mesas: this.props.user.mesas}));
-            this.setState(state => ({peticiones: !this.props.user.peticiones}));
-            this.setState(state => ({peticiones: this.props.user.peticiones}));
+            this.setState(state => ({solicitudes: !this.props.user.peticiones}));
+            this.setState(state => ({solicitudes: this.props.user.peticiones}));
         }
     }
     
-   render() {
+    render() {
     return (
       <React.Fragment>
         <div style={{
                         backgroundImage: `url(${logo})`,
                         backgroundPosition: 'center',
-                        backgroundSize: 'auto cover',
+                        backgroundSize: 'cover',
                         backgroundRepeat: 'no-repeat',
                         width: '100vw',
                         height: '100vh',
@@ -52,16 +52,18 @@ class Home extends React.Component {
             <div>
                 <Sidebar 
                     mesas={this.state.mesas} 
-                    peticiones={this.state.peticiones}
+                    peticiones={this.state.solicitudes}
                     email={this.state.email}
                     pass={this.state.password}
                 />
 
-                <div className='card' style={{margin: '5%', marginLeft:'20%', marginRight:'20%', zIndex: '0', backgroundColor: 'white'}}>
-                    <h2>Bienvenido</h2>
-                    <h4>{this.state.apellido+ ', '+ this.state.nombre}</h4>
+                <div className='card' style={{margin: '5%', marginBottom: '20%', marginLeft:'20%', marginRight:'20%', zIndex: '0', backgroundColor: 'rgba(179, 241, 178, 0.5)', borderRadius:'10px'}}>
+                    <h1>Bienvenido</h1>
+                    <h2>{this.state.apellido+ ', '+ this.state.nombre}</h2>
                 </div>
             </div>
+
+            <Feed solicitudes={this.state.solicitudes}/>
         </div>
         
       </React.Fragment>
