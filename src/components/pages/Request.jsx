@@ -84,6 +84,9 @@ class Request extends React.Component {
                 height: '100vh',
                 zIndex: '-10'
             }}>
+                {
+                    //sidebar
+                }
                 <div>
                     <Sidebar
                         mesas={this.state.mesas} 
@@ -93,38 +96,46 @@ class Request extends React.Component {
                     />
                 </div>
 
+                {
+                    // encabezado + tabla
+                }
                 <div className='card' 
                     style={{
                         marginTop: '2%',
-                        marginLeft:'5%', 
-                        marginRight:'5%', 
+                        marginLeft:'3%', 
+                        marginRight:'3%', 
                         zIndex: '0', 
                         backgroundColor: 'rgba(179, 241, 178, 0.4)', 
-                        borderRadius:'20px'
+                        borderRadius:'20px',
                     }}
-                >
-                    <ul style={{ 
-                        listStyleType: 'none',
-                    }}>
-                    {this.state.solicitudes.map((sol, i) => {
-                        return (
-                            <li>
-                                <div className='container'>
-                                    <div className='row'>
-                                        <div classname='col' style={{}}>
-                                            <span> {sol.asunto} </span> 
-                                        </div>
-                                        <div classname='col'>
-                                            {this.renderEstado(sol.estado)}
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        )
-                    })}
-                    </ul>
+                    >
+                        <h1 style={{fontSize:'32px'}}>Solicitudes</h1>
                 </div>
-
+                    <table className='table table-striped' style={{margin: '3%'}}>
+                        <thead>
+                        </thead>
+                        <tbody>
+                            {this.state.solicitudes.map((sol, k) => {
+                                return (
+                                    <tr key={k}>
+                                        <button type='button' className='btn btn-secondary' 
+                                        style={{
+                                            width: '90%',
+                                            marginBottom: '3px',
+                                            borderRadius: '30px'
+                                        }}
+                                        >
+                                            <td align='left' width='50%' style={{fontSize: '18px'}}>{sol.asunto}</td>
+                                            <td align='right' width='10%'>{this.renderEstado(sol.estado)}</td>
+                                        </button>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                {
+                    //boton de redactar
+                }
                 <div className="container">
                     <div className='btn-holder' 
                     style={{
