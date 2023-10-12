@@ -1,7 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import { FaBars} from 'react-icons/fa';
-import { AiFillCloseCircle } from 'react-icons/ai';
+import { AiOutlineMail,AiFillCloseCircle } from 'react-icons/ai';
 import '../../styles/sidebar.css'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { sidebarData } from './sidebarData';
@@ -73,9 +73,24 @@ class Sidebar extends React.Component {
                                 ))
                             )}
 
+                            <li className='nav-text' onClick={() => this.showSidebar()}>
+                                <Link to={{
+                                    pathname: '/solicitudes',
+                                    state: { 
+                                        email: this.props.email,
+                                        pass: this.props.pass,
+                                        mesas: this.props.mesas, 
+                                        peticiones: this.props.peticiones 
+                                    }}
+                                }>
+                                    <AiOutlineMail size={20} />
+                                    <span style={{ fontFamily: 'Cinzel' }}> Solicitudes </span>
+                                </Link>
+                            </li>
+
                             {sidebarData.map((elem, index) => {
                                 return (
-                                    <li key={index} span className='nav-text' onClick={() => this.showSidebar()}>
+                                    <li key={index} className='nav-text' onClick={() => this.showSidebar()}>
                                         <Link to={elem.path}>
                                             {elem.icon}
                                             <span style={{ fontFamily: 'Cinzel' }}> {elem.title}</span>
