@@ -55,8 +55,8 @@ class Feed extends React.Component {
                 <table>
                     <thead>
                         <tr>
-                            <th style={{fontSize: '20px', backgroundColor: '#009933', borderTopLeftRadius:'20px'}}>Asunto</th>
-                            <th style={{fontSize: '20px', backgroundColor: '#009933', borderTopRightRadius:'20px'}}>Estado</th>
+                            <th width="50%" style={{fontSize: '20px', backgroundColor: '#009933', borderTopLeftRadius:'20px'}}>Asunto</th>
+                            <th width="25%" style={{fontSize: '20px', backgroundColor: '#009933', borderTopRightRadius:'20px'}}>Estado</th>
                         </tr>
                     </thead>
                     <tbody>

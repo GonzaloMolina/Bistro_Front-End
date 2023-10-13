@@ -5,7 +5,7 @@ import logo from "../img/bistrot.jpg";
 import { BsCheck2Square } from 'react-icons/bs';
 import { GrCheckbox } from 'react-icons/gr';
 import { AiOutlineCloseSquare } from 'react-icons/ai';
-//import '../../styles/table.css'
+import API from '../../service/api'
 
 class Request extends React.Component {
     constructor(props){
@@ -36,41 +36,41 @@ class Request extends React.Component {
 
     greenB = () => {
         return (
-        <button type='button' className='btn'
-        style={{
-            color: 'green',
-            fontSize: '20px',
-            cursor: 'default'
-        }}>
-            <BsCheck2Square/>
-        </button>
+            <BsCheck2Square style={{color: "green", fontSize: "1.5em" }}/>
         )
     }
 
     redB = () => {
         return (
-        <button type='button' className='btn'
-        style={{
-            color: 'red',
-            fontSize: '20px',
-            cursor: 'default'
-        }}>
-            <AiOutlineCloseSquare/>
-        </button>
+            <AiOutlineCloseSquare style={{color: "red", fontSize: "1.5em" }}/>
         )
     }
 
     blackB = () => {
         return (
-        <button type='button' className='btn'
-        style={{
-            color: 'red',
-            fontSize: '20px',
-            cursor: 'default'
-        }}>
-            <GrCheckbox/>
-        </button>
+            <GrCheckbox style={{color: "black", fontSize: "1.5em" }}/>
         )
+    }
+
+    viewRequest = (id) => {
+        const headers= {
+            auth: {username: this.state.email, password: this.state.pass}
+        }
+        API.getAuth('peticion/'+id, headers)
+        .then(res => {
+            const info = {
+                email: this.state.email, 
+                pass: this.state.password,
+                mesas: this.state.mesas,
+                peticiones: this.state.solicitudes
+            }
+            this.props.history.push('/solicitud',
+            {
+                "info":info, 
+                "solicitud": res.data
+            });
+        })
+        .catch(err => console.log(err))
     }
 
     render(){
@@ -84,6 +84,9 @@ class Request extends React.Component {
                 height: '100vh',
                 zIndex: '-10'
             }}>
+                {
+                    //sidebar
+                }
                 <div>
                     <Sidebar
                         mesas={this.state.mesas} 
@@ -93,38 +96,49 @@ class Request extends React.Component {
                     />
                 </div>
 
+                {
+                    // encabezado + tabla
+                }
                 <div className='card' 
                     style={{
                         marginTop: '2%',
-                        marginLeft:'5%', 
-                        marginRight:'5%', 
+                        marginLeft:'3%', 
+                        marginRight:'3%', 
                         zIndex: '0', 
                         backgroundColor: 'rgba(179, 241, 178, 0.4)', 
-                        borderRadius:'20px'
+                        borderRadius:'20px',
                     }}
-                >
-                    <ul style={{ 
-                        listStyleType: 'none',
-                    }}>
-                    {this.state.solicitudes.map((sol, i) => {
-                        return (
-                            <li>
-                                <div className='container'>
-                                    <div className='row'>
-                                        <div classname='col' style={{}}>
-                                            <span> {sol.asunto} </span> 
+                    >
+                        <h1 style={{fontSize:'32px'}}>Solicitudes</h1>
+                </div>
+
+                <ul className='list-group list-group-flush' style={{backgroundColor: 'transparent', marginBottom: '0px'}}>
+                    {this.state.solicitudes.map((sol, k) => {
+                        return(<li key={k} className='list-group-item' style={{backgroundColor: 'transparent', border: '0px', marginBottom: '0px'}}>
+                            <button type='button' className='btn btn-secondary' 
+                                style={{
+                                    width: '100%',
+                                    borderRadius: '30px', marginBottom: '0px'
+                                }}
+                                onClick={() => this.viewRequest(sol.id)}
+                            >
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-10" align='left'>
+                                            <span> {sol.asunto} </span>
                                         </div>
-                                        <div classname='col'>
+                                        <div className="col-2" align='right'>
                                             {this.renderEstado(sol.estado)}
                                         </div>
                                     </div>
                                 </div>
-                            </li>
-                        )
+                            </button>
+                        </li>)            
                     })}
-                    </ul>
-                </div>
-
+                </ul>
+                {
+                    //boton de redactar
+                }
                 <div className="container">
                     <div className='btn-holder' 
                     style={{
