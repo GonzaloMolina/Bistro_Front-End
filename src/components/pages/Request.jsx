@@ -2,9 +2,8 @@ import React from 'react';
 import {withRouter} from 'react-router';
 import Sidebar from '../component/Sidebar';
 import logo from "../img/bistrot.jpg";
-import { BsCheck2Square } from 'react-icons/bs';
-import { GrCheckbox } from 'react-icons/gr';
 import { AiOutlineCloseSquare } from 'react-icons/ai';
+import { BsTrash } from 'react-icons/bs';
 import API from '../../service/api';
 
 class Request extends React.Component {
@@ -15,7 +14,8 @@ class Request extends React.Component {
             email: "",
             password: "",
             mesas: [],
-            solicitudes: []
+            solicitudes: [],
+            deleteFlag: false
         }
     }
 
@@ -41,23 +41,84 @@ class Request extends React.Component {
         }
     }
 
-    renderEstado = (state) => state==='ACEPTADA'?  this.greenB() : state==='RECHAZADA'?  this.redB() : this.blackB()
 
-    greenB = () => {
+    toDeleteState = (sol) => this.state.deleteFlag? 
+        <AiOutlineCloseSquare fontSize='2em' className='btnc'
+            style={{zIndex:'10'}}
+            onClick={() => {
+                this.doDelete(sol);
+            }}
+        /> : ''
+
+    renderEstado = (state, sol) => state==='ACEPTADA'?  this.greenB(sol) : state==='RECHAZADA'?  this.redB(sol) : this.blackB(sol)
+
+    greenB = (sol) => {
         return (
-            <BsCheck2Square style={{color: "green", fontSize: "1.5em" }}/>
+            <div className="container">
+                    <div className="row">
+                        <div className="col-10" align='left'>
+                            <button type='button' className='btn btn-success'
+                                style={{
+                                    width: '100%',
+                                    borderRadius: '30px', 
+                                    marginBottom: '0px', height: '50px'
+                                }}
+                                onClick={() => this.viewRequest(sol.id)}
+                            >
+                                <span> {sol.asunto} </span>
+                            </button>
+                        </div>
+                        <div className="col-2" align='right'>
+                            {this.toDeleteState(sol)}
+                        </div>
+                    </div>
+                </div>
         )
     }
 
-    redB = () => {
+    redB = (sol) => {
         return (
-            <AiOutlineCloseSquare style={{color: "red", fontSize: "1.5em" }}/>
+            <div className="container">
+                    <div className="row">
+                        <div className="col-10" align='left'>
+                            <button type='button' className='btn btn-danger'
+                                style={{
+                                    width: '100%',
+                                    borderRadius: '30px', marginBottom: '0px', height: '50px'
+                                }}
+                                onClick={() => this.viewRequest(sol.id)}
+                            >
+                                <span> {sol.asunto} </span>
+                            </button>
+                        </div>
+                        <div className="col-2" align='right'>
+                            {this.toDeleteState(sol)}
+                        </div>
+                    </div>
+                </div>
         )
     }
 
-    blackB = () => {
+    blackB = (sol) => {
         return (
-            <GrCheckbox style={{color: "black", fontSize: "1.5em" }}/>
+            <div className="container">
+                <div className="row">
+                    <div className="col-10" align='left'>
+                        <button type='button' className='btn btn-secondary'
+                            style={{
+                                width: '100%',
+                                borderRadius: '30px', marginBottom: '0px', height: '50px'
+                            }}
+                            onClick={() => this.viewRequest(sol.id)}
+                        >
+                            <span> {sol.asunto} </span>
+                        </button>
+                    </div>
+                    <div className="col-2" align='right'>
+                        {this.toDeleteState(sol)}
+                    </div>
+                </div>
+            </div>
         )
     }
 
@@ -76,8 +137,19 @@ class Request extends React.Component {
             });
     }
 
-    doDelete(id){
-        console.log(this.props);
+    doDelete(sol){
+        const newReq = this.state.solicitudes.filter(req => req.id !== sol.id);
+        this.setState(state => ({solicitudes: newReq}))
+        const headers= {
+            auth: {username: this.state.email, password: this.state.password}
+        }
+        //animacion spin
+        API.deleteAuth('peticion/'+this.state.id+'/'+sol.id, headers)
+        .then(res => 
+            //animacion check
+            console.log(res.data)
+        )
+        .catch(err => console.log(err))
     }
 
     render(){
@@ -96,6 +168,7 @@ class Request extends React.Component {
                 }
                 <div>
                     <Sidebar
+                        id={this.state.id}
                         mesas={this.state.mesas} 
                         peticiones={this.state.solicitudes}
                         email={this.state.email}
@@ -121,25 +194,14 @@ class Request extends React.Component {
 
                 <ul className='list-group list-group-flush' style={{backgroundColor: 'transparent', marginBottom: '0px'}}>
                     {this.state.solicitudes.map((sol, k) => {
-                        return(<li key={k} className='list-group-item' style={{backgroundColor: 'transparent', border: '0px', marginBottom: '0px'}}>
-                            <button type='button' className='btn btn-secondary' 
-                                style={{
-                                    width: '100%',
-                                    borderRadius: '30px', marginBottom: '0px'
-                                }}
-                                onClick={() => this.viewRequest(sol.id)}
-                            >
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col-10" align='left'>
-                                            <span> {sol.asunto} </span>
-                                        </div>
-                                        <div className="col-2" align='right'>
-                                            {this.renderEstado(sol.estado)}
-                                        </div>
-                                    </div>
-                                </div>
-                            </button>
+                        return(<li key={k} className='list-group-item' 
+                            style={{
+                                backgroundColor: 'transparent',
+                                border: '0px', 
+                                marginBottom: '0px',
+                                height:'55px'
+                            }}>
+                            {this.renderEstado(sol.estado, sol)}
                         </li>)            
                     })}
                 </ul>
@@ -152,12 +214,22 @@ class Request extends React.Component {
                         bottom: '15%',
                         right: '8%'
                     }}>
-                        <div className="">
+                        <div className="" style={{margin: '3%'}}>
                             <button 
                                 className="btn btn-secondary"
                                 onClick={() => console.log('estado', this.state)}
                             >
                                 Redactar
+                            </button>
+                        </div>
+                        <div className=''>
+                            <button 
+                                    className="btn btn-secondary"
+                                    onClick={() => {
+                                        const newFlag= !this.state.deleteFlag; 
+                                        this.setState(state => ({deleteFlag: newFlag}))}}
+                                >
+                                    <BsTrash color='red' fontSize='2em'/>
                             </button>
                         </div>
                     </div>
