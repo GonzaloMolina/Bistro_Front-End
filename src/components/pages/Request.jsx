@@ -5,12 +5,13 @@ import logo from "../img/bistrot.jpg";
 import { BsCheck2Square } from 'react-icons/bs';
 import { GrCheckbox } from 'react-icons/gr';
 import { AiOutlineCloseSquare } from 'react-icons/ai';
-import API from '../../service/api'
+import API from '../../service/api';
 
 class Request extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
+            id: 0,
             email: "",
             password: "",
             mesas: [],
@@ -19,16 +20,24 @@ class Request extends React.Component {
     }
 
     componentDidMount(){
+        console.log(this.props)
         if(this.props.user === undefined){this.props.history.push('/')}
         else{
+            this.setState(state => ({id: this.props.user.id}));
             this.setState(state => ({email: !this.props.user.email}));
             this.setState(state => ({email: this.props.user.email}));
             this.setState(state => ({password: !this.props.user.pass}));
             this.setState(state => ({password: this.props.user.pass}));
             this.setState(state => ({mesas: !this.props.user.mesas}));
             this.setState(state => ({mesas: this.props.user.mesas}));
-            this.setState(state => ({solicitudes: !this.props.user.peticiones}));
-            this.setState(state => ({solicitudes: this.props.user.peticiones}));
+            const headers= {
+                auth: {username: this.state.email, password: this.state.pass}
+            }
+            API.getAuth('mozo/'+this.props.user.id+'/solicitudes', headers)
+            .then(res => {
+                this.setState(state => ({solicitudes: res.data}))
+            })
+            .catch(err => console.log(err));
         }
     }
 
@@ -53,24 +62,22 @@ class Request extends React.Component {
     }
 
     viewRequest = (id) => {
-        const headers= {
-            auth: {username: this.state.email, password: this.state.pass}
+        const info = {
+            id: this.state.id,
+            email: this.state.email, 
+            pass: this.state.password,
+            mesas: this.state.mesas,
+            peticiones: this.state.solicitudes
         }
-        API.getAuth('peticion/'+id, headers)
-        .then(res => {
-            const info = {
-                email: this.state.email, 
-                pass: this.state.password,
-                mesas: this.state.mesas,
-                peticiones: this.state.solicitudes
-            }
-            this.props.history.push('/solicitud',
+        this.props.history.push('/solicitud',
             {
                 "info":info, 
-                "solicitud": res.data
+                "solicitudId": id
             });
-        })
-        .catch(err => console.log(err))
+    }
+
+    doDelete(id){
+        console.log(this.props);
     }
 
     render(){
@@ -148,7 +155,7 @@ class Request extends React.Component {
                         <div className="">
                             <button 
                                 className="btn btn-secondary"
-                                onClick={() => console.log('a')}
+                                onClick={() => console.log('estado', this.state)}
                             >
                                 Redactar
                             </button>

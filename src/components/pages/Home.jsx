@@ -9,6 +9,7 @@ class Home extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
+            id: 0,
             nombre: "",
             apellido: "",
             email: "",
@@ -21,6 +22,7 @@ class Home extends React.Component {
     componentDidMount(){
         if(this.props.user === undefined){this.props.history.push('/')}
         else{
+            this.setState(state => ({id: this.props.user.id}));
             this.setState(state => ({nombre: !this.props.user.nombre}));
             this.setState(state => ({nombre: this.props.user.nombre}));
             this.setState(state => ({apellido: !this.props.user.apellido}));
@@ -50,7 +52,8 @@ class Home extends React.Component {
         }}
         >
             <div>
-                <Sidebar 
+                <Sidebar
+                    id={this.state.id}
                     mesas={this.state.mesas} 
                     peticiones={this.state.solicitudes}
                     email={this.state.email}

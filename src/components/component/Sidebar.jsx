@@ -77,6 +77,7 @@ class Sidebar extends React.Component {
                                 <Link to={{
                                     pathname: '/solicitudes',
                                     state: { 
+                                        id: this.props.id,
                                         email: this.props.email,
                                         pass: this.props.pass,
                                         mesas: this.props.mesas, 
