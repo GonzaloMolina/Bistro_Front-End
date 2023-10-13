@@ -7,6 +7,7 @@ import Table from './pages/Table';
 import CreateOrder from './pages/CreateOrder';
 import View from './pages/View';
 import Request from './pages/Request';
+import ViewRequest from './component/ViewRequest';
 
 
 export default class App extends React.Component{
@@ -40,6 +41,12 @@ export default class App extends React.Component{
                 <Switch>
                     <Route exact path="/solicitudes" render=
                         {props => <Request  user={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/solicitud" render=
+                        {props => <ViewRequest content={props.location.state}/> } 
                     />
                 </Switch>
 
