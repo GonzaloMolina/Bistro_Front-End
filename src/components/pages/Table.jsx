@@ -12,6 +12,7 @@ class Table extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            id: 0,
             email: "", 
             pass: "",
             mesaId: 0,
@@ -23,7 +24,9 @@ class Table extends React.Component {
     }
 
     componentDidMount(){
+        console.log(this.props);
         this.setState(state => ({
+            id: this.props.content.id,
             email: this.props.content.email,
             pass: this.props.content.pass,
             mesaId: this.props.content.mesaId,
@@ -142,10 +145,12 @@ class Table extends React.Component {
             <div  className='base'>
             <div style={{zIndex:9}}>
                     <Sidebar 
+                        id={this.state.id}
                         mesas={this.state.mesas}
                         peticiones={this.state.peticiones}
                         email={this.state.email}
                         pass={this.state.password}
+                        mesaId={this.state.mesaId}
                     />
                 </div>
 
