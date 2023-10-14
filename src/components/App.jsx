@@ -7,7 +7,7 @@ import Table from './pages/Table';
 import CreateOrder from './pages/CreateOrder';
 import View from './pages/View';
 import Request from './pages/Request';
-import ViewRequest from './component/ViewRequest';
+import ViewRequest from './pages/ViewRequest';
 
 
 export default class App extends React.Component{

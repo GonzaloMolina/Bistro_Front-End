@@ -32,6 +32,7 @@ class Sidebar extends React.Component {
             width: this.state.anchoNav
         }
         const { sidebarVisible } = this.state;
+        console.log(this.props.mesaId);
         return (
             <React.Fragment>
                 <IconContext.Provider value={{color: '#faf60e' }}>
@@ -55,28 +56,53 @@ class Sidebar extends React.Component {
 
                             {this.state.mesasVisible && (
                                 // Renderizar elementos de "Mesa Nro" cuando las mesas son visibles
-                                this.props.mesas.map((elem, i) => (
-                                <li key={i} className='nav-text' onClick={() => this.showSidebar()}>
-                                    <Link to={{
-                                        pathname: '/table',
-                                        state: { 
-                                            email: this.props.email,
-                                            pass: this.props.pass,
-                                            mesas: this.props.mesas, 
-                                            mesaId: elem, 
-                                            peticiones: this.props.peticiones 
-                                        }}}
-                                    >
-                                    <span style={{ fontFamily: 'Cinzel', fontSize:15}}> {'Mesa Nro. ' + elem}</span>
-                                    </Link>
-                                </li>
-                                ))
+                                this.props.mesas.map((elem, i) => {
+                                    if(this.props.mesaId ===elem){
+                                        return (
+                                            <li key={i} className='nav-text' onClick={() => this.showSidebar()} style={{backgroundColor: 'rgb(23, 82, 23)'}}>
+                                                <Link to={{
+                                                    pathname: '/table',
+                                                    state: { 
+                                                        id: this.props.id,
+                                                        email: this.props.email,
+                                                        pass: this.props.pass,
+                                                        mesas: this.props.mesas, 
+                                                        mesaId: elem, 
+                                                        peticiones: this.props.peticiones 
+                                                    }}}
+                                                >
+                                                <span style={{ fontFamily: 'Cinzel', fontSize:15}}> {'Mesa Nro. ' + elem}</span>
+                                                </Link>
+                                            </li>
+                                        )
+                                    }
+                                    else{
+                                        return (
+                                            <li key={i} className='nav-text' onClick={() => this.showSidebar()}>
+                                                <Link to={{
+                                                    pathname: '/table',
+                                                    state: { 
+                                                        id: this.props.id,
+                                                        email: this.props.email,
+                                                        pass: this.props.pass,
+                                                        mesas: this.props.mesas, 
+                                                        mesaId: elem, 
+                                                        peticiones: this.props.peticiones 
+                                                    }}}
+                                                >
+                                                <span style={{ fontFamily: 'Cinzel', fontSize:15}}> {'Mesa Nro. ' + elem}</span>
+                                                </Link>
+                                            </li>
+                                        )
+                                    }
+                                })
                             )}
 
                             <li className='nav-text' onClick={() => this.showSidebar()}>
                                 <Link to={{
                                     pathname: '/solicitudes',
                                     state: { 
+                                        id: this.props.id,
                                         email: this.props.email,
                                         pass: this.props.pass,
                                         mesas: this.props.mesas, 

@@ -23,6 +23,7 @@ class LogIn extends React.Component {
       API.logIn('mozo/logIn', {email: email, password: password}, headers)
       .then(res => {
           let content = {
+            id: res.data.id,
             nombre: res.data.nombre,
             apellido: res.data.apellido,
             email: email,
