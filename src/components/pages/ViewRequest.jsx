@@ -4,6 +4,10 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
 import logo from "../img/bistrot.jpg";
 import API from '../../service/api';
+import Lottie from 'lottie-react';
+import spin from '../img/Animation -SpinLoading.json';
+import check from '../img/Animation - Check.json'
+import { wait } from '@testing-library/user-event/dist/utils';
 
 class ViewRequest extends React.Component{
     constructor(props){
@@ -13,7 +17,10 @@ class ViewRequest extends React.Component{
             id: 0,
             asunto: "",
             estado: "",
-            body: ""
+            body: "",
+            loading: true,
+            deleteFlag: false,
+            checkFlag: false,
         }
     }
 
@@ -31,8 +38,11 @@ class ViewRequest extends React.Component{
                 this.setState(state => ({asunto: res.data.asunto}));
                 this.setState(state => ({estado: res.data.estado}));
                 this.setState(state => ({body: res.data.body}));
+            }).catch(err => console.log(err))
+            wait(9000).then(res => {
+                const newFlag = !this.state.loading;
+                this.setState(state => ({loading: newFlag}));
             })
-            .catch(err => console.log(err))
         }
     }
 
@@ -73,13 +83,141 @@ class ViewRequest extends React.Component{
         const headers= {
             auth: {username: this.state.info.email, password: this.state.info.pass}
         }
-        //animacion spin
+        const newFlag = !this.state.deleteFlag;
+        this.setState(state => ({deleteFlag: newFlag}));
         API.deleteAuth('peticion/'+this.state.info.id+'/'+this.state.id, headers)
-        .then(res => 
-            //animacion check
-            this.props.history.push('/solicitudes', this.props.content.info
-        ))
+        .then(res => {
+            const newFlag = !this.state.checkFlag;
+            this.setState(state => ({checkFlag: newFlag}));
+            wait(2000).then(res => this.props.history.push('/solicitudes', this.props.content.info))
+            .catch()
+        })
         .catch(err => console.log(err))
+    }
+
+    renderRequest() {
+        if(this.state.loading){
+            return (
+                <div className='card' 
+                    style={{
+                        marginTop: '2%',
+                        marginLeft:'3%', 
+                        marginRight:'3%',
+                        zIndex: '0', 
+                        backgroundColor: 'rgba(250, 250, 250, 0.4)', 
+                        borderRadius:'20px',
+                        height:'120'
+                    }}
+                >
+                    <Lottie
+                        animationData={spin}
+                        style={{
+                            right: "50%",
+                            zIndex: 1,
+                            overflow: "hidden",
+                            width: '30%',
+                            height: '30%',
+                            margin: '0 auto'
+                        }}
+                    />
+                </div>
+            )
+        }
+        else{
+            return (
+                <div className='card' 
+                    style={{
+                        marginTop: '2%',
+                        marginLeft:'3%', 
+                        marginRight:'3%',
+                        zIndex: '0', 
+                        backgroundColor: 'rgba(250, 250, 250, 0.4)', 
+                        borderRadius:'20px',
+                    }}
+                >
+                        <div className='card' 
+                            style={{
+                                marginTop: '2%',
+                                marginLeft:'3%', 
+                                marginRight:'3%',
+                                marginBottom: '3%',
+                                zIndex: '0', 
+                                backgroundColor: 'rgba(250, 250, 250, 0.7)', 
+                                borderRadius:'20px',
+                            }}
+                        >
+                            <h1 align='left' 
+                                style={{
+                                    fontSize:'32px', 
+                                    marginTop: '20px', 
+                                    marginLeft: '20px'
+                                }}
+                            >
+                                {this.state.asunto}
+                            </h1>
+                            {this.renderEstado()}
+                            <div align='left' style={{marginLeft: '40px', marginTop:'20px'}}>
+                                <p align='left'>{this.state.body}</p>
+                            </div>
+                        </div>
+                </div>
+            )
+        }
+    }
+
+    renderLoad(){
+        if(this.state.deleteFlag && !this.state.checkFlag){
+            return (
+                <div className='card' 
+                    style={{
+                        marginTop: '2%',
+                        marginLeft:'3%', 
+                        marginRight:'3%',
+                        zIndex: '0', 
+                        backgroundColor: 'rgba(250, 250, 250, 0.4)', 
+                        borderRadius:'20px',
+                        height:'120'
+                    }}
+                >
+                    <Lottie
+                        animationData={spin}
+                        style={{
+                            right: "50%",
+                            zIndex: 1,
+                            overflow: "hidden",
+                            width: '30%',
+                            height: '30%',
+                            margin: '0 auto'
+                        }}
+                    />
+                </div>
+            )
+        }else{
+            return(<div className='card' 
+                    style={{
+                        marginTop: '2%',
+                        marginLeft:'3%', 
+                        marginRight:'3%',
+                        zIndex: '0', 
+                        backgroundColor: 'rgba(250, 250, 250, 0.4)', 
+                        borderRadius:'20px',
+                        height:'120'
+                    }}
+                >
+                    <Lottie
+                        animationData={check}
+                        style={{
+                            right: "50%",
+                            zIndex: 1,
+                            overflow: "hidden",
+                            width: '30%',
+                            height: '30%',
+                            margin: '0 auto'
+                        }}
+                    />
+                </div>
+            )
+        }
     }
 
     render(){
@@ -119,42 +257,7 @@ class ViewRequest extends React.Component{
                         </div>
                 </div>
                 
-                <div className='card' 
-                    style={{
-                        marginTop: '2%',
-                        marginLeft:'3%', 
-                        marginRight:'3%',
-                        zIndex: '0', 
-                        backgroundColor: 'rgba(250, 250, 250, 0.4)', 
-                        borderRadius:'20px',
-                    }}
-                    >
-                        <div className='card' 
-                            style={{
-                                marginTop: '2%',
-                                marginLeft:'3%', 
-                                marginRight:'3%',
-                                marginBottom: '3%',
-                                zIndex: '0', 
-                                backgroundColor: 'rgba(250, 250, 250, 0.7)', 
-                                borderRadius:'20px',
-                            }}
-                        >
-                            <h1 align='left' 
-                                style={{
-                                    fontSize:'32px', 
-                                    marginTop: '20px', 
-                                    marginLeft: '20px'
-                                }}
-                            >
-                                {this.state.asunto}
-                            </h1>
-                            {this.renderEstado()}
-                            <div align='left' style={{marginLeft: '40px', marginTop:'20px'}}>
-                                <p align='left'>{this.state.body}</p>
-                            </div>
-                        </div>
-                </div>
+                {this.state.deleteFlag? this.renderLoad(): this.renderRequest()}
             </div>
             </React.Fragment>
         )
