@@ -13,6 +13,7 @@ class CreateOrder extends React.Component{
     }
 
     componentDidMount(){
+        console.log(this.props);
         if(this.props.content === undefined){this.props.history.push('/');}
         else{
             this.setState(state => ({content: this.props.content}));
@@ -21,7 +22,7 @@ class CreateOrder extends React.Component{
 
     getMenu = () => {
         const headers= {
-            auth: {username: 'admin@mail.com',password: 'public123'}
+            auth: {username: this.props.content.email, password: this.props.content.pass}
         }
         return API.getAuth('menu/'+7, headers)
     }
@@ -32,11 +33,11 @@ class CreateOrder extends React.Component{
         console.log(plt);
         console.log(beb);
         const headers= {
-            auth: {username: 'admin@mail.com',password: 'public123'}
+            auth: {username: this.props.content.email, password: this.props.content.pass}
         }
         API.post('orden/new', {
             mesaId: this.props.content.mesaId,
-            mozoId: 53,
+            mozoId: this.props.content.id,
             bebidas: beb,
             platos: plt
         }, headers)
