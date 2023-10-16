@@ -146,16 +146,40 @@ class ViewRequest extends React.Component{
                                 borderRadius:'20px',
                             }}
                         >
-                            <h1 align='left' 
+                            <h1 align='center' 
                                 style={{
                                     fontSize:'32px', 
                                     marginTop: '20px', 
                                     marginLeft: '20px'
                                 }}
                             >
+                                {'Solicitud'}
+                            </h1>
+                        </div>
+                        <div className='card' 
+                            style={{
+                                marginTop: '2%',
+                                marginLeft:'3%', 
+                                marginRight:'3%',
+                                marginBottom: '3%',
+                                zIndex: '0', 
+                                backgroundColor: 'rgba(250, 250, 250, 0.7)', 
+                                borderRadius:'20px',
+                            }}
+                        >
+                            <h1 align='left' 
+                                style={{
+                                    fontSize:'24px', 
+                                    marginTop: '20px', 
+                                    marginLeft: '20px'
+                                }}
+                            >
                                 {this.state.asunto}
                             </h1>
+                            <hr/>
+                            <hr/>
                             {this.renderEstado()}
+                            <hr/>
                             <div align='left' style={{marginLeft: '40px', marginTop:'20px'}}>
                                 <p align='left'>{this.state.body}</p>
                             </div>
