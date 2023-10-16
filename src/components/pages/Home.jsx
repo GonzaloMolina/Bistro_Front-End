@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router';
 import Sidebar from '../component/Sidebar';
 import Feed from '../component/Feed';
+import ErrorMessage from '../component/ErrorMessage';
 import logo from "../img/bistrot.jpg";
 
 
@@ -37,6 +38,28 @@ class Home extends React.Component {
             this.setState(state => ({solicitudes: this.props.user.peticiones}));
         }
     }
+
+    renderFeedReq(){
+        if(this.state.solicitudes.length === 0){
+            return (
+                <div
+                    style={{
+                        margin: '5%',
+                        zIndex: '0', 
+                    }}
+                >
+                    <ErrorMessage error={"No hay una solicitudes que mostrar"} />
+                </div>
+            )
+        }
+        else{
+            return (
+                <div>
+                    <Feed solicitudes={this.state.solicitudes}/>
+                </div>
+            )
+        }
+    }
     
     render() {
     return (
@@ -66,7 +89,7 @@ class Home extends React.Component {
                 </div>
             </div>
 
-            <Feed solicitudes={this.state.solicitudes}/>
+            {this.renderFeedReq()}
         </div>
         
       </React.Fragment>

@@ -4,6 +4,7 @@ import Sidebar from '../component/Sidebar';
 import logo from "../img/bistrot.jpg";
 import { AiOutlineCloseSquare } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
+import ErrorMessage from '../component/ErrorMessage';
 import API from '../../service/api';
 
 class Request extends React.Component {
@@ -15,7 +16,7 @@ class Request extends React.Component {
             password: "",
             mesas: [],
             solicitudes: [],
-            deleteFlag: false
+            flag:false,
         }
     }
 
@@ -41,82 +42,100 @@ class Request extends React.Component {
         }
     }
 
-
-    toDeleteState = (sol) => this.state.deleteFlag? 
-        <AiOutlineCloseSquare fontSize='2em' className='btnc'
-            style={{zIndex:'10'}}
-            onClick={() => {
-                this.doDelete(sol);
-            }}
-        /> : ''
+    componentDidUpdate(){}
 
     renderEstado = (state, sol) => state==='ACEPTADA'?  this.greenB(sol) : state==='RECHAZADA'?  this.redB(sol) : this.blackB(sol)
+    
+    renderDBotton(sol){
+        return (
+            <button type='button' className='btn-secondary'
+                onClick={() => {this.doDelete(sol);}}
+                style={{zIndex:'0', borderRadius: '10px', 
+                    backgroundColor:'rgb(107, 116, 125)', border:'0px',
+                    marginRight:'5px', marginLeft:'2px',
+                    borderTopRightRadius:'30px',
+                    borderBottomRightRadius:'30px',
+                }}
+            >
+                <AiOutlineCloseSquare 
+                color='red'
+                fontSize='2em'
+                style={{zIndex:'0', 
+                    borderRadius: '10px', 
+                    margin:'0px'
+                }}
+            />
+            </button>
+        )
+    }
 
     greenB = (sol) => {
         return (
-            <div className="container">
-                    <div className="row">
-                        <div className="col-10" align='left'>
-                            <button type='button' className='btn btn-success'
-                                style={{
-                                    width: '100%',
-                                    borderRadius: '30px', 
-                                    marginBottom: '0px', height: '50px'
-                                }}
-                                onClick={() => this.viewRequest(sol.id)}
-                            >
-                                <span> {sol.asunto} </span>
-                            </button>
-                        </div>
-                        <div className="col-2" align='right'>
-                            {this.toDeleteState(sol)}
-                        </div>
-                    </div>
+        <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" 
+                style={{flexDirection: 'column', marginTop: '2%'}}>
+                <div className="btn-group mr-2 flex-wrap" role="group" aria-label="First group"
+                    style={{marginBottom:'0px',marginTop:'2px'}}>
+                    <button type='button' className='btn btn-success'
+                            style={{
+                                borderRadius: '10px',
+                                borderTopLeftRadius:'30px',
+                                borderBottomLeftRadius:'30px',
+                                marginBottom: '0px', height: '50px',
+                            }}
+                            onClick={() => this.viewRequest(sol.id)}
+                        >
+                            <span style={{display: 'block'}}> {sol.asunto} </span>
+                        </button>
+                    
+                        {this.renderDBotton(sol)}
                 </div>
+        </div>
         )
     }
 
     redB = (sol) => {
         return (
-            <div className="container">
-                    <div className="row">
-                        <div className="col-10" align='left'>
-                            <button type='button' className='btn btn-danger'
-                                style={{
-                                    width: '100%',
-                                    borderRadius: '30px', marginBottom: '0px', height: '50px'
-                                }}
-                                onClick={() => this.viewRequest(sol.id)}
-                            >
-                                <span> {sol.asunto} </span>
-                            </button>
-                        </div>
-                        <div className="col-2" align='right'>
-                            {this.toDeleteState(sol)}
-                        </div>
-                    </div>
-                </div>
-        )
-    }
-
-    blackB = (sol) => {
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-10" align='left'>
-                        <button type='button' className='btn btn-secondary'
+            <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" 
+                style={{flexDirection: 'column', marginTop: '2%'}}>
+                <div className="btn-group mr-2 flex-wrap" role="group" aria-label="First group"
+                    style={{marginBottom:'0px',marginTop:'2px'}}>
+                    <button type='button' className='btn btn-danger'
                             style={{
-                                width: '100%',
-                                borderRadius: '30px', marginBottom: '0px', height: '50px'
+                                borderRadius: '10px',
+                                marginBottom: '0px', height: '50px',
+                                borderTopLeftRadius:'30px',
+                                borderBottomLeftRadius:'30px',
                             }}
                             onClick={() => this.viewRequest(sol.id)}
                         >
                             <span> {sol.asunto} </span>
                         </button>
-                    </div>
-                    <div className="col-2" align='right'>
-                        {this.toDeleteState(sol)}
-                    </div>
+                    
+                        {this.renderDBotton(sol)}
+                </div>
+        </div>
+        )
+    }
+
+    blackB = (sol) => {
+        return (
+            <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" 
+                style={{flexDirection: 'column', marginTop: '2%'}}>
+                <div className="btn-group mr-2 flex-wrap" role="group" aria-label="First group"
+                    style={{marginBottom:'0px',marginTop:'2px'}}>
+                    <button type='button' className='btn btn-secondary'
+                            style={{
+                                borderRadius: '10px', 
+                                marginBottom: '0px', height: '50px',
+                                borderTopLeftRadius:'30px',
+                                borderBottomLeftRadius:'30px',
+                            }}
+                            onClick={() => this.viewRequest(sol.id)}
+                        >
+                            <span> {sol.asunto} </span>
+                        </button>
+                    
+                        {this.renderDBotton(sol)}
                 </div>
             </div>
         )
@@ -140,6 +159,7 @@ class Request extends React.Component {
     doDelete(sol){
         const newReq = this.state.solicitudes.filter(req => req.id !== sol.id);
         this.setState(state => ({solicitudes: newReq}))
+        this.state.solicitudes.length === 0? this.setState(state => ({flag: true})): console.log(this.state.solicitudes)
         const headers= {
             auth: {username: this.state.email, password: this.state.password}
         }
@@ -150,6 +170,66 @@ class Request extends React.Component {
             console.log(res.data)
         )
         .catch(err => console.log(err))
+    }
+
+    renderList(){
+        if(this.state.solicitudes.length === 0 || this.state.flag){
+            return (
+                <div>
+                    <div className='card' 
+                        style={{
+                            marginTop: '2%',
+                            marginLeft:'3%', 
+                            marginRight:'3%', 
+                            zIndex: '0', 
+                            backgroundColor: 'rgba(179, 241, 178, 0.4)', 
+                            borderRadius:'20px',
+                        }}
+                        >
+                            <h1 style={{fontSize:'32px'}}>Solicitudes</h1>
+                    </div>
+
+                    <div
+                        style={{
+                            margin: '5%',
+                            zIndex: '0', 
+                        }}
+                    >
+                        <ErrorMessage error={"No hay una solicitudes que mostrar"} />
+                    </div>
+                </div>
+            )
+        }else{
+            return (
+            <div>
+                    <div className='card' 
+                    style={{
+                        marginTop: '2%',
+                        marginLeft:'3%', 
+                        marginRight:'3%', 
+                        zIndex: '0', 
+                        backgroundColor: 'rgba(179, 241, 178, 0.4)', 
+                        borderRadius:'20px',
+                    }}
+                    >
+                        <h1 style={{fontSize:'32px'}}>Solicitudes</h1>
+                </div>
+                    <ul className='list-group list-group-flush' style={{backgroundColor: 'transparent', marginBottom: '0px'}}>
+                        {this.state.solicitudes.map((sol, k) => {
+                            return(<li key={k} className='list-group-item' 
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    border: '0px', 
+                                    marginBottom: '0px',
+                                    height:'55px'
+                                }}>
+                                {this.renderEstado(sol.estado, sol)}
+                            </li>)
+                        })}
+                    </ul>
+                </div>
+            )
+        }
     }
 
     render(){
@@ -178,33 +258,9 @@ class Request extends React.Component {
 
                 {
                     // encabezado + tabla
+                    this.renderList()
                 }
-                <div className='card' 
-                    style={{
-                        marginTop: '2%',
-                        marginLeft:'3%', 
-                        marginRight:'3%', 
-                        zIndex: '0', 
-                        backgroundColor: 'rgba(179, 241, 178, 0.4)', 
-                        borderRadius:'20px',
-                    }}
-                    >
-                        <h1 style={{fontSize:'32px'}}>Solicitudes</h1>
-                </div>
-
-                <ul className='list-group list-group-flush' style={{backgroundColor: 'transparent', marginBottom: '0px'}}>
-                    {this.state.solicitudes.map((sol, k) => {
-                        return(<li key={k} className='list-group-item' 
-                            style={{
-                                backgroundColor: 'transparent',
-                                border: '0px', 
-                                marginBottom: '0px',
-                                height:'55px'
-                            }}>
-                            {this.renderEstado(sol.estado, sol)}
-                        </li>)            
-                    })}
-                </ul>
+                
                 {
                     //boton de redactar
                 }
