@@ -8,6 +8,7 @@ import CreateOrder from './pages/CreateOrder';
 import View from './pages/View';
 import Request from './pages/Request';
 import ViewRequest from './pages/ViewRequest';
+import CreateRequest from './pages/CreateRequest';
 
 
 export default class App extends React.Component{
@@ -47,6 +48,12 @@ export default class App extends React.Component{
                 <Switch>
                     <Route exact path="/solicitud" render=
                         {props => <ViewRequest content={props.location.state}/> } 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/redactar" render=
+                        {props => <CreateRequest content={props.location.state}/> } 
                     />
                 </Switch>
 
