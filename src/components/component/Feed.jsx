@@ -1,8 +1,5 @@
 import React from "react";
 import { withRouter } from 'react-router';
-import { BsCheck2Square } from 'react-icons/bs';
-import { GrCheckbox } from 'react-icons/gr';
-import { AiOutlineCloseSquare } from 'react-icons/ai';
 
 class Feed extends React.Component {
 
@@ -13,11 +10,11 @@ class Feed extends React.Component {
         return (
         <button type='button' className='btn'
         style={{
-            color: 'green',
+            color: '#009933',
             fontSize: '20px',
             cursor: 'default'
         }}>
-            <BsCheck2Square/>
+            <b>Aprobada</b>
         </button>
         )
     }
@@ -30,7 +27,7 @@ class Feed extends React.Component {
             fontSize: '20px',
             cursor: 'default'
         }}>
-            <AiOutlineCloseSquare/>
+            Rechazada
         </button>
         )
     }
@@ -39,11 +36,11 @@ class Feed extends React.Component {
         return (
         <button type='button' className='btn'
         style={{
-            color: 'red',
+            color: 'Black',
             fontSize: '20px',
             cursor: 'default'
         }}>
-            <GrCheckbox/>
+            En Proceso
         </button>
         )
     }
