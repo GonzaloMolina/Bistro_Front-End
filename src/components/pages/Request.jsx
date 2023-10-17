@@ -292,8 +292,9 @@ class Request extends React.Component {
                     }}>
                         <div className="" style={{margin: '3%'}}>
                             <button 
+                                type='button'
                                 className="btn btn-secondary"
-                                onClick={() => console.log('estado', this.state)}
+                                onClick={() => this.props.history.push('/redactar', this.props.user)}
                             >
                                 Redactar
                             </button>
