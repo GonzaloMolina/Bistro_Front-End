@@ -3,9 +3,11 @@ import {withRouter} from 'react-router';
 import Sidebar from '../component/Sidebar';
 import logo from "../img/bistrot.jpg";
 import { AiOutlineCloseSquare } from 'react-icons/ai';
-import { BsTrash } from 'react-icons/bs';
 import ErrorMessage from '../component/ErrorMessage';
+import spin from '../img/Animation -SpinLoading.json';
+import Lottie from 'lottie-react';
 import API from '../../service/api';
+import { wait } from '@testing-library/user-event/dist/utils';
 
 class Request extends React.Component {
     constructor(props){
@@ -37,6 +39,7 @@ class Request extends React.Component {
             API.getAuth('mozo/'+this.props.user.id+'/solicitudes', headers)
             .then(res => {
                 this.setState(state => ({solicitudes: res.data}))
+                wait(2000).then(res => this.setState(state => ({flag: true})))
             })
             .catch(err => console.log(err));
         }
@@ -173,10 +176,52 @@ class Request extends React.Component {
     }
 
     renderList(){
-        if(this.state.solicitudes.length === 0 || this.state.flag){
+        if(!this.state.flag){
             return (
+                <Lottie
+                        animationData={spin}
+                        style={{
+                            right: "50%",
+                            zIndex: 1,
+                            overflow: "hidden",
+                            width: '30%',
+                            height: '30%',
+                            margin: '0 auto'
+                        }}
+                    />
+            )
+        }
+        else{
+            if(this.state.solicitudes.length === 0){
+                return (
+                    <div>
+                        <div className='card' 
+                            style={{
+                                marginTop: '2%',
+                                marginLeft:'3%', 
+                                marginRight:'3%', 
+                                zIndex: '0', 
+                                backgroundColor: 'rgba(179, 241, 178, 0.4)', 
+                                borderRadius:'20px',
+                            }}
+                            >
+                                <h1 style={{fontSize:'32px'}}>Solicitudes</h1>
+                        </div>
+    
+                        <div
+                            style={{
+                                margin: '5%',
+                                zIndex: '0', 
+                            }}
+                        >
+                            <ErrorMessage error={"No hay una solicitudes que mostrar"} />
+                        </div>
+                    </div>
+                )
+            }else{
+                return (
                 <div>
-                    <div className='card' 
+                        <div className='card' 
                         style={{
                             marginTop: '2%',
                             marginLeft:'3%', 
@@ -188,47 +233,22 @@ class Request extends React.Component {
                         >
                             <h1 style={{fontSize:'32px'}}>Solicitudes</h1>
                     </div>
-
-                    <div
-                        style={{
-                            margin: '5%',
-                            zIndex: '0', 
-                        }}
-                    >
-                        <ErrorMessage error={"No hay una solicitudes que mostrar"} />
+                        <ul className='list-group list-group-flush' style={{backgroundColor: 'transparent', marginBottom: '0px'}}>
+                            {this.state.solicitudes.map((sol, k) => {
+                                return(<li key={k} className='list-group-item' 
+                                    style={{
+                                        backgroundColor: 'transparent',
+                                        border: '0px', 
+                                        marginBottom: '0px',
+                                        height:'55px'
+                                    }}>
+                                    {this.renderEstado(sol.estado, sol)}
+                                </li>)
+                            })}
+                        </ul>
                     </div>
-                </div>
-            )
-        }else{
-            return (
-            <div>
-                    <div className='card' 
-                    style={{
-                        marginTop: '2%',
-                        marginLeft:'3%', 
-                        marginRight:'3%', 
-                        zIndex: '0', 
-                        backgroundColor: 'rgba(179, 241, 178, 0.4)', 
-                        borderRadius:'20px',
-                    }}
-                    >
-                        <h1 style={{fontSize:'32px'}}>Solicitudes</h1>
-                </div>
-                    <ul className='list-group list-group-flush' style={{backgroundColor: 'transparent', marginBottom: '0px'}}>
-                        {this.state.solicitudes.map((sol, k) => {
-                            return(<li key={k} className='list-group-item' 
-                                style={{
-                                    backgroundColor: 'transparent',
-                                    border: '0px', 
-                                    marginBottom: '0px',
-                                    height:'55px'
-                                }}>
-                                {this.renderEstado(sol.estado, sol)}
-                            </li>)
-                        })}
-                    </ul>
-                </div>
-            )
+                )
+            }
         }
     }
 
@@ -276,16 +296,6 @@ class Request extends React.Component {
                                 onClick={() => console.log('estado', this.state)}
                             >
                                 Redactar
-                            </button>
-                        </div>
-                        <div className=''>
-                            <button 
-                                    className="btn btn-secondary"
-                                    onClick={() => {
-                                        const newFlag= !this.state.deleteFlag; 
-                                        this.setState(state => ({deleteFlag: newFlag}))}}
-                                >
-                                    <BsTrash color='red' fontSize='2em'/>
                             </button>
                         </div>
                     </div>

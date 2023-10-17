@@ -39,7 +39,7 @@ class ViewRequest extends React.Component{
                 this.setState(state => ({estado: res.data.estado}));
                 this.setState(state => ({body: res.data.body}));
             }).catch(err => console.log(err))
-            wait(9000).then(res => {
+            wait(2000).then(res => {
                 const newFlag = !this.state.loading;
                 this.setState(state => ({loading: newFlag}));
             })
@@ -176,8 +176,7 @@ class ViewRequest extends React.Component{
                             >
                                 {this.state.asunto}
                             </h1>
-                            <hr/>
-                            <hr/>
+                            <hr style={{height: '2px'}}/>
                             {this.renderEstado()}
                             <hr/>
                             <div align='left' style={{marginLeft: '40px', marginTop:'20px'}}>

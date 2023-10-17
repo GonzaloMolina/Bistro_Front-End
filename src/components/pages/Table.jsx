@@ -4,9 +4,10 @@ import Sidebar from '../component/Sidebar';
 import ErrorMessage from '../component/ErrorMessage';
 import '../../styles/table.css'
 import API from '../../service/api';
-//import OrderView from '../component/OrderView';
 import {AiOutlinePlus, AiOutlineReload, AiOutlineMinus} from 'react-icons/ai';
-//import OrderView from '../component/OrderView';
+import { wait } from '@testing-library/user-event/dist/utils';
+import spin from '../img/Animation -SpinLoading.json';
+import Lottie from 'lottie-react';
 
 class Table extends React.Component {
     constructor(props){
@@ -20,6 +21,7 @@ class Table extends React.Component {
             peticiones: [],
             cuenta: 0,
             orden: undefined,
+            flag: true
         }
     }
 
@@ -46,6 +48,7 @@ class Table extends React.Component {
                 console.log(res.data);
                 this.setState(state => ({orden: res.data.orden}));
                 this.setState(state => ({cuenta: res.data.cuenta}));
+                wait(2000).then(res => this.setState(state => ({flag: false})))
             })
             .catch(error => {
                 console.log(error)
@@ -55,6 +58,7 @@ class Table extends React.Component {
 
     componentDidUpdate(){
         if(this.props.content !== undefined && this.props.content.mesaId !== this.state.mesaId){
+            this.setState(state => ({flag: true}))
             this.setState(state => ({
                 email: this.props.content.email,
                 pass: this.props.content.pass,
@@ -71,6 +75,7 @@ class Table extends React.Component {
                 console.log(res.data);
                 this.setState(state => ({orden: res.data.orden}));
                 this.setState(state => ({cuenta: res.data.cuenta}));
+                wait(2000).then(res => this.setState(state => ({flag: false})))
             })
             .catch(error => {
                 console.log(error)
@@ -88,6 +93,7 @@ class Table extends React.Component {
 
     handleOnClickDelete(){
         if(!(this.state.orden === undefined || this.state.orden === null)){
+            this.setState(state => ({flag: true}))
             const headers= {
                 auth: {username: this.state.email, password: this.state.pass}
             }
@@ -96,46 +102,66 @@ class Table extends React.Component {
             .then(res => {
                 console.log(res.status)
                 this.setState(state => ({orden: undefined}))
+                wait(2000).then(res => {
+                    this.setState(state => ({flag: false}))
+                })
             })
             .catch(err => console.log(err))
         }
     }
 
     renderOrden(){
-        if(this.state.orden === undefined || this.state.orden === null){
+        if(this.state.flag){
             return (
-                <div style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
-                    <ErrorMessage error={"No hay una orden que mostrar"} />
-                </div>
-            );
+                <Lottie
+                        animationData={spin}
+                        style={{
+                            right: "50%",
+                            zIndex: 1,
+                            overflow: "hidden",
+                            width: '30%',
+                            height: '30%',
+                            margin: '0 auto'
+                        }}
+                    />
+            )
         }
         else{
-            return (
-                <div className="contenedor">
-                    <div className='card' style={{zIndex: '0', backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
-                        <h1>{'Cuenta:  $'}{this.state.cuenta}</h1>
+            if(this.state.orden === undefined || this.state.orden === null){
+                return (
+                    <div style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(179, 241, 178, 0.5)'}}>
+                        <ErrorMessage error={"No hay una orden que mostrar"} />
                     </div>
-                    <br/>
-                    <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
-                        <h1>{'Orden Nro: '}{this.state.orden.id}</h1>
+                );
+            }
+            else{
+                return (
+                    <div className="contenedor">
+                        <div className='card' style={{zIndex: '0', backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
+                            <h1>{'Cuenta:  $'}{this.state.cuenta}</h1>
+                        </div>
+                        <br/>
+                        <div className='card' style={{zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
+                            <h1>{'Orden Nro: '}{this.state.orden.id}</h1>
+                        </div>
+    
+                        <div className="contenedorB">
+                                <button type='button' 
+                                    className='btn btn-secondary' 
+                                    style={{}}
+                                    onClick={() => this.props.history.push('/view', 
+                                        {
+                                            "info":this.state.content, 
+                                            "orden":this.state.orden
+                                        })
+                                    }
+                                >
+                                    Ver Orden
+                                </button>
+                        </div>
                     </div>
-
-                    <div className="contenedorB">
-                            <button type='button' 
-                                className='btn btn-secondary' 
-                                style={{}}
-                                onClick={() => this.props.history.push('/view', 
-                                    {
-                                        "info":this.state.content, 
-                                        "orden":this.state.orden
-                                    })
-                                }
-                            >
-                                Ver Orden
-                            </button>
-                    </div>
-                </div>
-            );
+                );
+            }
         }
     }
 
