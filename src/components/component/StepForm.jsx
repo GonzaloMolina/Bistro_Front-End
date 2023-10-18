@@ -87,36 +87,21 @@ class StepForm extends Component {
     }
   }
 
-  nextPage = () => this.state.page === (this.state.titles.length - 1) ?
-  this.props.create(this.state.platos, this.state.bebidas) : this.setPage(this.state.page + 1)
+  nextPage(){
+    if(this.state.page === (this.state.titles.length - 1)){
+      this.props.create(this.state.platos, this.state.bebidas);
+    }
+    else{ 
+      this.setPage(this.state.page + 1)
+    }
+  }
 
   butomNextText = () => this.state.page === (this.state.titles.length - 1) ? 'Crear Orden' : 'Siguiente';
   butomPrevText = () => this.state.page === (this.state.titles.length - 1) ? 'Agregar otro' : 'Anterior';
 
-  render() {
-    return (
-      <React.Fragment>
-        <div className='base'>
-          <div className='navbar' style={{
-            backgroundColor: 'green',
-            height: '80px',
-            display: 'flex',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            zIndex: 10,
-            marginBottom: '3%'
-          }}>
-            <div className='btn-holder'>
-              <div className="">
-                <AiOutlineArrowLeft
-                  className="btnc"
-                  onClick={() => this.props.history.push('/table', this.props.content)}
-                  style={{ backgroundColor: '#faf60e', marginLeft: '20%', borderRadius: '10px', fontSize: '1.5em' }}
-                />
-              </div>
-            </div>
-          </div>
-          <div className='form'>
+
+  renderForm(){
+      return (<div className='form'>
             <div className='progressbar'>
               {/* Pasos numéricos */}
               <div className="step-numbers">
@@ -163,7 +148,33 @@ class StepForm extends Component {
                 </button>
               </div>
             </div>
+      </div>)
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <div className='base'>
+          <div className='navbar' style={{
+            backgroundColor: 'green',
+            height: '80px',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            zIndex: 10,
+            marginBottom: '3%'
+          }}>
+            <div className='btn-holder'>
+              <div className="">
+                <AiOutlineArrowLeft
+                  className="btnc"
+                  onClick={() => this.props.history.push('/table', this.props.content)}
+                  style={{ backgroundColor: '#faf60e', marginLeft: '20%', borderRadius: '10px', fontSize: '1.5em' }}
+                />
+              </div>
+            </div>
           </div>
+          {this.renderForm()}
         </div>
       </React.Fragment>
     );
