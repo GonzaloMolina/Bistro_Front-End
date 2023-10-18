@@ -111,7 +111,7 @@ class StepForm extends Component {
                 <AiOutlineArrowLeft
                   className="btnc"
                   onClick={() => this.props.history.push('/table', this.props.content)}
-                  style={{ backgroundColor: '#faf60e', marginLeft: '20%' }}
+                  style={{ backgroundColor: '#faf60e', marginLeft: '20%', borderRadius: '10px', fontSize: '1.5em' }}
                 />
               </div>
             </div>
