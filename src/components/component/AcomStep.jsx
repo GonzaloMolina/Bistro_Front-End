@@ -8,12 +8,12 @@ class AcompStep extends React.Component {
     this.state = {
       cantidad: 0,
       selected: {},
-      ls: [],
+      ls: []
     };
   }
 
   componentDidMount() {
-    console.log(this.props);
+    console.log(this.props.plate());
     this.setState((state) => ({ 
       selected: this.props.plate(),
       ls: []
@@ -31,6 +31,17 @@ class AcompStep extends React.Component {
     console.log("zs_", zs);
     this.setState((state) => ({ ls: zs }));
     this.props.setOther[1](zs);
+  }
+
+  removeElem(zs, elem){
+    let flag = true;
+    let res = [];
+    zs.forEach(e => {
+      if(flag && e === elem){flag = !flag;}
+      else{res.push(e);}
+    })
+    this.setState((state) => ({ ls: res }));
+    this.props.setOther[1](res);
   }
 
   renderBebidas() {
@@ -95,18 +106,53 @@ class AcompStep extends React.Component {
     );
   }
 
+  cantRender(elem){
+    if (this.state.ls.filter(e => e === elem).length === 0){
+      return (
+        <button
+              type="button"
+              className="btn btn-secondary "
+              onClick={() => {
+              }}
+            >
+              {''}
+            </button>
+      )
+    }else{
+      return (
+        <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => {
+                this.removeElem(this.state.ls, elem)
+                console.log(this.state.ls);
+              }} style={{}}
+            >
+              {this.state.ls.filter(e => e === elem).length}
+            </button>
+      )
+    }
+  }
+
   acompField(elem, key) {
     return (
-      <div key={key}>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={() => {
-            this.addelem(this.state.ls.concat([elem]));
-          }} style={{margin: '10px'}}
-        >
-          {elem.nombre}
-        </button>
+      <div key={key} style={{marginLeft: '4%', marginBottom:'2%'}}>
+        <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" 
+            style={{marginTop: '2%', marginRight:'3px'}}>
+          <div className="btn-group mr-2" role="group" aria-label="First group"
+              style={{marginBottom:'0px',marginTop:'2px'}}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => {
+                this.addelem(this.state.ls.concat([elem]));
+              }}
+            >
+              {elem.nombre}
+            </button>
+            {this.cantRender(elem)}
+          </div>
+        </div>
       </div>
     );
   }
@@ -146,9 +192,7 @@ class AcompStep extends React.Component {
           >
             <div
               style={{
-                display: 'flex', 
-                alignItems: 'center',  
-                margin:'5%'
+                flexDirection: 'column'
               }}>
                 {this.state.selected.salsa.map((elem, key) =>
                   this.acompField(elem, key)
@@ -182,10 +226,19 @@ class AcompStep extends React.Component {
           <h4>seleccione un acompañamiento</h4>
         </div>
 
-        <div className="" style={{ flexDirection: "column" }}>
+        <div className="card" 
+            style={{
+              zIndex: '0', 
+              backdropFilter: 'blur(10px)', 
+              backgroundColor:'rgba(179, 241, 178, 0.5)',
+              margin:'5%'
+            }}
+          >
+            <div className="" style={{ flexDirection: "column" }}>
             {this.state.selected.acompanamiento.map((elem, key) =>
               this.acompField(elem, key)
             )}
+          </div>
           </div>
         </div>
       );

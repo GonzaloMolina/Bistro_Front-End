@@ -148,7 +148,7 @@ class Table extends React.Component {
                         <div className="contenedorB">
                                 <button type='button' 
                                     className='btn btn-secondary' 
-                                    style={{}}
+                                    style={{margin:'1%', fontSize: '18px'}}
                                     onClick={() => this.props.history.push('/view', 
                                         {
                                             "info":this.state.content, 
@@ -157,6 +157,16 @@ class Table extends React.Component {
                                     }
                                 >
                                     Ver Orden
+                                </button>
+
+                                <button type='button' 
+                                    className='btn btn-secondary' 
+                                    style={{margin:'1%', fontSize: '18px'}}
+                                    onClick={() => 
+                                        console.log('click')
+                                    }
+                                >
+                                    Liberar mesa
                                 </button>
                         </div>
                     </div>
