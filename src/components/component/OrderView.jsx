@@ -29,6 +29,42 @@ class OrderView extends React.Component{
         }
     }
 
+    count(ls, acom){
+        let x = 0;
+        for (let i = 0; i < ls.length; i++) {
+            if(ls[i] === acom){x++;}
+        }
+        return x
+    }
+
+    belongs(str, ls){
+        return ls.filter(elem => elem.nombre === str).length > 0;
+    }
+
+    belongs2(str, ls){
+        return ls.filter(elem => elem.acompanamiento.nombre === str).length > 0;
+    }
+    
+        sinRepetidosPlatos(ps){
+            let rs = []
+            ps.forEach(element => {
+                if(!this.belongs2(element.acompanamiento.nombre, rs)){
+                    rs.push(element);
+                }
+            });
+            return rs;
+        }
+
+    sinRepetidosBebidas(bs){
+        let rs = []
+        bs.forEach(element => {
+            if(!this.belongs(element.nombre, rs)){
+                rs.push(element);
+            }
+        });
+        return rs;
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -59,31 +95,53 @@ class OrderView extends React.Component{
                     <div id="name" className="card" style={{margin: "2%",  backdropFilter: 'blur(10px)', backgroundColor:'rgba(179, 241, 178, 0.5)'}}>
                         <div style={{margin: "2%"}}>
                             <h4><b>{"Pedido: "}</b></h4>
-                            <div id="name" className="card" style={{overflowX: 'auto',margin: "2%"}}>
+                            <div>
                                     <table style={{ width: '100%' }} className="table">
                                         <thead >
                                             <tr>
                                                 <th style={{backgroundColor: '#009933'}}scope="col">Consumible</th>
                                                 <th style={{backgroundColor: '#009933'}} scope="col">Adicional</th>
+                                                <th style={{backgroundColor: '#009933'}} scope="col"></th>
                                                 <th style={{backgroundColor: '#009933'}} scope="col">Precio</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {this.props.content.orden.platos.map(
+                                            {this.sinRepetidosPlatos(this.props.content.orden.platos).map(
                                                 (e, i) => {
                                                     return (<tr key={i}>
                                                         <td style={{fontSize: '15px',backgroundColor: 'rgb(211,211,211)'}}>{e.nombre}</td>
-                                                        <td style={{fontSize: '15px',backgroundColor: 'rgb(211,211,211)'}}>{this.adicional(e)}</td>
-                                                        <td style={{fontSize: '18px',backgroundColor: 'rgb(211,211,211)'}}>{'$'+e.precio}</td>
+                                                        <td style={{fontSize: '14px',backgroundColor: 'rgb(211,211,211)'}}>{this.adicional(e)}</td>
+                                                        <td style={{fontSize: '15px',backgroundColor: 'rgb(211,211,211)'}}>
+                                                            x{this.props.content.orden.platos.filter(plt => 
+                                                                plt.acompanamiento.nombre === e.acompanamiento.nombre
+                                                                ).length
+                                                            }
+                                                        </td>
+                                                        <td style={{fontSize: '18px',backgroundColor: 'rgb(211,211,211)'}}>
+                                                            {'$'+
+                                                                e.precio * 
+                                                                this.props.content.orden.platos.filter(plt => 
+                                                                    plt.acompanamiento.nombre === e.acompanamiento.nombre
+                                                                ).length
+                                                            }
+                                                        </td>
                                                     </tr>)
                                                 }
                                             )}
-                                            {this.props.content.orden.bebidas.map(
+                                            {this.sinRepetidosBebidas(this.props.content.orden.bebidas).map(
                                                 (e, i) => {
                                                     return (<tr key={i}>
                                                         <td style={{fontSize: '15px',backgroundColor: 'rgb(211,211,211)'}}>{e.nombre}</td>
                                                         <td style={{backgroundColor: 'rgb(211,211,211)'}}></td>
-                                                        <td style={{fontSize: '18px',backgroundColor: 'rgb(211,211,211)'}}>{'$'+e.precio}</td>
+                                                        <td style={{fontSize: '18px',backgroundColor: 'rgb(211,211,211)'}}>x
+                                                            {this.props.content.orden.bebidas.filter(b => b.nombre === e.nombre).length}
+                                                        </td>
+                                                        <td style={{fontSize: '18px',backgroundColor: 'rgb(211,211,211)'}}>
+                                                            {'$'+
+                                                                e.precio * 
+                                                                this.props.content.orden.bebidas.filter(b => b.nombre === e.nombre).length
+                                                            }
+                                                        </td>
                                                     </tr>)
                                                 }
                                             )}
