@@ -41,19 +41,36 @@ class OrderView extends React.Component{
         return ls.filter(elem => elem.nombre === str).length > 0;
     }
 
-    belongs2(str, ls){
-        return ls.filter(elem => elem.acompanamiento.nombre === str).length > 0;
+    belongs2(e, ls){
+        if(e.acompanamiento === null){
+            return ls.filter(plt => {
+                if(plt.salsa !== null){
+                    return plt.salsa.nombre === e.salsa.nombre;
+                }else{
+                    return false;
+                }
+            }).length > 0;
+        }
+        else{ 
+            return ls.filter(plt => {
+                if(plt.acompanamiento !== null){
+                    return plt.acompanamiento.nombre === e.acompanamiento.nombre;
+                }else{
+                    return false;
+                }
+            }).length > 0;
+        }
     }
     
-        sinRepetidosPlatos(ps){
-            let rs = []
-            ps.forEach(element => {
-                if(!this.belongs2(element.acompanamiento.nombre, rs)){
-                    rs.push(element);
-                }
-            });
-            return rs;
-        }
+    sinRepetidosPlatos(ps){
+        let rs = []
+        ps.forEach(element => {
+            if(!this.belongs2(element, rs)){
+                rs.push(element);
+            }
+        });
+        return rs;
+    }
 
     sinRepetidosBebidas(bs){
         let rs = []
@@ -63,6 +80,32 @@ class OrderView extends React.Component{
             }
         });
         return rs;
+    }
+
+    cantidadPlt(plts, plato){
+        if(plato.acompanamiento === null && plato.salsa === null){
+            console.log(plato)
+        }
+        else{
+            if(plato.acompanamiento === null){
+                return plts.filter(plt => {
+                    if(plt.salsa !== null){
+                        return plt.salsa.nombre === plato.salsa.nombre;
+                    }else{
+                        return false;
+                    }
+                }).length
+            }
+            else{
+                return plts.filter(plt => {
+                    if(plt.acompanamiento !== null){
+                        return plt.acompanamiento.nombre === plato.acompanamiento.nombre;
+                    }else{
+                        return false;
+                    }
+                }).length
+            }
+        }
     }
 
     render(){
@@ -112,17 +155,11 @@ class OrderView extends React.Component{
                                                         <td style={{fontSize: '15px',backgroundColor: 'rgb(211,211,211)'}}>{e.nombre}</td>
                                                         <td style={{fontSize: '14px',backgroundColor: 'rgb(211,211,211)'}}>{this.adicional(e)}</td>
                                                         <td style={{fontSize: '15px',backgroundColor: 'rgb(211,211,211)'}}>
-                                                            x{this.props.content.orden.platos.filter(plt => 
-                                                                plt.acompanamiento.nombre === e.acompanamiento.nombre
-                                                                ).length
-                                                            }
+                                                            x{this.cantidadPlt(this.props.content.orden.platos, e)}
                                                         </td>
                                                         <td style={{fontSize: '18px',backgroundColor: 'rgb(211,211,211)'}}>
                                                             {'$'+
-                                                                e.precio * 
-                                                                this.props.content.orden.platos.filter(plt => 
-                                                                    plt.acompanamiento.nombre === e.acompanamiento.nombre
-                                                                ).length
+                                                                e.precio * this.cantidadPlt(this.props.content.orden.platos, e)
                                                             }
                                                         </td>
                                                     </tr>)

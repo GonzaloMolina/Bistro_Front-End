@@ -110,6 +110,23 @@ class Table extends React.Component {
         }
     }
 
+    doRelease(){
+        this.setState(state => ({flag: true}))
+            const headers= {
+                auth: {username: this.state.email, password: this.state.pass}
+            }
+            const path = "mesa/"+this.state.content.mesaId+"/release";
+            API.getAuth(path, headers)
+            .then(res => {
+                console.log(res.status)
+                this.setState(state => ({orden: undefined}))
+                wait(2000).then(res => {
+                    this.setState(state => ({flag: false}))
+                })
+            })
+            .catch(err => console.log(err))
+    }
+
     renderOrden(){
         if(this.state.flag){
             return (
@@ -162,8 +179,9 @@ class Table extends React.Component {
                                 <button type='button' 
                                     className='btn btn-secondary' 
                                     style={{margin:'1%', fontSize: '18px'}}
+                                    disabled={this.state.orden === undefined || this.state.orden === null}
                                     onClick={() => 
-                                        console.log('click')
+                                        this.doRelease()
                                     }
                                 >
                                     Liberar mesa
