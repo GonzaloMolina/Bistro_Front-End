@@ -38,7 +38,7 @@ class Request extends React.Component {
             }
             API.getAuth('mozo/'+this.props.user.id+'/solicitudes', headers)
             .then(res => {
-                this.setState(state => ({solicitudes: res.data}))
+                this.setState(state => ({solicitudes: res.data.reverse()}))
                 wait(2000).then(res => this.setState(state => ({flag: true})))
             })
             .catch(err => console.log(err));

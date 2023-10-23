@@ -28,8 +28,9 @@ class CreateOrder extends React.Component{
     }
 
     getMenu = () => {
+        console.log(this.state);
         const headers= {
-            auth: {username: this.props.content.email, password: this.props.content.pass}
+            auth: {username: this.state.content.email, password: this.state.content.pass}
         }
         return API.getAuth('menu/'+7, headers)
     }
@@ -37,15 +38,16 @@ class CreateOrder extends React.Component{
     formComponent = () => <StepForm menu={this.getMenu} create={this.doCreate} {...this.props}/>
 
     doCreate = (plt, beb) =>{
+        console.log(this.state);
         console.log(plt);
         console.log(beb);
         const headers= {
-            auth: {username: this.props.content.email, password: this.props.content.pass}
+            auth: {username: this.state.content.email, password: this.state.content.pass}
         }
         this.setState(state => ({flag: true}))
         API.post('orden/new', {
-            mesaId: this.props.content.mesaId,
-            mozoId: this.props.content.id,
+            mesaId: this.state.content.mesaId,
+            mozoId: this.state.content.id,
             bebidas: beb,
             platos: plt
         }, headers)

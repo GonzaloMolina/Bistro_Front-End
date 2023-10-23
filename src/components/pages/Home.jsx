@@ -35,7 +35,7 @@ class Home extends React.Component {
             this.setState(state => ({mesas: !this.props.user.mesas}));
             this.setState(state => ({mesas: this.props.user.mesas}));
             this.setState(state => ({solicitudes: !this.props.user.peticiones}));
-            this.setState(state => ({solicitudes: this.props.user.peticiones}));
+            this.setState(state => ({solicitudes: this.props.user.peticiones.reverse()}));
         }
     }
 
