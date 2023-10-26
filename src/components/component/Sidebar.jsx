@@ -32,7 +32,6 @@ class Sidebar extends React.Component {
             width: this.state.anchoNav
         }
         const { sidebarVisible } = this.state;
-        console.log(this.props.mesaId);
         return (
             <React.Fragment>
                 <IconContext.Provider value={{color: '#faf60e' }}>
@@ -67,6 +66,7 @@ class Sidebar extends React.Component {
                                                         email: this.props.email,
                                                         pass: this.props.pass,
                                                         mesas: this.props.mesas, 
+                                                        jefe: this.props.jefe,
                                                         mesaId: elem, 
                                                         peticiones: this.props.peticiones 
                                                     }}}
@@ -86,6 +86,7 @@ class Sidebar extends React.Component {
                                                         email: this.props.email,
                                                         pass: this.props.pass,
                                                         mesas: this.props.mesas, 
+                                                        jefe: this.props.jefe,
                                                         mesaId: elem, 
                                                         peticiones: this.props.peticiones 
                                                     }}}
@@ -99,16 +100,17 @@ class Sidebar extends React.Component {
                             )}
 
                             <li className='nav-text' onClick={() => this.showSidebar()}>
-                                <Link to={{
-                                    pathname: '/solicitudes',
+                            <Link to={{
+                                pathname: '/solicitudes',
                                     state: { 
                                         id: this.props.id,
                                         email: this.props.email,
                                         pass: this.props.pass,
                                         mesas: this.props.mesas, 
+                                        jefe: this.props.jefe,
                                         peticiones: this.props.peticiones 
-                                    }}
-                                }>
+                                }}}
+                            >
                                     <AiOutlineMail size={20} />
                                     <span style={{ fontFamily: 'Cinzel' }}> Solicitudes </span>
                                 </Link>
@@ -117,7 +119,17 @@ class Sidebar extends React.Component {
                             {sidebarData.map((elem, index) => {
                                 return (
                                     <li key={index} className='nav-text' onClick={() => this.showSidebar()}>
-                                        <Link to={elem.path}>
+                                        <Link to={{
+                                            pathname: elem.path,
+                                            state: { 
+                                                id: this.props.id,
+                                                email: this.props.email,
+                                                pass: this.props.pass,
+                                                mesas: this.props.mesas, 
+                                                jefe: this.props.jefe,
+                                                peticiones: this.props.peticiones 
+                                            }
+                                        }}>
                                             {elem.icon}
                                             <span style={{ fontFamily: 'Cinzel' }}> {elem.title}</span>
                                         </Link>

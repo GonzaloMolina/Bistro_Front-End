@@ -10,7 +10,8 @@ class LogIn extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        form: this.formComponent()
+        form: this.formComponent(),
+        error: undefined
       };
     }
     
@@ -27,6 +28,7 @@ class LogIn extends React.Component {
             nombre: res.data.nombre,
             apellido: res.data.apellido,
             email: email,
+            jafe: res.data.jefe,
             password: password,
             mesas: res.data.mesas,
             peticiones: res.data.peticiones
@@ -35,12 +37,31 @@ class LogIn extends React.Component {
           this.props.history.push('/home', content)
       })
       .catch(error => {
-        console.log(error)
-        this.setState({form: !this.formComponent(error.response.data.title)})
-        this.setState({form: this.formComponent(error.response.data.title)})
+        if(error.code === 'ERR_NETWORK'){
+          this.setState(state => ({error: 'El Backend esta Apagado'}))
+        }
+        else{
+        }
       })
     }
     
+    prompError(){
+      return (
+        <div class="card text-white bg-danger" style={{margin: '5%'}}>
+          <div class="card-header">
+            ERROR
+          </div>
+          <div class="card-body">
+            <p>{this.state.error}</p>
+            <button 
+              type='button' 
+              className='btn btn-secondary'
+              onClick={() => this.setState(state => ({error: undefined}))}
+            > Ok </button>
+          </div>
+        </div>
+      )
+    }
     
     render() {
       return (
@@ -59,7 +80,7 @@ class LogIn extends React.Component {
                 position:'center',
                 marginLeft: 'auto', 
                 marginRight: 'auto'}}>
-                  {this.state.form}
+                  {this.state.error? this.prompError(): this.state.form}
               </div>
             </div>
         </React.Fragment>

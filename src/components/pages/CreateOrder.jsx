@@ -20,7 +20,6 @@ class CreateOrder extends React.Component{
     }
 
     componentDidMount(){
-        console.log(this.props);
         if(this.props.content === undefined){this.props.history.push('/');}
         else{
             this.setState(state => ({content: this.props.content}));
@@ -28,11 +27,11 @@ class CreateOrder extends React.Component{
     }
 
     getMenu = () => {
-        console.log(this.state);
+        console.log(this.state.content);
         const headers= {
             auth: {username: this.state.content.email, password: this.state.content.pass}
         }
-        return API.getAuth('menu/'+7, headers)
+        return API.getAuth('menu/'+this.state.content.menuId, headers)
     }
 
     formComponent = () => <StepForm menu={this.getMenu} create={this.doCreate} {...this.props}/>

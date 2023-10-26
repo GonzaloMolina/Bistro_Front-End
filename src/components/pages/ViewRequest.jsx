@@ -267,7 +267,7 @@ class ViewRequest extends React.Component{
                         <div className='btn-holder'>
                                 <AiOutlineArrowLeft 
                                     className="btnc"
-                                    onClick={() => this.props.history.push('/solicitudes', this.props.content.info)}
+                                    onClick={() => this.props.history.push('/solicitudes', this.state.info)}
                                     style={{backgroundColor: '#faf60e', marginLeft:'20px', borderRadius: '10px', fontSize: '1.5em'}}
                                 />
                         </div>

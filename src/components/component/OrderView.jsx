@@ -42,14 +42,20 @@ class OrderView extends React.Component{
     }
 
     belongs2(e, ls){
-        if(e.salsa !== null){
-            return ls.filter(elem => elem.nombre === e.nombre &&
-                elem.salsa.nombre === e.salsa.nombre
-                ).length > 0
-        }else{
-            return ls.filter(elem => elem.nombre === e.nombre &&
-                elem.acompanamiento.nombre === e.acompanamiento.nombre
-                ).length > 0
+        if((e.acompanamiento === null && e.salsa === null)){
+            return ls.filter(elem => elem.nombre === e.nombre).length > 0;
+        }
+        else{
+            if(e.salsa !== null){
+                return ls.filter(elem => elem.nombre === e.nombre &&
+                    elem.salsa.nombre === e.salsa.nombre
+                    ).length > 0
+            }else{
+                return ls.filter(elem => 
+                        elem.nombre === e.nombre && 
+                        elem.acompanamiento.nombre === e.acompanamiento.nombre
+                    ).length > 0
+            }
         }
     }
     
@@ -85,6 +91,9 @@ class OrderView extends React.Component{
                 .filter(i => i.acompanamiento.id === plato.acompanamiento.id)
                 .length
             }
+        }
+        else{
+            return plts.filter(elem => elem.nombre === plato.nombre).length; 
         }
     }
 
@@ -139,7 +148,10 @@ class OrderView extends React.Component{
                                                         </td>
                                                         <td style={{fontSize: '18px',backgroundColor: 'rgb(211,211,211)'}}>
                                                             {'$'+ e.precio * 
-                                                    (this.cantidadPlt(this.props.content.orden.platos, e)? (this.cantidadPlt(this.props.content.orden.platos, e)) : 1)
+                                                            (this.cantidadPlt(this.props.content.orden.platos, e)? 
+                                                                (this.cantidadPlt(this.props.content.orden.platos, e)) : 
+                                                                1
+                                                            )
                                                             }
                                                         </td>
                                                     </tr>)

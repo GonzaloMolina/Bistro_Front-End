@@ -43,8 +43,7 @@ class SelectStep extends React.Component {
       else{
           return (
           <div
-              className='card'
-              style={{marginTop:'1%', zIndex: '0', backdropFilter: 'blur(10px)', backgroundColor: '#236104',minWidth:'90%'}}
+              style={{marginTop:'1%', zIndex: '0',minWidth:'90%'}}
           >
               {this.getContent().map((elem, key) => 
                   (
@@ -52,18 +51,13 @@ class SelectStep extends React.Component {
                       key={key}
                       style={{
                         alignContent: 'center',
-                        marginTop: '1%',
                         marginBottom: '1%'
                       }}>
-                      <button className='btn btn-secondary' 
+                      <button className='btn btn-success' 
                       onClick={() => this.props.select(elem)}
                       style={{
                         alignContent: 'center',
-                        padding: '0',
-                        fontSize:'20px',
-                        width: '100%',
-                        backgroundColor:'rgba(179, 241, 178, 0.5)',
-                        color:'black'
+                        width: '80%'
                       }}>
                           {elem.nombre}
                       </button>

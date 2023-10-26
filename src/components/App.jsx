@@ -9,6 +9,7 @@ import View from './pages/View';
 import Request from './pages/Request';
 import ViewRequest from './pages/ViewRequest';
 import CreateRequest from './pages/CreateRequest';
+import Info from './pages/Info';
 
 
 export default class App extends React.Component{
@@ -54,6 +55,12 @@ export default class App extends React.Component{
                 <Switch>
                     <Route exact path="/redactar" render=
                         {props => <CreateRequest content={props.location.state}/> } 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/info" render=
+                        {props => <Info content={props.location.state}/> } 
                     />
                 </Switch>
 

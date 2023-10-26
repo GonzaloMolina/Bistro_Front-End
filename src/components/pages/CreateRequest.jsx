@@ -15,6 +15,7 @@ class CreateRquest extends React.Component{
             id: 0,
             email: '',
             password: '',
+            jefe: '',
             mesas: [],
             peticiones: [],
             asunto: '',
@@ -28,6 +29,7 @@ class CreateRquest extends React.Component{
         if(this.props.content === undefined){this.props.history.push('/')}
         else{
             this.setState(state => ({id: this.props.content.id}));
+            this.setState(state => ({jefe: this.props.content.jefe}));
             this.setState(state => ({email: this.props.content.email}));
             this.setState(state => ({password: this.props.content.pass}));
             this.setState(state => ({mesas: this.props.content.mesas}));
@@ -47,7 +49,7 @@ class CreateRquest extends React.Component{
             body: txt,
             empleadoId: this.state.id,
             origin: this.state.email,
-            destino: 'axel.lopez.garabal@gmail.com'
+            destino: this.state.jefe
         }
         this.setState(state => ({flag: false}));
         API.post('peticion/new',body, head)
@@ -61,8 +63,20 @@ class CreateRquest extends React.Component{
         .catch(err => console.log(err))
     }
 
+    content(){
+        return {
+            id: this.state.id,
+            jefe: this.state.jefe,
+            mesas: this.state.mesas,
+            peticiones: this.state.peticiones,
+            email: this.state.email,
+            pass: this.state.password,
+        }
+    }
+
     renderForm(){
         if(this.state.flag){
+            console.log(this.state)
             return (
                 <div>
                     <div className='card' 
@@ -187,7 +201,7 @@ class CreateRquest extends React.Component{
                         <div className='btn-holder'>
                                 <AiOutlineArrowLeft 
                                     className="btnc"
-                                    onClick={() => this.props.history.push('/solicitudes', this.props.content)}
+                                    onClick={() => this.props.history.push('/solicitudes', this.content())}
                                     style={{backgroundColor: '#faf60e', marginLeft:'20px', borderRadius: '10px', fontSize: '1.5em'}}
                                 />
                         </div>
