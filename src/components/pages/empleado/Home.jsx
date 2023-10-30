@@ -1,9 +1,9 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import Sidebar from '../component/Sidebar';
-import Feed from '../component/Feed';
-import ErrorMessage from '../component/ErrorMessage';
-import logo from "../img/bistrot.jpg";
+import Sidebar from '../../component/Sidebar';
+import Feed from '../../component/Feed';
+import ErrorMessage from '../../component/ErrorMessage';
+import logo from "../../img/bistrot.jpg";
 
 
 class Home extends React.Component {

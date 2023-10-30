@@ -1,16 +1,16 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import Sidebar from '../component/Sidebar';
-import ErrorMessage from '../component/ErrorMessage';
-import '../../styles/table.css'
-import API from '../../service/api';
+import Sidebar from '../../component/Sidebar';
+import ErrorMessage from '../../component/ErrorMessage';
+import '../../../styles/table.css'
+import API from '../../../service/api';
 import {AiOutlinePlus, AiOutlineReload, AiOutlineMinus} from 'react-icons/ai';
 import { wait } from '@testing-library/user-event/dist/utils';
-import spin from '../img/Animation -SpinLoading.json';
+import spin from '../../img/Animation -SpinLoading.json';
 import Lottie from 'lottie-react';
-import f1 from "../img/t1.jpg";
-import f2 from "../img/t2.jpg";
-import f3 from "../img/t3.png";
+import f1 from "../../img/t1.jpg";
+import f2 from "../../img/t2.jpg";
+import f3 from "../../img/t3.png";
 
 class Table extends React.Component {
     constructor(props){
@@ -103,7 +103,8 @@ class Table extends React.Component {
                 mesas: this.state.mesas,
                 peticiones: this.state.peticiones,
                 orden: this.state.orden,
-                cuenta: this.state.cuenta
+                cuenta: this.state.cuenta,
+                jefe: this.state.jefe
             }
     }
 
@@ -121,7 +122,7 @@ class Table extends React.Component {
             const headers= {
                 auth: {username: this.state.email, password: this.state.pass}
             }
-            const path = "orden/"+this.state.content.mesaId+"/"+this.state.orden.id;
+            const path = "orden/"+this.state.mesaId+"/"+this.state.orden.id;
             API.deleteAuth(path, headers)
             .then(res => {
                 console.log(res.status)
@@ -139,7 +140,7 @@ class Table extends React.Component {
             const headers= {
                 auth: {username: this.state.email, password: this.state.pass}
             }
-            const path = "mesa/"+this.state.content.mesaId+"/release";
+            const path = "mesa/"+this.state.mesaId+"/release";
             API.getAuth(path, headers)
             .then(res => {
                 console.log(res.status)
@@ -192,7 +193,7 @@ class Table extends React.Component {
                                     style={{margin:'1%', fontSize: '18px'}}
                                     onClick={() => this.props.history.push('/view', 
                                         {
-                                            "info":this.state.content, 
+                                            "info":this.content(), 
                                             "orden":this.state.orden
                                         })
                                     }

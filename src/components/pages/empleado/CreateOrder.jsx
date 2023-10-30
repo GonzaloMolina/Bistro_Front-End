@@ -1,12 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import API from '../../service/api';
-import StepForm from '../component/StepForm';
+import API from '../../../service/api';
+import StepForm from '../../component/StepForm';
 import Lottie from 'lottie-react';
-import spin from '../img/Animation -SpinLoading.json';
-import check from '../img/Animation - Check.json';
+import spin from '../../img/Animation -SpinLoading.json';
+import check from '../../img/Animation - Check.json';
 import { wait } from '@testing-library/user-event/dist/utils';
-import logo from "../img/bistrot.jpg";
+import logo from "../../img/bistrot.jpg";
 
 class CreateOrder extends React.Component{
     constructor(props){

@@ -1,13 +1,13 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import Sidebar from '../component/Sidebar';
-import logo from "../img/bistrot.jpg";
-import logo2 from '../img/bistrot2.jpeg';
+import Sidebar from '../../component/Sidebar';
+import logo from "../../img/bistrot.jpg";
+import logo2 from '../../img/bistrot2.jpeg';
 import { AiOutlineCloseSquare } from 'react-icons/ai';
-import ErrorMessage from '../component/ErrorMessage';
-import spin from '../img/Animation -SpinLoading.json';
+import ErrorMessage from '../../component/ErrorMessage';
+import spin from '../../img/Animation -SpinLoading.json';
 import Lottie from 'lottie-react';
-import API from '../../service/api';
+import API from '../../../service/api';
 import { wait } from '@testing-library/user-event/dist/utils';
 
 class Request extends React.Component {

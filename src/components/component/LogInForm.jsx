@@ -8,7 +8,7 @@ class LogInForm extends React.Component{
     constructor(props){
         super(props)
         this.state = { 
-            error: props.error,
+            error: '',
             email: '', 
             password: ''};
     }
@@ -38,7 +38,7 @@ class LogInForm extends React.Component{
             <React.Fragment>
             <div align="center">
                 <div  className="card" style={{margin: "5%", marginTop: "0", backgroundColor: "rgba(43, 143, 50, 0.7)", zIndex:10}} >
-                    <ErrorMessage error={this.state.error}/>
+                    <ErrorMessage error={this.props.error}/>
                     <div>
                         <form style={{margin: "4%"}}>  
                         <div align="left" className="form-group" style={{opacity: "", marginBottom: "10px"}}>
@@ -71,8 +71,7 @@ class LogInForm extends React.Component{
                                 id="Log In" 
                                 onClick={() => {this.logIn()}}
                                 style={{maxWidth: '100%'}}>
-                                    <b>Iniciar Sesion</b>
-                                    
+                                    Iniciar Sesion
                             </button>
                         </div>
                     </form>

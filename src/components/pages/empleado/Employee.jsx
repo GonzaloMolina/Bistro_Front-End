@@ -1,7 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import CardList from '../component/CardList';
-import API from '../../service/api'
+import API from '../../../service/api'
 
 class Employee extends React.Component {
     constructor(props){

@@ -1,9 +1,9 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import Sidebar from '../component/Sidebar';
-import API from '../../service/api';
+import Sidebar from '../../component/Sidebar';
+import API from '../../../service/api';
 import { wait } from '@testing-library/user-event/dist/utils';
-import logo from "../img/bistrot.jpg";
+import logo from "../../img/bistrot.jpg";
 
 
 class Info extends React.Component{

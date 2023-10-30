@@ -14,6 +14,7 @@ class OrderView extends React.Component{
     }
 
     componentDidMount(){
+        console.log(this.props)
         if(this.props.content === undefined){this.props.history.push('/');}
         else{
             this.setState(state => ({content: this.props.content.info}))

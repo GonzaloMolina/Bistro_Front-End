@@ -1,11 +1,11 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import logo from "../img/bistrot.jpg";
-import API from '../../service/api';
+import logo from "../../img/bistrot.jpg";
+import API from '../../../service/api';
 import Lottie from 'lottie-react';
-import spin from '../img/Animation -SpinLoading.json';
-import check from '../img/Animation - Check.json'
+import spin from '../../img/Animation -SpinLoading.json';
+import check from '../../img/Animation - Check.json'
 import { wait } from '@testing-library/user-event/dist/utils';
 
 class CreateRquest extends React.Component{
