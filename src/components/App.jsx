@@ -13,6 +13,10 @@ import Info from './pages/empleado/Info';
 
 import LogInAdmin from './pages/admin/LogInAdmin';
 import HomeAdmin from './pages/admin/HomeAdmin';
+import Employee from './pages/admin/Employee';
+import MesasAdmin from './pages/admin/MesasAdmin';
+import SolicitudesAdmin from './pages/admin/SolicitudesAdmin';
+import OrdenesAdmin from './pages/admin/OrdenesAdmin';
 
 export default class App extends React.Component{
     render(){
@@ -75,6 +79,30 @@ export default class App extends React.Component{
                 <Switch>
                     <Route exact path="/admin/home" render=
                         {props => <HomeAdmin content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/empleados" render=
+                        {props => <Employee content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/mesas" render=
+                        {props => <MesasAdmin content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/ordenes" render=
+                        {props => <OrdenesAdmin content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/solicitudes" render=
+                        {props => <SolicitudesAdmin content={props.location.state}/>} 
                     />
                 </Switch>
 

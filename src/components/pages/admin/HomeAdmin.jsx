@@ -1,25 +1,17 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import { Link } from 'react-router-dom/cjs/react-router-dom';
-
-const secciones = [
-    {seccion: 'Empleados',link: 'empleados', descripcion: 'administra a tus empleados', sub: []},
-    {seccion: 'Mesas',link: 'mesas', descripcion: 'Agrega, observa o elimina las mesas', sub: []},
-    {seccion: 'Ordenes',link: 'ordenes', descripcion: 'Las ordenes que se han realizado hasta el momento', sub: []},
-    {seccion: 'Solicitudes',link: 'solicitudes', descripcion: 'Aprueba o rechaza las peticiones de tus empleados', sub: []},
-    {seccion: 'Info personal',link: 'info', descripcion: 'Revisa tu informacion ya que tus empleados pueden nesecitarla', sub: []},
-    {seccion: 'Ayuda',link: 'help'},
-]
+import secciones from './secciones';
+import SideBarAdmin from '../../component/SideBarAdmin';
 
 class HomeAdmin extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            name: "",
-            admin: "",
-            email: "",
-            direccion: "",
-            tel: "",
+            name: "Il mondo",
+            admin: "Axel LG",
+            email: "axel.lg@outlook.com",
+            direccion: "no",
+            tel: "nro",
             empleados: [],
             mesas: [],
             ordenes: [],
@@ -28,7 +20,8 @@ class HomeAdmin extends React.Component{
     }
 
     componentDidMount(){
-        if(this.props.content !== undefined){
+        console.log(this.props.content.email)
+        if(this.props.content.email !== undefined){
             this.setState(state => ({name: this.props.content.name}));
             this.setState(state => ({admin: this.props.content.admin}));
             this.setState(state => ({email: this.props.content.email}));
@@ -40,62 +33,44 @@ class HomeAdmin extends React.Component{
             this.setState(state => ({solicitudes: this.props.content.solicitudes}));
         }
         else{
-            this.props.history.push('/admin/');
+            //this.props.history.push('/admin/');
+        }
+    }
+
+    content() {
+        return {
+            name: this.state.name,
+            admin: this.state.admin,
+            email: this.state.email,
+            direccion: this.state.direccion,
+            tel: this.state.tel,
+            empleados: this.state.empleados,
+            mesas: this.state.mesas,
+            ordenes: this.state.ordenes,
+            solicitudes: this.state.solicitudes,
         }
     }
 
     render(){
         return <React.Fragment>
-            <div style={{     
-                backgroundColor: 'darkblue',
-                height: '80px',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                zIndex: 2
-                }}
-            />
-            <div style={{
-                backgroundColor: 'blue',
-                width: '200px',
-                height: '100vh',
-                display: 'flex',
-                justifyContent: 'center',
-                position: 'fixed',
-                top: 80,
-                left: 0,
-                transition: '850ms',
-                zIndex: 1
-            }}>
-                <ul>
-                {secciones.map(seccion => {
-                        return (
-                            <li>
-                                <Link to=''>{seccion.seccion}</Link>
-                                <ul>
-                                    {seccion.sub? seccion.sub.map(ss => <li>ss</li>) : <div/>}
-                                </ul>
-                            </li>
-                        )
-                    })
-                }
-                </ul>
-            </div>
+            <SideBarAdmin seccion={'Home'} content={this.content()}/>
                 
             <div style={{
                 position:'fixed', 
                 left:200, 
                 marginTop:'3px', 
                 marginLeft: '3px',
+                overflow:'scroll', height:'100%'
             }}>
                 <div className='flex-wrap' style={{ display: 'flex',flexDirection: 'row'}}>
-                    {secciones.map(elem => {
+                    {secciones.map((elem, k) => {
                         if(elem.descripcion  !== undefined){
                             return (
-                                <div className="card" style={{width: "18rem", margin: "3%", marginTop: "2%", borderRadius: '20px'}}>
+                                <div className="card" key={k} style={{width: "18rem", margin: "2%", borderRadius: '20px'}}>
                                     <button 
                                         type='button' 
                                         style={{borderRadius: '20px', height: '150px'}}
-                                        onClick={() => console.log('/admin/'+elem.link)}
+                                        onClick={() => this.props.history.push('/admin'+elem.link, this.content())}
                                     >
                                         <div className="card-body">
                                             <h5 className="card-title">{elem.seccion}</h5>
@@ -105,17 +80,17 @@ class HomeAdmin extends React.Component{
                                 </div>
                             )
                         } else {
-                            return (<div/>)
+                            return (<div key={k}/>)
                         }
                     })}
-                </div>
-
                 <button 
                     type='button' className='btn btn-primary'
                     onClick={() => console.log(this.state)}
                 > 
                     debug
                 </button>
+                </div>
+
             </div>            
 
         </React.Fragment>

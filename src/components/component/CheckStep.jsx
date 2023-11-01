@@ -170,7 +170,7 @@ class CheckStep extends React.Component {
                                         <span>{pla.key.nombre}</span>
                                     </div>
                                     <div className="col">
-                                        <span>{''}</span>
+                                        <span>x{this.props.getLs[0]().filter(p => p.key === pla.key.id).length}</span>
                                     </div>
                                 </div>
                             </div>
