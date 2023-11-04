@@ -15,6 +15,7 @@ class MesasAdmin extends React.Component {
             mesas: [],
             ordenes: [],
             solicitudes: [],
+            search: ""
         }
     }
 
@@ -35,6 +36,10 @@ class MesasAdmin extends React.Component {
         }
     }
         
+    handleChange(value, prop) {
+        this.setState(prevState => ({ ...prevState, [prop]: value }));
+    }
+
     content() {
         return {
             name: this.state.name,
@@ -50,7 +55,6 @@ class MesasAdmin extends React.Component {
     }
 
    render() {
-    console.log(this.props.content)
     return (
       <React.Fragment>
         <SideBarAdmin seccion={'Mesas'}  content={this.content()}/>
@@ -58,17 +62,65 @@ class MesasAdmin extends React.Component {
         <div style={{
                 position:'fixed', 
                 left:200, 
-                marginTop:'3px', 
+                marginTop:'0px',
                 marginLeft: '3px',
                 overflow:'scroll', height:'100%'
             }}>
-            <h1>MESAS ADMIN</h1>
-            <button 
-                type='button' className='btn btn-primary'
-                onClick={() => console.log(this.state)}
-            > 
-                debug
-            </button>
+            <div style={{position:'fixed', left:200, height:'100vh', 
+                width: '100%', backgroundColor:'lightgray'}}>
+                <div className='card' style={{zIndex:'2',marginLeft:'1%', width: '100%', backgroundColor:'lightgray', border:'none'}}> 
+                    <div className='row'>
+                        <div className='col'>
+                        <input 
+                            className="form-control" 
+                            type="search" 
+                            align='left'
+                            placeholder="Buscar por identificador de mesa"
+                            value={this.state.search}
+                            onChange={ event => this.handleChange(event.target.value, 'search') }
+                            aria-label="Search"
+                            style={{marginTop:'1%', width: '100%'}}  
+                        />
+                        </div>
+                        <div className='col' align='left'>
+                            <button type="button" class="btn btn-success"
+                                onClick={() => console.log('crear mesa')}
+                                style={{margin:'1%'}}  
+                            >
+                                Crear mesa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='card' style={{
+                    position:'fixed',
+                    margin: '1%',
+                    overflow:'scroll', 
+                    height:'calc(100% - 165px)', 
+                    width: 'calc(100% - 220px)',
+                    zIndex:'1', backgroundColor: 'gray'
+                }}>
+                    <div className='flex-wrap' style={{ display: 'flex',flexDirection: 'row', width: '100%'}}>
+                        {this.state.mesas.filter(mesa => (mesa.id+'').includes(this.state.search)).map((elem, k) => {
+                            return (
+                                <div className="card" key={k} style={{width: "18rem", margin:'1%',marginRight:'3%', borderRadius: '20px'}}>
+                                    <button 
+                                        type='button' 
+                                        style={{borderRadius: '20px', height: '100px'}}
+                                        onClick={() => console.log(elem)}
+                                    >
+                                        <div className="card-body" align='left'>
+                                            <h5 className="card-title">Identificador de mesa: {elem.id}</h5>
+                                            <h6 className="card-subtitle mb-2 text-muted">capacidad: {elem.capacidad}</h6>
+                                        </div>
+                                    </button>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+            </div>
         </div>
       </React.Fragment>
     );

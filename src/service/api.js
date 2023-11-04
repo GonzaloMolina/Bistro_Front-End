@@ -19,7 +19,7 @@ const API = {
     getAuth: (path, header) => axios.get(`${server}${path}`, header).then(res => res),
     logIn: (path, body, header) => axios.post(`${server}${path}`, body, header).then(response => response),
     post: (path, body, head) => axios.post(`${server}${path}`, body, head).then(res => res),
-    put: (path, body) => axios.put(`${server}${path}`, body).then(console.log(body)),
+    put: (path, body) => axios.put(`${server}${path}`, body, header).then(console.log(body)),
     delete: path => axios.delete(`${server}${path}`, header).then(response => response),
     deleteAuth: (path, header) => axios.delete(`${server}${path}`, header).then(response => response)
 }

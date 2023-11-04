@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router';
 
 import LogInForm from './components/component/LogInForm';
-import LogIn from './components/pages/LogIn';
+//import LogIn from './components/pages/LogIn';
 
 
 import { createMemoryHistory } from 'history'
@@ -103,11 +103,13 @@ describe('LogInForm test', () => {
 
 describe('LogIn page test', () => {
   test('', async () => {
+    const f = jest.fn()
     const email = 'E-mail';
     const password = 'Contraseña';
     const btnText = 'Iniciar Sesion';
 
     let mock = createMemoryHistory({ initialEntries: ["/"] });
+    mock.push = f;
 
     const page = render(<Router history={mock}> <LogIn {...{ history: mock }} /> </Router>);
 
@@ -128,6 +130,7 @@ describe('LogIn page test', () => {
     const btn = page.getByText(btnText);
     //antes del click estas en root?
 
-    //fireEvent.click(btn)
+    fireEvent.click(btn)
+    expect(f).toHaveBeenCalledTimes(1);
   });
 });

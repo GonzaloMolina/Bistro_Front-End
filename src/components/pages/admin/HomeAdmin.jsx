@@ -7,11 +7,11 @@ class HomeAdmin extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            name: "Il mondo",
-            admin: "Axel LG",
-            email: "axel.lg@outlook.com",
-            direccion: "no",
-            tel: "nro",
+            name: "",
+            admin: "",
+            email: "",
+            direccion: "",
+            tel: "",
             empleados: [],
             mesas: [],
             ordenes: [],
@@ -20,8 +20,8 @@ class HomeAdmin extends React.Component{
     }
 
     componentDidMount(){
-        console.log(this.props.content.email)
-        if(this.props.content.email !== undefined){
+        console.log(this.props)
+        if(this.props.content !== undefined && this.props.content.email !== undefined){
             this.setState(state => ({name: this.props.content.name}));
             this.setState(state => ({admin: this.props.content.admin}));
             this.setState(state => ({email: this.props.content.email}));
@@ -58,9 +58,7 @@ class HomeAdmin extends React.Component{
             <div style={{
                 position:'fixed', 
                 left:200, 
-                marginTop:'3px', 
-                marginLeft: '3px',
-                overflow:'scroll', height:'100%'
+                overflow:'scroll', height:'100%', backgroundColor:'lightgray'
             }}>
                 <div className='flex-wrap' style={{ display: 'flex',flexDirection: 'row'}}>
                     {secciones.map((elem, k) => {
@@ -83,14 +81,7 @@ class HomeAdmin extends React.Component{
                             return (<div key={k}/>)
                         }
                     })}
-                <button 
-                    type='button' className='btn btn-primary'
-                    onClick={() => console.log(this.state)}
-                > 
-                    debug
-                </button>
                 </div>
-
             </div>            
 
         </React.Fragment>

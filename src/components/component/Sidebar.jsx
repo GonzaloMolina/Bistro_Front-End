@@ -49,7 +49,7 @@ class Sidebar extends React.Component {
                             <li className='nav-text' onClick={this.toggleMesas}>
                                 <Link to="#">
                                 <BsPencilSquare />
-                                <span style={{ fontFamily: 'Cinzel' }} className='head'>Mesas</span>
+                                <span style={{ fontFamily: 'Cinzel' }}>Mesas</span>
                                 </Link>
                             </li>
 
