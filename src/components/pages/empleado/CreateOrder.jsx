@@ -1,12 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import API from '../../service/api';
-import StepForm from '../component/StepForm';
+import API from '../../../service/api';
+import StepForm from '../../component/StepForm';
 import Lottie from 'lottie-react';
-import spin from '../img/Animation -SpinLoading.json';
-import check from '../img/Animation - Check.json';
+import spin from '../../img/Animation -SpinLoading.json';
+import check from '../../img/Animation - Check.json';
 import { wait } from '@testing-library/user-event/dist/utils';
-import logo from "../img/bistrot.jpg";
+import logo from "../../img/bistrot.jpg";
 
 class CreateOrder extends React.Component{
     constructor(props){
@@ -20,7 +20,6 @@ class CreateOrder extends React.Component{
     }
 
     componentDidMount(){
-        console.log(this.props);
         if(this.props.content === undefined){this.props.history.push('/');}
         else{
             this.setState(state => ({content: this.props.content}));
@@ -28,24 +27,26 @@ class CreateOrder extends React.Component{
     }
 
     getMenu = () => {
+        console.log(this.state.content);
         const headers= {
-            auth: {username: this.props.content.email, password: this.props.content.pass}
+            auth: {username: this.state.content.email, password: this.state.content.pass}
         }
-        return API.getAuth('menu/'+7, headers)
+        return API.getAuth('menu/'+this.state.content.menuId, headers)
     }
 
     formComponent = () => <StepForm menu={this.getMenu} create={this.doCreate} {...this.props}/>
 
     doCreate = (plt, beb) =>{
+        console.log(this.state);
         console.log(plt);
         console.log(beb);
         const headers= {
-            auth: {username: this.props.content.email, password: this.props.content.pass}
+            auth: {username: this.state.content.email, password: this.state.content.pass}
         }
         this.setState(state => ({flag: true}))
         API.post('orden/new', {
-            mesaId: this.props.content.mesaId,
-            mozoId: this.props.content.id,
+            mesaId: this.state.content.mesaId,
+            mozoId: this.state.content.id,
             bebidas: beb,
             platos: plt
         }, headers)

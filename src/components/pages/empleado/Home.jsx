@@ -1,9 +1,9 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import Sidebar from '../component/Sidebar';
-import Feed from '../component/Feed';
-import ErrorMessage from '../component/ErrorMessage';
-import logo from "../img/bistrot.jpg";
+import Sidebar from '../../component/Sidebar';
+import Feed from '../../component/Feed';
+import ErrorMessage from '../../component/ErrorMessage';
+import logo from "../../img/bistrot.jpg";
 
 
 class Home extends React.Component {
@@ -15,6 +15,7 @@ class Home extends React.Component {
             apellido: "",
             email: "",
             password: "",
+            jefe: "",
             mesas: [],
             solicitudes: []
         }
@@ -24,6 +25,7 @@ class Home extends React.Component {
         if(this.props.user === undefined){this.props.history.push('/')}
         else{
             this.setState(state => ({id: this.props.user.id}));
+            this.setState(state => ({jefe: this.props.user.jafe}));
             this.setState(state => ({nombre: !this.props.user.nombre}));
             this.setState(state => ({nombre: this.props.user.nombre}));
             this.setState(state => ({apellido: !this.props.user.apellido}));
@@ -35,7 +37,7 @@ class Home extends React.Component {
             this.setState(state => ({mesas: !this.props.user.mesas}));
             this.setState(state => ({mesas: this.props.user.mesas}));
             this.setState(state => ({solicitudes: !this.props.user.peticiones}));
-            this.setState(state => ({solicitudes: this.props.user.peticiones}));
+            this.setState(state => ({solicitudes: this.props.user.peticiones.reverse()}));
         }
     }
 
@@ -80,6 +82,7 @@ class Home extends React.Component {
                     mesas={this.state.mesas} 
                     peticiones={this.state.solicitudes}
                     email={this.state.email}
+                    jefe={this.state.jefe}
                     pass={this.state.password}
                 />
 

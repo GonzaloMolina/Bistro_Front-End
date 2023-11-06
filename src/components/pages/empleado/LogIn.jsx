@@ -1,16 +1,17 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 
-import LogInForm from "../component/LogInForm";
-import API from "../../service/api";
+import LogInForm from "../../component/LogInForm";
+import API from "../../../service/api";
 
-import logo from "../img/Bistro_logo.png";
+import logo from "../../img/Bistro_logo.png";
 
 class LogIn extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        form: this.formComponent()
+        form: this.formComponent(),
+        error: undefined
       };
     }
     
@@ -27,20 +28,45 @@ class LogIn extends React.Component {
             nombre: res.data.nombre,
             apellido: res.data.apellido,
             email: email,
+            jafe: res.data.jefe,
             password: password,
             mesas: res.data.mesas,
             peticiones: res.data.peticiones
           }
-          console.log(content);
           this.props.history.push('/home', content)
       })
       .catch(error => {
-        console.log(error)
-        this.setState({form: !this.formComponent(error.response.data.title)})
-        this.setState({form: this.formComponent(error.response.data.title)})
+        if(error.code === 'ERR_NETWORK'){
+          this.setState(state => ({error: 'El Backend esta Apagado'}))
+        }
+        else{
+          if(error.code === 'ERR_BAD_REQUEST'){
+            this.setState(state => ({form: !this.formComponent('error en mail/password')}))
+            this.setState(state => ({form: this.formComponent('error en mail/password')}))
+          } else {
+            console.log(error);
+          }
+        }
       })
     }
     
+    prompError(){
+      return (
+        <div className="card text-white bg-danger" style={{margin: '5%'}}>
+          <div className="card-header">
+            ERROR
+          </div>
+          <div className="card-body">
+            <p>{this.state.error}</p>
+            <button 
+              type='button' 
+              className='btn btn-secondary'
+              onClick={() => this.setState(state => ({error: undefined}))}
+            > Ok </button>
+          </div>
+        </div>
+      )
+    }
     
     render() {
       return (
@@ -59,7 +85,7 @@ class LogIn extends React.Component {
                 position:'center',
                 marginLeft: 'auto', 
                 marginRight: 'auto'}}>
-                  {this.state.form}
+                  {this.state.error? this.state.form: this.state.form}
               </div>
             </div>
         </React.Fragment>

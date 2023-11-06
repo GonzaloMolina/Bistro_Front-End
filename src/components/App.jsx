@@ -1,15 +1,22 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
-import Home from './pages/Home';
-import LogIn from './pages/LogIn';
-import Table from './pages/Table';
-import CreateOrder from './pages/CreateOrder';
-import View from './pages/View';
-import Request from './pages/Request';
-import ViewRequest from './pages/ViewRequest';
-import CreateRequest from './pages/CreateRequest';
+import Home from './pages/empleado/Home';
+import LogIn from './pages/empleado/LogIn';
+import Table from './pages/empleado/Table';
+import CreateOrder from './pages/empleado/CreateOrder';
+import View from './pages/empleado/View';
+import Request from './pages/empleado/Request';
+import ViewRequest from './pages/empleado/ViewRequest';
+import CreateRequest from './pages/empleado/CreateRequest';
+import Info from './pages/empleado/Info';
 
+import LogInAdmin from './pages/admin/LogInAdmin';
+import HomeAdmin from './pages/admin/HomeAdmin';
+import Employee from './pages/admin/Employee';
+import MesasAdmin from './pages/admin/MesasAdmin';
+import SolicitudesAdmin from './pages/admin/SolicitudesAdmin';
+import OrdenesAdmin from './pages/admin/OrdenesAdmin';
 
 export default class App extends React.Component{
     render(){
@@ -58,8 +65,50 @@ export default class App extends React.Component{
                 </Switch>
 
                 <Switch>
+                    <Route exact path="/info" render=
+                        {props => <Info content={props.location.state}/> } 
+                    />
+                </Switch>
+
+                <Switch>
                     <Route exact path="/" render=
                         {props => <LogIn {...props}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/home" render=
+                        {props => <HomeAdmin content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/empleados" render=
+                        {props => <Employee content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/mesas" render=
+                        {props => <MesasAdmin content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/ordenes" render=
+                        {props => <OrdenesAdmin content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/solicitudes" render=
+                        {props => <SolicitudesAdmin content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/" render=
+                        {props => <LogInAdmin {...props}/>} 
                     />
                 </Switch>
             </BrowserRouter>

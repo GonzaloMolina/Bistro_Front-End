@@ -1,53 +1,60 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import Sidebar from '../component/Sidebar';
-import ErrorMessage from '../component/ErrorMessage';
-import '../../styles/table.css'
-import API from '../../service/api';
+import Sidebar from '../../component/Sidebar';
+import ErrorMessage from '../../component/ErrorMessage';
+import '../../../styles/table.css'
+import API from '../../../service/api';
 import {AiOutlinePlus, AiOutlineReload, AiOutlineMinus} from 'react-icons/ai';
 import { wait } from '@testing-library/user-event/dist/utils';
-import spin from '../img/Animation -SpinLoading.json';
+import spin from '../../img/Animation -SpinLoading.json';
 import Lottie from 'lottie-react';
+import f1 from "../../img/t1.jpg";
+import f2 from "../../img/t2.jpg";
+import f3 from "../../img/t3.png";
 
 class Table extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             id: 0,
-            email: "", 
+            email: "",
+            menuId: 0,
             pass: "",
             mesaId: 0,
             mesas: [],
             peticiones: [],
+            jefe: "",
             cuenta: 0,
             orden: undefined,
-            flag: true
+            flag: true,
+            index: Math.floor(Math.random() * 3)
         }
     }
 
     componentDidMount(){
-        console.log(this.props);
-        this.setState(state => ({
-            id: this.props.content.id,
-            email: this.props.content.email,
-            pass: this.props.content.pass,
-            mesaId: this.props.content.mesaId,
-            mesas: this.props.content.mesas,
-            peticiones: this.props.content.peticiones
-        }))
         if(this.props.content === undefined){
             this.props.history.push("/");
         }
         else{
-            this.setState(state => ({content: this.props.content}))
+            console.log(this.props.content)
+            this.setState(state => ({
+                id: this.props.content.id,
+                email: this.props.content.email,
+                pass: this.props.content.pass,
+                mesaId: this.props.content.mesaId,
+                mesas: this.props.content.mesas,
+                jefe: this.props.content.jefe,
+                peticiones: this.props.content.peticiones
+            }))
             const headers= {
                 auth: {username: this.state.email,password: this.state.pass}
             }
             API.getAuth('mesa/'+this.props.content.mesaId, headers)
             .then(res => {
-                console.log(res.data);
+                this.setState(state => ({menuId: res.data.menuId}));
                 this.setState(state => ({orden: res.data.orden}));
                 this.setState(state => ({cuenta: res.data.cuenta}));
+                console.log(this.state);
                 wait(2000).then(res => this.setState(state => ({flag: false})))
             })
             .catch(error => {
@@ -60,11 +67,14 @@ class Table extends React.Component {
         if(this.props.content !== undefined && this.props.content.mesaId !== this.state.mesaId){
             this.setState(state => ({flag: true}))
             this.setState(state => ({
+                id: this.props.content.id,
                 email: this.props.content.email,
                 pass: this.props.content.pass,
                 mesaId: this.props.content.mesaId,
                 mesas: this.props.content.mesas,
-                peticiones: this.props.content.peticiones
+                jefe: this.props.content.jefe,
+                peticiones: this.props.content.peticiones,
+                index: Math.floor(Math.random() * 3)
             }))
             this.setState(state => ({content: this.props.content}))
             const headers= {
@@ -72,7 +82,7 @@ class Table extends React.Component {
             }
             API.getAuth('mesa/'+this.props.content.mesaId, headers)
             .then(res => {
-                console.log(res.data);
+                console.log(this.state);
                 this.setState(state => ({orden: res.data.orden}));
                 this.setState(state => ({cuenta: res.data.cuenta}));
                 wait(2000).then(res => this.setState(state => ({flag: false})))
@@ -83,8 +93,23 @@ class Table extends React.Component {
         }
     }
 
+    content = () => {
+        return {
+                email: this.state.email,
+                pass: this.state.pass,
+                mesaId: this.state.mesaId,
+                id: this.state.id,
+                menuId: this.state.menuId,
+                mesas: this.state.mesas,
+                peticiones: this.state.peticiones,
+                orden: this.state.orden,
+                cuenta: this.state.cuenta,
+                jefe: this.state.jefe
+            }
+    }
+
     handleOnClickCreate(){
-        this.props.history.push('/create', this.state.content);
+        this.props.history.push('/create', this.content());
     }
 
     handleOnClickUpdate(){
@@ -97,7 +122,7 @@ class Table extends React.Component {
             const headers= {
                 auth: {username: this.state.email, password: this.state.pass}
             }
-            const path = "orden/"+this.state.content.mesaId+"/"+this.state.orden.id;
+            const path = "orden/"+this.state.mesaId+"/"+this.state.orden.id;
             API.deleteAuth(path, headers)
             .then(res => {
                 console.log(res.status)
@@ -115,7 +140,7 @@ class Table extends React.Component {
             const headers= {
                 auth: {username: this.state.email, password: this.state.pass}
             }
-            const path = "mesa/"+this.state.content.mesaId+"/release";
+            const path = "mesa/"+this.state.mesaId+"/release";
             API.getAuth(path, headers)
             .then(res => {
                 console.log(res.status)
@@ -168,7 +193,7 @@ class Table extends React.Component {
                                     style={{margin:'1%', fontSize: '18px'}}
                                     onClick={() => this.props.history.push('/view', 
                                         {
-                                            "info":this.state.content, 
+                                            "info":this.content(), 
                                             "orden":this.state.orden
                                         })
                                     }
@@ -193,17 +218,24 @@ class Table extends React.Component {
         }
     }
 
+    fondo(){return [f1, f2, f3][this.state.index]}
+
     render(){
         return (
             <React.Fragment>
-            <div  className='base'>
+            <div  className='base'
+                style={{
+                    backgroundImage: `url(${this.fondo()})`
+                }}
+            >
             <div style={{zIndex:9}}>
                     <Sidebar 
                         id={this.state.id}
                         mesas={this.state.mesas}
                         peticiones={this.state.peticiones}
+                        jefe={this.state.jefe}
                         email={this.state.email}
-                        pass={this.state.password}
+                        pass={this.state.pass}
                         mesaId={this.state.mesaId}
                     />
                 </div>

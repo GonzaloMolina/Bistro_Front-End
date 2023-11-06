@@ -1,12 +1,13 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import Sidebar from '../component/Sidebar';
-import logo from "../img/bistrot.jpg";
+import Sidebar from '../../component/Sidebar';
+import logo from "../../img/bistrot.jpg";
+import logo2 from '../../img/bistrot2.jpeg';
 import { AiOutlineCloseSquare } from 'react-icons/ai';
-import ErrorMessage from '../component/ErrorMessage';
-import spin from '../img/Animation -SpinLoading.json';
+import ErrorMessage from '../../component/ErrorMessage';
+import spin from '../../img/Animation -SpinLoading.json';
 import Lottie from 'lottie-react';
-import API from '../../service/api';
+import API from '../../../service/api';
 import { wait } from '@testing-library/user-event/dist/utils';
 
 class Request extends React.Component {
@@ -18,15 +19,18 @@ class Request extends React.Component {
             password: "",
             mesas: [],
             solicitudes: [],
+            jefe: "",
             flag:false,
+            index: Math.floor(Math.random() * 2)
         }
     }
 
     componentDidMount(){
         console.log(this.props)
-        if(this.props.user === undefined){this.props.history.push('/')}
+        if(this.props.user.jefe === undefined){this.props.history.push('/')}
         else{
             this.setState(state => ({id: this.props.user.id}));
+            this.setState(state => ({jefe: this.props.user.jefe}));
             this.setState(state => ({email: !this.props.user.email}));
             this.setState(state => ({email: this.props.user.email}));
             this.setState(state => ({password: !this.props.user.pass}));
@@ -38,7 +42,7 @@ class Request extends React.Component {
             }
             API.getAuth('mozo/'+this.props.user.id+'/solicitudes', headers)
             .then(res => {
-                this.setState(state => ({solicitudes: res.data}))
+                this.setState(state => ({solicitudes: res.data.reverse()}))
                 wait(2000).then(res => this.setState(state => ({flag: true})))
             })
             .catch(err => console.log(err));
@@ -149,6 +153,7 @@ class Request extends React.Component {
             id: this.state.id,
             email: this.state.email, 
             pass: this.state.password,
+            jefe: this.state.jefe,
             mesas: this.state.mesas,
             peticiones: this.state.solicitudes
         }
@@ -255,7 +260,7 @@ class Request extends React.Component {
     render(){
         return (
             <div style={{
-                backgroundImage: `url(${logo})`,
+                backgroundImage: `url(${[logo,logo2][1]})`,
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
@@ -272,6 +277,7 @@ class Request extends React.Component {
                         mesas={this.state.mesas} 
                         peticiones={this.state.solicitudes}
                         email={this.state.email}
+                        jefe={this.state.jefe}
                         pass={this.state.password}
                     />
                 </div>

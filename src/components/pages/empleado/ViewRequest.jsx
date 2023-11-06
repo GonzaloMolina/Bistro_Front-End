@@ -2,11 +2,11 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
-import logo from "../img/bistrot.jpg";
-import API from '../../service/api';
+import logo from "../../img/bistrot.jpg";
+import API from '../../../service/api';
 import Lottie from 'lottie-react';
-import spin from '../img/Animation -SpinLoading.json';
-import check from '../img/Animation - Check.json'
+import spin from '../../img/Animation -SpinLoading.json';
+import check from '../../img/Animation - Check.json'
 import { wait } from '@testing-library/user-event/dist/utils';
 
 class ViewRequest extends React.Component{
@@ -267,7 +267,7 @@ class ViewRequest extends React.Component{
                         <div className='btn-holder'>
                                 <AiOutlineArrowLeft 
                                     className="btnc"
-                                    onClick={() => this.props.history.push('/solicitudes', this.props.content.info)}
+                                    onClick={() => this.props.history.push('/solicitudes', this.state.info)}
                                     style={{backgroundColor: '#faf60e', marginLeft:'20px', borderRadius: '10px', fontSize: '1.5em'}}
                                 />
                         </div>

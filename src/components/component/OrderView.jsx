@@ -14,6 +14,7 @@ class OrderView extends React.Component{
     }
 
     componentDidMount(){
+        console.log(this.props)
         if(this.props.content === undefined){this.props.history.push('/');}
         else{
             this.setState(state => ({content: this.props.content.info}))
@@ -42,23 +43,20 @@ class OrderView extends React.Component{
     }
 
     belongs2(e, ls){
-        if(e.acompanamiento === null){
-            return ls.filter(plt => {
-                if(plt.salsa !== null){
-                    return plt.salsa.nombre === e.salsa.nombre;
-                }else{
-                    return false;
-                }
-            }).length > 0;
+        if((e.acompanamiento === null && e.salsa === null)){
+            return ls.filter(elem => elem.nombre === e.nombre).length > 0;
         }
-        else{ 
-            return ls.filter(plt => {
-                if(plt.acompanamiento !== null){
-                    return plt.acompanamiento.nombre === e.acompanamiento.nombre;
-                }else{
-                    return false;
-                }
-            }).length > 0;
+        else{
+            if(e.salsa !== null){
+                return ls.filter(elem => elem.nombre === e.nombre &&
+                    elem.salsa.nombre === e.salsa.nombre
+                    ).length > 0
+            }else{
+                return ls.filter(elem => 
+                        elem.nombre === e.nombre && 
+                        elem.acompanamiento.nombre === e.acompanamiento.nombre
+                    ).length > 0
+            }
         }
     }
     
@@ -83,28 +81,20 @@ class OrderView extends React.Component{
     }
 
     cantidadPlt(plts, plato){
-        if(plato.acompanamiento === null && plato.salsa === null){
-            console.log(plato)
-        }
-        else{
+        if(!(plato.salsa === null && plato.acompanamiento === null)){
             if(plato.acompanamiento === null){
-                return plts.filter(plt => {
-                    if(plt.salsa !== null){
-                        return plt.salsa.nombre === plato.salsa.nombre;
-                    }else{
-                        return false;
-                    }
-                }).length
+                return plts.filter(e => e.nombre === plato.nombre)
+                .filter(i => i.salsa.id === plato.salsa.id)
+                .length
             }
             else{
-                return plts.filter(plt => {
-                    if(plt.acompanamiento !== null){
-                        return plt.acompanamiento.nombre === plato.acompanamiento.nombre;
-                    }else{
-                        return false;
-                    }
-                }).length
+                return plts.filter(e => e.nombre === plato.nombre)
+                .filter(i => i.acompanamiento.id === plato.acompanamiento.id)
+                .length
             }
+        }
+        else{
+            return plts.filter(elem => elem.nombre === plato.nombre).length; 
         }
     }
 
@@ -124,7 +114,7 @@ class OrderView extends React.Component{
                         <div className='btn-holder'>
                                 <AiOutlineArrowLeft 
                                     className="btnc"
-                                    onClick={() => this.props.history.push('/table', this.props.content.info)}
+                                    onClick={() => this.props.history.push('/table', this.state.content)}
                                     style={{backgroundColor: '#faf60e', marginLeft:'20%', borderRadius: '10px', fontSize: '1.5em'}}
                                 />
                         </div>
@@ -155,11 +145,14 @@ class OrderView extends React.Component{
                                                         <td style={{fontSize: '15px',backgroundColor: 'rgb(211,211,211)'}}>{e.nombre}</td>
                                                         <td style={{fontSize: '14px',backgroundColor: 'rgb(211,211,211)'}}>{this.adicional(e)}</td>
                                                         <td style={{fontSize: '15px',backgroundColor: 'rgb(211,211,211)'}}>
-                                                            x{this.cantidadPlt(this.props.content.orden.platos, e)}
+                                                            {(this.cantidadPlt(this.props.content.orden.platos, e)? (this.cantidadPlt(this.props.content.orden.platos, e)) : 1)}
                                                         </td>
                                                         <td style={{fontSize: '18px',backgroundColor: 'rgb(211,211,211)'}}>
-                                                            {'$'+
-                                                                e.precio * this.cantidadPlt(this.props.content.orden.platos, e)
+                                                            {'$'+ e.precio * 
+                                                            (this.cantidadPlt(this.props.content.orden.platos, e)? 
+                                                                (this.cantidadPlt(this.props.content.orden.platos, e)) : 
+                                                                1
+                                                            )
                                                             }
                                                         </td>
                                                     </tr>)
