@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router';
 import SideBarAdmin from '../../component/SideBarAdmin';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import API from '../../../service/api';
 
 class Employee extends React.Component {
     constructor(props){
@@ -63,6 +64,18 @@ class Employee extends React.Component {
         console.log(this.state);
     }
 
+    delete(){
+        const body = {
+            admin: this.state.email,
+            target: this.state.chosenOne.id,
+        }
+        API.postAdmin('restaurante/deleteEmployee', body)
+        .then(res => {console.log(res.data);
+            this.setState(state => ({empleados: res.data.empleados}));
+            this.setState(state => ({open: false}));
+        }).catch(err => console.log(err))
+    }
+
     listEmployees(){
         return (
         <div className='flex-wrap' style={{ display: 'flex',flexDirection: 'row', width: '100%'}}>
@@ -97,23 +110,45 @@ class Employee extends React.Component {
                 >
                     < AiOutlineArrowLeft />
                 </button>
-
-                <div className='card' align='center' style={{ width: '50%', marginLeft: '7%', marginTop: '2%'}}>
-                    <div className="card-body" align='left'>
-                        <h5 className="card-title">Identificador:  {this.state.chosenOne.id}</h5>
-                        <h6 className="card-subtitle mb-2 text-muted">E-mail:  {this.state.chosenOne.email}</h6>
-                        <h6 className="card-subtitle mb-2 text-muted">Nombre:  {this.state.chosenOne.nombre}</h6>
-                        <h6 className="card-subtitle mb-2 text-muted">Apellido:  {this.state.chosenOne.apellido}</h6>
-                        <h6 className="card-subtitle mb-2 text-muted">Solicitudes:  
-                            [{this.state.chosenOne.peticiones.map(sol => sol.id+', ')}]
-                        </h6>
-                        <h6 className="card-subtitle mb-2 text-muted">Mesas asignadas:  
-                            [{this.state.chosenOne.mesas.map(mesa => mesa+', ')}]
-                        </h6>
+                <div align='center'>
+                    <div className='card' align='center' style={{ width: '50%', marginLeft: '7%', marginTop: '2%'}}>
+                        <div className="card-body" align='left'>
+                            <h5 className="card-title">Identificador:  {this.state.chosenOne.id}</h5>
+                            <h6 className="card-subtitle mb-2 text-muted">E-mail:  {this.state.chosenOne.email}</h6>
+                            <h6 className="card-subtitle mb-2 text-muted">Nombre:  {this.state.chosenOne.nombre}</h6>
+                            <h6 className="card-subtitle mb-2 text-muted">Apellido:  {this.state.chosenOne.apellido}</h6>
+                            <h6 className="card-subtitle mb-2 text-muted">Solicitudes:  
+                                [{this.state.chosenOne.peticiones.map(sol => sol.id+', ')}]
+                            </h6>
+                            <h6 className="card-subtitle mb-2 text-muted">Mesas asignadas:  
+                                [{this.state.chosenOne.mesas.map(mesa => mesa+', ')}]
+                            </h6>
+                        </div>
                     </div>
+                    <button type='button' style={{borderRadius: "25px", marginTop: '1%', marginBottom: '1%'}}
+                    className='btn btn-danger' 
+                    onClick={() => this.delete()}
+                    >
+                        Borrar empleado
+                    </button>
                 </div>
             </div>
         )
+    }
+
+    registerEmp(){
+        const body = {
+            nombre: "nameT",
+            apellido: "lastT",
+            mail: "test@gmail.com",
+            password: "temp",
+            restoEmail: this.state.email,
+        }
+        API.postAdmin('restaurante/employee', body)
+        .then(res => {console.log(res.data);
+            this.setState(state => ({empleados: res.data.empleados}));
+            //this.setState(state => ({open: false}));
+        }).catch(err => console.log(err))
     }
 
     render() {
@@ -138,8 +173,8 @@ class Employee extends React.Component {
                         />
                         </div>
                         <div className='col' align='left'>
-                            <button type="button" class="btn btn-success"
-                                onClick={() => console.log('crear mesa')}
+                            <button type="button" className="btn btn-success"
+                                onClick={() => this.registerEmp()}
                                 style={{margin:'1%'}}  
                             >
                                 Registrar empleado
