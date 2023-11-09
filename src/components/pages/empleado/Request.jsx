@@ -83,7 +83,7 @@ class Request extends React.Component {
                 <div className="btn-group mr-2 flex-wrap" role="group" aria-label="First group"
                     style={{marginBottom:'0px',marginTop:'2px'}}>
                     <button type='button' className='btn btn-success'
-                            style={{
+                            style={{ backgroundColor: '#AED581',
                                 borderRadius: '10px',
                                 borderTopLeftRadius:'30px',
                                 borderBottomLeftRadius:'30px',
@@ -91,7 +91,7 @@ class Request extends React.Component {
                             }}
                             onClick={() => this.viewRequest(sol.id)}
                         >
-                            <span style={{display: 'block'}}> {sol.asunto} </span>
+                            <span style={{display: 'block', fontSize:'18px'}}> {sol.asunto} </span>
                         </button>
                     
                         {this.renderDBotton(sol)}
@@ -107,7 +107,7 @@ class Request extends React.Component {
                 <div className="btn-group mr-2 flex-wrap" role="group" aria-label="First group"
                     style={{marginBottom:'0px',marginTop:'2px'}}>
                     <button type='button' className='btn btn-danger'
-                            style={{
+                            style={{ backgroundColor: '#F48FB1',
                                 borderRadius: '10px',
                                 marginBottom: '0px', height: '50px',
                                 borderTopLeftRadius:'30px',
@@ -115,7 +115,7 @@ class Request extends React.Component {
                             }}
                             onClick={() => this.viewRequest(sol.id)}
                         >
-                            <span> {sol.asunto} </span>
+                            <span style={{display: 'block', fontSize:'18px'}}> {sol.asunto} </span>
                         </button>
                     
                         {this.renderDBotton(sol)}
@@ -131,7 +131,7 @@ class Request extends React.Component {
                 <div className="btn-group mr-2 flex-wrap" role="group" aria-label="First group"
                     style={{marginBottom:'0px',marginTop:'2px'}}>
                     <button type='button' className='btn btn-secondary'
-                            style={{
+                            style={{ backgroundColor: '#9E9E9E',
                                 borderRadius: '10px', 
                                 marginBottom: '0px', height: '50px',
                                 borderTopLeftRadius:'30px',
@@ -139,7 +139,7 @@ class Request extends React.Component {
                             }}
                             onClick={() => this.viewRequest(sol.id)}
                         >
-                            <span> {sol.asunto} </span>
+                            <span style={{display: 'block', fontSize:'18px'}}> {sol.asunto} </span>
                         </button>
                     
                         {this.renderDBotton(sol)}
