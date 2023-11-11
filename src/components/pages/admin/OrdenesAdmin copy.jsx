@@ -1,11 +1,6 @@
-// OrdenesAdmin.jsx
 import React from 'react';
-import { withRouter } from 'react-router-dom';  // Asegúrate de importar withRouter si lo estás utilizando
-import SideBarAdmin from '../../component/SideBarAdmin'  // Asegúrate de ajustar la ruta de importación según la ubicación de tu archivo
-import OrdenesTable from './OrdenesTable';  // Asegúrate de ajustar la ruta de importación según la ubicación de tu archivo
-import './OrdenesTable.css';  // Asegúrate de ajustar la ruta de importación según la ubicación de tu archivo CSS
-import OrdenesChart from './OrdenesChart';
-
+import {withRouter} from 'react-router';
+import SideBarAdmin from '../../component/SideBarAdmin';
 
 class OrdenesAdmin extends React.Component {
     constructor(props){
@@ -20,13 +15,8 @@ class OrdenesAdmin extends React.Component {
             mesas: [],
             ordenes: [],
             solicitudes: [],
-            selectedDate: null, // Estado para almacenar la fecha seleccionada
         }
     }
-
-    handleDateChange = (date) => {
-        this.setState({ selectedDate: date });
-    };
 
     componentDidMount(){
         if(this.props.content.email !== undefined){
@@ -59,42 +49,30 @@ class OrdenesAdmin extends React.Component {
         }
     }
 
-  render() {
+   render() {
+    console.log(this.props.content)
     return (
       <React.Fragment>
-        <div style={{maxHeight:'23%'}}>
-        <SideBarAdmin seccion={'Ordenes'} content={this.content()} />
+        <SideBarAdmin seccion={'Ordenes'}  content={this.content()}/>
         <div style={{
-          position: 'fixed',
-          left: 200,
-          marginTop: '3px',
-          marginLeft: '3px',
-          overflow: 'scroll',
-          height: '100%',
-          width:"100%"
-        }}>
-        <h1>Ordenes</h1>
-        <OrdenesTable ordenes={this.state.ordenes} />
-        
-        <div>
-        <OrdenesChart
-            ordenes={this.state.ordenes}
-            selectedDate={this.state.selectedDate}
-            onDateChange={this.handleDateChange}
-        />
-        </div>
-        <button
-        type='button' className='btn btn-primary'
-        onClick={() => console.log(this.state)}
-        >
-        debug
-        </button>
+                position:'fixed', 
+                left:200, 
+                marginTop:'3px', 
+                marginLeft: '3px',
+                overflow:'scroll', height:'100%'
+            }}>
+            <h1>Ordenes Admin</h1>
 
-        </div>
+            <button 
+                type='button' className='btn btn-primary'
+                onClick={() => console.log(this.state)}
+            > 
+                debug
+            </button>
         </div>
       </React.Fragment>
     );
-  }
+  } 
 }
 
 export default withRouter(OrdenesAdmin);
