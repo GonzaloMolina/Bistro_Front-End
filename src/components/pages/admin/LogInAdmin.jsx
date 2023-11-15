@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-
-import LogInForm from "../../component/LogInForm";
+import { Link } from 'react-router-dom/cjs/react-router-dom';
+import LogInFormAdmin from './LogInFormAdmin';
 import API from "../../../service/api";
 
 import logo from "../../img/Bistro_logo.png";
@@ -15,7 +15,7 @@ class LogInAdmin extends React.Component {
       };
     }
     
-    formComponent = (error) => <LogInForm error={error} login={this.doLogIn} {...this.props}/>
+    formComponent = (error) => <LogInFormAdmin error={error} login={this.doLogIn} {...this.props}/>
     
     doLogIn = ({email, password}) => {
       const headers= {
@@ -76,6 +76,14 @@ class LogInAdmin extends React.Component {
                 marginLeft: 'auto', 
                 marginRight: 'auto'}}>
                   {this.state.error? this.state.form: this.state.form}
+              </div>
+              <div align='center'>
+                <Link to='/'>¿ Es empleado ?</Link>
+              </div>
+              <div align='center' style={{margin: '8px'}}>
+                <button className='btn btn-secondary' onClick={() => this.props.history.push('/admin/register')}>
+                    Registrarse
+                </button>
               </div>
             </div>
         </React.Fragment>

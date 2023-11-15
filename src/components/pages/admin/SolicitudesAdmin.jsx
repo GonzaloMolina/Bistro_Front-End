@@ -74,11 +74,14 @@ class SolicitudesAdmin extends React.Component {
         console.log(solicitud, str);
         const body = {
             estado: str,
-            targetRequest: solicitud.id
+            targetRequest: solicitud.id,
+            adminEmail: this.state.email
         }
         API.put('restaurante/updateState', body)
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err))
+        .then(res => {
+            console.log(res.data);
+            this.setState(state => ({empleados: res.data.empleados}));
+        }).catch(err => console.log(err))
     }
 
     doRequest(sol){
@@ -256,6 +259,16 @@ class SolicitudesAdmin extends React.Component {
         );
     }
 
+    update(){
+        const body = {
+            email: this.state.email
+        }
+        API.postAdmin('restaurante/getInfo', body)
+        .then(res => {
+            this.setState(state => ({empleados: res.data.empleados}))
+        }).catch(err => console.log(err))
+    }
+
     render() {
     return (
       <React.Fragment>
@@ -267,16 +280,27 @@ class SolicitudesAdmin extends React.Component {
             height:'100vh', 
             width: '100%',
         }}>
-            <div className='card' style={{zIndex:'2',marginTop:'1%', width: '100%', backgroundColor:'lightgray', border:'none'}}> 
-                    <input 
-                        className="form-control" 
-                        type="search" 
-                        placeholder="Buscar empleado por email"
-                        value={this.state.search}
-                        onChange={ event => this.handleChange(event.target.value, 'search') }
-                        aria-label="Search"
-                        style={{width: '40%', marginLeft: '1%'}}  
-                    />
+            <div className='card' style={{zIndex:'2',marginTop:'1%', marginLeft: '1%', width: '100%', backgroundColor:'lightgray', border:'none'}}> 
+                <div className='row'>
+                    <div className='col'>
+                        <input 
+                            className="form-control" 
+                            type="search" 
+                            placeholder="Buscar empleado por email"
+                            value={this.state.search}
+                            onChange={ event => this.handleChange(event.target.value, 'search') }
+                            aria-label="Search"
+                            style={{width: '100%'}}  
+                        />
+                    </div>
+                    <div className='col' align='left'>
+                        <button type="button" className="btn btn-secondary"
+                            onClick={() => this.update()}
+                        >
+                            Actualizar
+                        </button>
+                    </div>
+                </div>
             </div>
 
 

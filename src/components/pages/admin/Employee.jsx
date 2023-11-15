@@ -3,6 +3,7 @@ import {withRouter} from 'react-router';
 import SideBarAdmin from '../../component/SideBarAdmin';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import API from '../../../service/api';
+import EmployeeForm from './EmployeeForm';
 
 class Employee extends React.Component {
     constructor(props){
@@ -21,11 +22,6 @@ class Employee extends React.Component {
             chosenOne: undefined,
             open: false,
             form: false,
-
-            nombreEmpl: "",
-            apellidoEmpl: "",
-            mailEmpl: "",
-            passwordEmpl: "",
         }
     }
 
@@ -142,144 +138,14 @@ class Employee extends React.Component {
         )
     }
 
-    registerEmp(){
-        const body = {
-            nombre: this.state.nombreEmpl,
-            apellido: this.state.apellidoEmpl,
-            mail: this.state.mailEmpl,
-            password: this.state.passwordEmpl,
-            restoEmail: this.state.email,
-        }
-        console.log(body);
-        API.postAdmin('restaurante/employee', body)
-        .then(res => {console.log(res.data);
-            this.setState(state => ({empleados: res.data.empleados}));
-            this.setState(state => ({form: false}));
-        }).catch(err => console.log(err))
-    }
+    closeForm = () => this.setState(state => ({form: false}));
+
+    setE = (ls) => this.setState(state => ({empleados: ls}))
 
     showForm(){
         return (
             <div className='card' style={{margin: '15%', marginTop: '3%', marginBottom:'0px'}}>
-                <h4 style={{marginTop:'15px', marginBottom:'15px'}}>Formulario de Registro de empleado</h4>
-                <div className='card' style={{marginLeft: '15%', marginRight: '15%'}}>
-                    <form>
-                        <div className="form-group" style={{margin: '2%'}}>
-                            {this.state.nombreEmpl === ''? 
-                                <div>
-                                    <input type='text'
-                                        className="form-control" 
-                                        id="nombreInput" 
-                                        placeholder="Ingrese el nombre del emplado"
-                                        value={this.state.nombreEmpl}
-                                        style={{borderColor: 'red', outline: '1px solid red'}}
-                                        onChange={ event => this.handleChange(event.target.value, 'nombreEmpl') }
-                                    />
-                                    <small align='left' id="fieldHelp" style={{color: 'red'}}>
-                                        el campo no puede estar vacio
-                                    </small>
-                                </div>
-                            :
-                                <input type="text" 
-                                    className="form-control" 
-                                    id="capInput" 
-                                    placeholder="Ingrese el nombre del emplado"
-                                    value={this.state.nombreEmpl}
-                                    onChange={ event => this.handleChange(event.target.value, 'nombreEmpl') }
-                                />
-                            }
-                        </div>
-                        <div className="form-group" style={{margin: '2%'}}>
-                            {this.state.apellidoEmpl === ''? 
-                                <div>
-                                    <input type='text'
-                                        className="form-control" 
-                                        id="apellidoInput" 
-                                        placeholder="Ingrese el apellido del emplado"
-                                        value={this.state.apellidoEmpl}
-                                        style={{borderColor: 'red', outline: '1px solid red'}}
-                                        onChange={ event => this.handleChange(event.target.value, 'apellidoEmpl') }
-                                    />
-                                    <small align='left' id="fieldHelp" style={{color: 'red'}}>
-                                        el campo no puede estar vacio
-                                    </small>
-                                </div>
-                            :
-                                <input type="text" 
-                                    className="form-control" 
-                                    id="capInput" 
-                                    placeholder="Ingrese el apellido del emplado"
-                                    value={this.state.apellidoEmpl}
-                                    onChange={ event => this.handleChange(event.target.value, 'apellidoEmpl') }
-                                />
-                            }
-                        </div>
-                        <div className="form-group" style={{margin: '2%'}}>
-                            {this.state.mailEmpl === ''? 
-                                <div>
-                                    <input type='text'
-                                        className="form-control" 
-                                        id="mailInput" 
-                                        placeholder="Ingrese el email del emplado"
-                                        value={this.state.mailEmpl}
-                                        style={{borderColor: 'red', outline: '1px solid red'}}
-                                        onChange={ event => this.handleChange(event.target.value, 'mailEmpl') }
-                                    />
-                                    <small align='left' id="fieldHelp" style={{color: 'red'}}>
-                                        el campo no puede estar vacio
-                                    </small>
-                                </div>
-                            :
-                                <input type="text" 
-                                    className="form-control" 
-                                    id="capInput" 
-                                    placeholder="Ingrese el email del emplado"
-                                    value={this.state.mailEmpl}
-                                    onChange={ event => this.handleChange(event.target.value, 'mailEmpl') }
-                                />
-                            }
-                        </div>
-                        <div className="form-group" style={{margin: '2%'}}>
-                            {this.state.passwordEmpl === ''? 
-                                <div>
-                                    <input type='password'
-                                        className="form-control" 
-                                        id="passwordInput" 
-                                        placeholder="Ingrese el password del emplado"
-                                        value={this.state.passwordEmpl}
-                                        style={{borderColor: 'red', outline: '1px solid red'}}
-                                        onChange={ event => this.handleChange(event.target.value, 'passwordEmpl') }
-                                    />
-                                    <small align='left' id="fieldHelp" style={{color: 'red'}}>
-                                        el campo no puede estar vacio
-                                    </small>
-                                </div>
-                            :
-                                <input type="password" 
-                                    className="form-control" 
-                                    id="passwordInput" 
-                                    placeholder="Ingrese el password del emplado"
-                                    value={this.state.passwordEmpl}
-                                    onChange={ event => this.handleChange(event.target.value, 'passwordEmpl') }
-                                />
-                            }
-                        </div>
-                    </form>
-                </div>
-
-                <button
-                    className='btn btn-primary'
-                    style={{margin:'5%', marginLeft: '15%', marginRight: '15%'}}
-                    disabled={
-                        this.state.nombreEmpl === "" ||
-                        this.state.apellidoEmpl === "" ||
-                        this.state.mailEmpl ==="" ||
-                        this.state.passwordEmpl === ""
-                    }
-                    onClick={() => this.registerEmp()}
-                >
-                    Registrar empleado
-                </button>
+                <EmployeeForm list={this.setE} resto={this.state.email} close={this.closeForm}/>
             </div>
         );
     }

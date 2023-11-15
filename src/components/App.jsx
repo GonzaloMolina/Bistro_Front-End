@@ -17,6 +17,7 @@ import Employee from './pages/admin/Employee';
 import MesasAdmin from './pages/admin/MesasAdmin';
 import SolicitudesAdmin from './pages/admin/SolicitudesAdmin';
 import OrdenesAdmin from './pages/admin/OrdenesAdmin';
+import Register from './pages/admin/Register';
 
 export default class App extends React.Component{
     render(){
@@ -103,6 +104,12 @@ export default class App extends React.Component{
                 <Switch>
                     <Route exact path="/admin/solicitudes" render=
                         {props => <SolicitudesAdmin content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/register" render=
+                        {props => <Register {...props}/>} 
                     />
                 </Switch>
 
