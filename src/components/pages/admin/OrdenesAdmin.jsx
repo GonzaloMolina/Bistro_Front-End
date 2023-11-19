@@ -1,6 +1,12 @@
+// OrdenesAdmin.jsx
 import React from 'react';
-import {withRouter} from 'react-router';
-import SideBarAdmin from '../../component/SideBarAdmin';
+import { withRouter } from 'react-router-dom';  // Asegúrate de importar withRouter si lo estás utilizando
+import SideBarAdmin from '../../component/SideBarAdmin'  // Asegúrate de ajustar la ruta de importación según la ubicación de tu archivo
+import OrdenesTable from './OrdenesTable';  // Asegúrate de ajustar la ruta de importación según la ubicación de tu archivo
+import './OrdenesTable.css';  // Asegúrate de ajustar la ruta de importación según la ubicación de tu archivo CSS
+import OrdenesChart from './OrdenesChart';
+import API from '../../../service/api';
+
 
 class OrdenesAdmin extends React.Component {
     constructor(props){
@@ -15,8 +21,14 @@ class OrdenesAdmin extends React.Component {
             mesas: [],
             ordenes: [],
             solicitudes: [],
+            selectedDate: null, // Estado para almacenar la fecha seleccionada
+            open: false
         }
     }
+
+    handleDateChange = (date) => {
+        this.setState({ selectedDate: date });
+    };
 
     componentDidMount(){
         if(this.props.content.email !== undefined){
@@ -49,30 +61,83 @@ class OrdenesAdmin extends React.Component {
         }
     }
 
-   render() {
-    console.log(this.props.content)
+  showTabla(){
+    return (
+      <div style={{matginBottom: '2%'}}>
+        <OrdenesTable ordenes={this.state.ordenes} />
+      </div>
+    );
+  }
+
+  showGraf(){
+    return (
+        <div>
+          <OrdenesChart
+              ordenes={this.state.ordenes}
+              selectedDate={this.state.selectedDate}
+              onDateChange={this.handleDateChange}
+          />
+        </div>
+    )
+  }
+
+  update(){
+    const body = {
+        email: this.state.email
+    }
+    API.postAdmin('restaurante/getInfo', body)
+    .then(res => {
+        this.setState(state => ({ordenes: res.data.ordenes}))
+    }).catch(err => console.log(err))
+}
+
+  render() {
     return (
       <React.Fragment>
-        <SideBarAdmin seccion={'Ordenes'}  content={this.content()}/>
-        <div style={{
-                position:'fixed', 
-                left:200, 
-                marginTop:'3px', 
-                marginLeft: '3px',
-                overflow:'scroll', height:'100%'
+        <div style={{maxHeight:'23%'}}>
+        <SideBarAdmin seccion={'Ordenes'} content={this.content()} />
+          <div style={{
+            position: 'fixed',
+            left: 200,
+            overflow: 'scroll',
+            height: 'calc(100% - 85px)',
+            width: 'calc(100% - 200px)',
+            backgroundColor: 'lightgrey',
+          }}> 
+            <h1 style={{marginLeft: '2%'}}>Ordenes registradas</h1>
+            
+            <div className='card' align='center' style={{
+              margin: '2%',
+              backgroundColor: 'white'
             }}>
-            <h1>Ordenes Admin</h1>
-
-            <button 
-                type='button' className='btn btn-primary'
-                onClick={() => console.log(this.state)}
-            > 
-                debug
-            </button>
+              {this.state.open ? this.showTabla() : this.showGraf()}
+            </div>
+            
+            <div className='row' style={{marginBottom: '2%', marginLeft: '2%', width:'calc(100% - 80px)'}}>
+              <div className='col-sm' style={{width: '30%'}}>
+                <button className='btn btn-secondary' onClick={() => this.update()}>
+                  Actualizar
+                </button>
+              </div>
+              <div className='col-sm' style={{width: '30%'}}>
+                <div className="form-check form-switch">
+                  <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                    onClick={() => {
+                      const temp = ! this.state.open;
+                      this.setState(state => ({open: temp}))
+                    }}
+                  />
+                  <label className="form-check-label" for="flexSwitchCheckChecked">
+                    {this.state.open? 'Mostrar como grafico' : 'Mostrar como tabla'}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </React.Fragment>
     );
-  } 
+  }
 }
 
 export default withRouter(OrdenesAdmin);

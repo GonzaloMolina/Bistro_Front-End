@@ -1,10 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from '../../component/ErrorMessage';
    
 
-class LogInForm extends React.Component{
+class LogInFormAdmin extends React.Component{
     constructor(props){
         super(props)
         this.state = { 
@@ -37,7 +37,7 @@ class LogInForm extends React.Component{
         return(
             <React.Fragment>
             <div align="center">
-                <div  className="card" style={{margin: "5%",marginBottom: "0%", marginTop: "0", backgroundColor: "rgba(43, 143, 50, 0.7)", zIndex:10}} >
+                <div  className="card" style={{margin: "5%",marginBottom: "0%", marginTop: "0", backgroundColor: "rgba(62, 35, 249, 0.7)", zIndex:10}} >
                     <ErrorMessage error={this.props.error}/>
                     <div>
                         <form style={{margin: "4%"}}>  
@@ -84,4 +84,4 @@ class LogInForm extends React.Component{
     }
 }
 
-export default withRouter(LogInForm);
+export default withRouter(LogInFormAdmin);

@@ -1,6 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import SideBarAdmin from '../../component/SideBarAdmin';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 import '../../../styles/sidebarAdmin.css'
 import API from '../../../service/api';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
@@ -18,7 +19,10 @@ class SolicitudesAdmin extends React.Component {
             mesas: [],
             ordenes: [],
             solicitudes: [],
-            search: ''
+            
+            search: '',
+            chosenOne: undefined,
+            open: false
         }
     }
 
@@ -70,45 +74,31 @@ class SolicitudesAdmin extends React.Component {
         console.log(solicitud, str);
         const body = {
             estado: str,
-            targetRequest: solicitud.id
+            targetRequest: solicitud.id,
+            adminEmail: this.state.email
         }
         API.put('restaurante/updateState', body)
-        .then(res => console.log(res.data))
+        .then(res => {
+            console.log(res.data);
+            this.setState(state => ({empleados: res.data.empleados}));
+        }).catch(err => console.log(err))
+    }
+
+    doRequest(sol){
+        console.log(sol.id);
+        API.get('peticion/'+sol.id)
+        .then(res => {
+            console.log(res.data);
+            this.setState(state => ({chosenOne: res.data}));
+        }).then(res => this.setState(state => ({open: true})))
         .catch(err => console.log(err))
     }
 
-    render() {
-    return (
-      <React.Fragment>
-        <SideBarAdmin seccion={'Solicitudes'}  content={this.content()}/>
-        <div style={{
-            position:'fixed', 
-            left:200, 
-            backgroundColor: 'lightgray',
-            height:'100vh', 
-            width: '100%',
-        }}>
-            <div className='card' style={{zIndex:'2',marginTop:'1%', width: '100%', backgroundColor:'lightgray', border:'none'}}> 
-                    <input 
-                        className="form-control" 
-                        type="search" 
-                        placeholder="Buscar empleado por email"
-                        value={this.state.search}
-                        onChange={ event => this.handleChange(event.target.value, 'search') }
-                        aria-label="Search"
-                        style={{width: '40%', marginLeft: '1%'}}  
-                    />
-            </div>
 
-
-            <div style={{overflow:'scroll',margin:'1%',
-                height:'calc(100% - 155px)', 
-                width: 'calc(100% - 220px)',
-                borderRadius: '20px'
-            }}>
-
-                {
-                    this.state.empleados.filter(emp => emp.email.includes(this.state.search)).map(empleado => {
+    showAllRequests(){
+        return (
+            <div>
+                {this.state.empleados.filter(emp => emp.email.includes(this.state.search)).map(empleado => {
                         return (
                         <div>
                             <div id="accordion" style={{marginBottom: '4px'}}>
@@ -124,7 +114,7 @@ class SolicitudesAdmin extends React.Component {
                                     </div>
 
                                     <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                        <div class="card-body">
+                                        <div className="card-body">
                                             {(empleado.peticiones.length === 0)?
                                                 (<div className='card bg-secondary'>
                                                     <div className='card-header border border-secondary' align='left'>
@@ -139,7 +129,21 @@ class SolicitudesAdmin extends React.Component {
                                                             <div className='card border border-danger' 
                                                                 style={{marginBottom: '4px', backgroundColor:'rgba(220, 53, 70, 0.5)'}}>
                                                                 <div className='card-header' align='left'>
-                                                                    <span> {sol.asunto} </span>
+                                                                    <div className='row'>
+                                                                        <div className='col'>
+                                                                            <span> {sol.asunto} </span>
+                                                                        </div>
+                                                                        <div className='col' align='right'>
+                                                                            <div className="btn-group" role="group" 
+                                                                                aria-label="Basic example" align='rigth'>
+                                                                                <button type="button" className="btn btn-secondary"
+                                                                                    onClick={() => {this.doRequest(sol)}}
+                                                                                >
+                                                                                    Ver
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>)
                                                         case 'ACEPTADA':
@@ -147,7 +151,21 @@ class SolicitudesAdmin extends React.Component {
                                                                 <div className='card border border-success' 
                                                                     style={{marginBottom: '4px', backgroundColor:'rgb(39, 168, 68, 0.5)' }}>
                                                                     <div className='card-header' align='left'>
-                                                                        <span> {sol.asunto} </span>
+                                                                        <div className='row'>
+                                                                            <div className='col'>
+                                                                                <span> {sol.asunto} </span>
+                                                                            </div>
+                                                                            <div className='col' align='right'>
+                                                                                <div className="btn-group" role="group" 
+                                                                                    aria-label="Basic example" align='rigth'>
+                                                                                    <button type="button" className="btn btn-secondary"
+                                                                                        onClick={() => {this.doRequest(sol)}}
+                                                                                    >
+                                                                                        Ver
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>)
                                                         default:
@@ -160,14 +178,20 @@ class SolicitudesAdmin extends React.Component {
                                                                                 <span> {sol.asunto} </span>
                                                                             </div>
                                                                             <div className='col' align='right'>
-                                                                                <div class="btn-group" 
+                                                                                <div className="btn-group" 
                                                                                     role="group" 
                                                                                     aria-label="Basic example" align='rigth'>
-                                                                                    <button type="button" class="btn btn-success"
+                                                                                    <button type="button" className="btn btn-secondary"
+                                                                                        onClick={() => {
+                                                                                            this.doRequest(sol)
+                                                                                        }}>
+                                                                                        ver
+                                                                                    </button>
+                                                                                    <button type="button" className="btn btn-success"
                                                                                         onClick={() => this.handleClick(sol, 'ACEPTADA')}>
                                                                                         ACEPTAR
                                                                                     </button>
-                                                                                    <button type="button" class="btn btn-danger"
+                                                                                    <button type="button" className="btn btn-danger"
                                                                                         onClick={() => this.handleClick(sol, 'RECHAZADA')}>
                                                                                         RECHAZAR
                                                                                     </button>
@@ -189,12 +213,106 @@ class SolicitudesAdmin extends React.Component {
                         )
                     })
                 }
-                <button 
-                type='button' className='btn btn-primary'
-                onClick={() => console.log(this.state)}
-            > 
-                debug
-            </button>
+            </div>
+        );
+    }
+
+    showRequest(){
+        return (
+            <div align='left' style={{marginLeft: '5px', marginTop: '5px'}}>
+                <button type='button' style={{borderRadius: "25px"}}
+                    className='btn btn-primary' 
+                    onClick={() => this.setState(state => ({open: false}))}
+                >
+                    < AiOutlineArrowLeft />
+                </button>
+                <div align='center'>
+                    <div className='card' align='center' style={{ width: '50%', marginLeft: '7%', marginTop: '2%'}}>
+                        <div className="card-body" align='left'>
+                            <h5 className="card-title">Nro de Solicitud:  {this.state.chosenOne.id}</h5>
+                            <h6 className="card-subtitle mb-2 text-muted">Emisor:  {this.state.chosenOne.emisor}</h6>
+                            <h6 className="card-subtitle mb-2 text-muted">Estado:  {this.state.chosenOne.estado}</h6>
+                            <h6 className="card-subtitle mb-2 text-muted">Asunto:  {this.state.chosenOne.asunto}</h6>
+                            <h6 className="card-subtitle mb-2 text-muted">Cuerpo de la solicitud:</h6>
+                            <p> {this.state.chosenOne.body} </p>
+                        </div>
+                    </div>
+                    {
+                        this.state.chosenOne.estado === "ENPROCESO"?
+                            (<div className="btn-group" 
+                                role="group" 
+                                style={{marginTop: '2%'}}
+                                aria-label="Basic example" align='rigth'>
+                                <button type="button" className="btn btn-success"
+                                    onClick={() => this.handleClick(this.state.chosenOne, 'ACEPTADA')}>
+                                        ACEPTAR
+                                </button>
+                                <button type="button" className="btn btn-danger"
+                                    onClick={() => this.handleClick(this.state.chosenOne, 'RECHAZADA')}>
+                                        RECHAZAR
+                                </button>
+                            </div>)  
+                        :   <div></div>
+                        }
+                </div>
+            </div>
+        );
+    }
+
+    update(){
+        const body = {
+            email: this.state.email
+        }
+        API.postAdmin('restaurante/getInfo', body)
+        .then(res => {
+            this.setState(state => ({empleados: res.data.empleados}))
+        }).catch(err => console.log(err))
+    }
+
+    render() {
+    return (
+      <React.Fragment>
+        <SideBarAdmin seccion={'Solicitudes'}  content={this.content()}/>
+        <div style={{
+            position:'fixed', 
+            left:200, 
+            backgroundColor: 'lightgray',
+            height:'100vh', 
+            width: '100%',
+        }}>
+            <div className='card' style={{zIndex:'2',marginTop:'1%', marginLeft: '1%', width: '100%', backgroundColor:'lightgray', border:'none'}}> 
+                <div className='row'>
+                    <div className='col'>
+                        <input 
+                            className="form-control" 
+                            type="search" 
+                            placeholder="Buscar empleado por email"
+                            value={this.state.search}
+                            onChange={ event => this.handleChange(event.target.value, 'search') }
+                            aria-label="Search"
+                            style={{width: '100%'}}  
+                        />
+                    </div>
+                    <div className='col' align='left'>
+                        <button type="button" className="btn btn-secondary"
+                            onClick={() => this.update()}
+                        >
+                            Actualizar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div style={{overflow:'scroll',margin:'1%',
+                height:'calc(100% - 155px)', 
+                width: 'calc(100% - 220px)',
+                borderRadius: '20px'
+            }}>
+                {
+                    this.state.open? this.showRequest()
+                    : this.showAllRequests()
+                }
             </div>
         </div>
       </React.Fragment>

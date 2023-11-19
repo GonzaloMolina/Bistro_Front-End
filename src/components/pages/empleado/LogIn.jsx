@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 import LogInForm from "../../component/LogInForm";
 import API from "../../../service/api";
 
@@ -86,6 +86,9 @@ class LogIn extends React.Component {
                 marginLeft: 'auto', 
                 marginRight: 'auto'}}>
                   {this.state.error? this.state.form: this.state.form}
+              </div>
+              <div align='center'>
+                <Link to='/admin'>¿ Es adminsitrador ?</Link>
               </div>
             </div>
         </React.Fragment>
