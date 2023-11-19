@@ -77,14 +77,14 @@ class MesasAdmin extends React.Component {
             <div className='flex-wrap' style={{ display: 'flex',flexDirection: 'row', width: '100%'}}>
                 {this.state.mesas.filter(mesa => (mesa.id+'').includes(this.state.search)).map((elem, k) => {
                     return (
-                        <div className="card" key={k} style={{width: "18rem", margin:'1%',marginRight:'3%', borderRadius: '20px'}}>
+                        <div key={k} style={{width: "18rem", margin:'1%',marginRight:'3%'}}>
                             <button 
                                 type='button' 
-                                style={{borderRadius: '20px', height: '100px'}}
+                                style={{borderRadius: '50%', height: '100px'}}
                                 onClick={() => this.doRequest(elem)}
                             >
-                                <div className="card-body" align='left'>
-                                    <h5 className="card-title">Identificador de mesa: {elem.id}</h5>
+                                <div className="card-body" align='center'>
+                                    <h5 className="card-title">Mesa Nro: {elem.id}</h5>
                                     <h6 className="card-subtitle mb-2 text-muted">capacidad: {elem.capacidad}</h6>
                                 </div>
                             </button>
@@ -164,6 +164,7 @@ class MesasAdmin extends React.Component {
                 <div className='card' style={{marginLeft: '15%', marginRight: '15%'}}>
                     <form>
                         <div class="form-group" style={{margin: '2%'}}>
+                            <div align='left'><label> Cantidad de personas para la mesa </label></div>
                             {this.state.cap === ''? 
                                 <div>
                                     <input type='number'

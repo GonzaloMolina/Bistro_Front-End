@@ -42,6 +42,8 @@ class LogInFormAdmin extends React.Component{
                     <div>
                         <form style={{margin: "4%"}}>  
                         <div align="left" className="form-group" style={{opacity: "", marginBottom: "10px"}}>
+                            <div align='left'><label style={{color: 'white'}}
+                            > E-mail del administrador </label></div>
                             <input
                                 className="form-control"
                                 type="email"
@@ -53,6 +55,8 @@ class LogInFormAdmin extends React.Component{
                         </div>
 
                         <div align="left" className="form-group" style={{opacity: "", marginBottom: "10px"}}>
+                            <div align='left'><label style={{color: 'white'}}
+                            > Contraseña de la cuenta </label></div>
                             <input
                                 className="form-control"
                                 type="password"

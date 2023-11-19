@@ -57,10 +57,11 @@ class EmployeeForm extends React.Component{
     render(){
         return (
             <div>
-                <h4 style={{marginTop:'15px', marginBottom:'15px'}}>Formulario de Registro de empleado</h4>
+                <h4 style={{marginTop:'10px', marginBottom:'10px'}}>Formulario de Registro de empleado</h4>
                 <div className='card' style={{marginLeft: '15%', marginRight: '15%'}}>
                     <form>
-                        <div className="form-group" style={{margin: '2%'}}>
+                        <div className="form-group" style={{margin: '2%', marginBottom: '3%'}}>
+                            <div align='left'><label> Nombre del empleado </label></div>
                             {this.state.nombreF? 
                                 <div>
                                     <input type='text'
@@ -89,7 +90,8 @@ class EmployeeForm extends React.Component{
                                 />
                             }
                         </div>
-                        <div className="form-group" style={{margin: '2%'}}>
+                        <div className="form-group" style={{margin: '2%', marginBottom: '3%'}}>
+                            <div align='left'><label> Apellido del empleado </label></div>
                             {this.state.apellidoF? 
                                 <div>
                                     <input type='text'
@@ -118,7 +120,8 @@ class EmployeeForm extends React.Component{
                                 />
                             }
                         </div>
-                        <div className="form-group" style={{margin: '2%'}}>
+                        <div className="form-group" style={{margin: '2%', marginBottom: '3%'}}>
+                            <div align='left'><label> E-mail del empleado </label></div>
                             {this.state.mailF? 
                                 <div>
                                     <input type='text'
@@ -143,7 +146,8 @@ class EmployeeForm extends React.Component{
                                 />
                             }
                         </div>
-                        <div className="form-group" style={{margin: '2%'}}>
+                        <div className="form-group" style={{margin: '2%', marginBottom: '3%'}}>
+                            <div align='left'><label> Contraseña de la cuenta del empleado </label></div>
                             {this.state.passwordF? 
                                 <div>
                                     <input type='password'
