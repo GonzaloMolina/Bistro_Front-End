@@ -133,12 +133,19 @@ class MesasAdmin extends React.Component {
                             }
                         </div>
                     </div>
-                    <button type='button' style={{borderRadius: "25px", marginTop: '1%', marginBottom: '1%'}}
-                    className='btn btn-danger' 
-                    onClick={() => this.delete()}
-                    >
-                        Borrar mesa
-                    </button>
+                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <button type='button' style={{borderRadius: "25px", marginTop: '1%', marginBottom: '1%', marginRight:'5px', borderColor:'red'}}
+                            className='btn btn-danger' 
+                            onClick={() => this.delete()}
+                        > Borrar mesa </button>
+                        <button 
+                            type="button" 
+                            style={{borderRadius: "25px", marginTop: '1%', marginBottom: '1%', borderColor:'yellow'}}
+                            disabled={this.state.chosenOne.orden !== null}
+                            class="btn btn-warning"
+                            onClick={() => console.log(this.state.chosenOne)}
+                            >Desasignar la mesa</button>
+                    </div>
                 </div>
             </div>
         );
