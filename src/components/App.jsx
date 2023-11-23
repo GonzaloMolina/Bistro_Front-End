@@ -18,6 +18,7 @@ import MesasAdmin from './pages/admin/MesasAdmin';
 import SolicitudesAdmin from './pages/admin/SolicitudesAdmin';
 import OrdenesAdmin from './pages/admin/OrdenesAdmin';
 import Register from './pages/admin/Register';
+import Menu from './pages/admin/Menu';
 
 export default class App extends React.Component{
     render(){
@@ -98,6 +99,12 @@ export default class App extends React.Component{
                 <Switch>
                     <Route exact path="/admin/ordenes" render=
                         {props => <OrdenesAdmin content={props.location.state}/>} 
+                    />
+                </Switch>
+
+                <Switch>
+                    <Route exact path="/admin/menu" render=
+                        {props => <Menu content={props.location.state}/>} 
                     />
                 </Switch>
 

@@ -37,7 +37,7 @@ class Register extends React.Component{
     checkPhone(){return this.state.phone !=="";}
 
     doRegister(){
-        //this.doReq()
+        this.doReq()
     }
 
     doReq(){

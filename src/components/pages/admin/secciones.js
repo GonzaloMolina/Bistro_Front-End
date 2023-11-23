@@ -1,5 +1,5 @@
-import { BiHomeAlt2, BiHelpCircle } from 'react-icons/bi';
-import { AiOutlineMail, AiOutlineInfoCircle, AiOutlineFolderOpen } from 'react-icons/ai';
+import { BiHomeAlt2, BiHelpCircle, BiFoodMenu } from 'react-icons/bi';
+import { AiOutlineMail, AiOutlineFolderOpen } from 'react-icons/ai';
 import { BsPersonBoundingBox } from 'react-icons/bs';
 import { MdTableBar } from 'react-icons/md';
 
@@ -21,7 +21,14 @@ const secciones =
             seccion: 'Mesas',
             icono: <MdTableBar />,
             link: '/mesas',
-            descripcion: 'Agrega, observa o elimina las mesas',
+            descripcion: 'Agrega, observa o elimina las mesas de tu establecimiento',
+            sub: []
+        },
+        {
+            seccion: 'Menu',
+            icono: <BiFoodMenu />,
+            link: '/menu',
+            descripcion: 'Maneja los consumibles de tu establecimiento',
             sub: []
         },
         {
@@ -36,13 +43,6 @@ const secciones =
             icono: <AiOutlineMail />,
             link: '/solicitudes',
             descripcion: 'Aprueba o rechaza las peticiones de tus empleados',
-            sub: []
-        },
-        {
-            seccion: 'Informacion',
-            icono: <AiOutlineInfoCircle />,
-            link: '/info',
-            descripcion: 'Revisa tu informacion ya que tus empleados pueden nesecitarla',
             sub: []
         },
         {

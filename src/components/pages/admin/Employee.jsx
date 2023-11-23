@@ -14,11 +14,14 @@ class Employee extends React.Component {
             email:  "",
             direccion:  "",
             tel: "",
+            menu: {},
             empleados: [],
             mesas: [],
             ordenes: [],
             solicitudes: [],
+
             search: "",
+            mesaAsignar: 0,
             chosenOne: undefined,
             open: false,
             form: false,
@@ -32,6 +35,7 @@ class Employee extends React.Component {
             this.setState(state => ({email: this.props.content.email}));
             this.setState(state => ({direccion: this.props.content.direccion}));
             this.setState(state => ({tel: this.props.content.tel}));
+            this.setState(state => ({menu: this.props.content.menu}));
             this.setState(state => ({empleados: this.props.content.empleados}));
             this.setState(state => ({mesas: this.props.content.mesas}));
             this.setState(state => ({ordenes: this.props.content.ordenes}));
@@ -49,6 +53,7 @@ class Employee extends React.Component {
             email: this.state.email,
             direccion: this.state.direccion,
             tel: this.state.tel,
+            menu: this.state.menu,
             empleados: this.state.empleados,
             mesas: this.state.mesas,
             ordenes: this.state.ordenes,
@@ -102,6 +107,21 @@ class Employee extends React.Component {
         )
     }
 
+    doAssign(){
+        const body = {
+            admin: this.state.email,
+            empleadoId: this.state.chosenOne.id,
+            mesaId: parseInt(this.state.mesaAsignar)
+        }
+        API.postAdmin('restaurante/asignar', body)
+        .then(res => {
+            this.setState(state => ({mesas: res.data.mesas}))
+            this.setState(state => ({empleados: res.data.empleados}))
+            this.setState(state => ({open: false}))
+        })
+        .catch(err => console.log(err))
+    }
+
     showEmployee(){
         console.log(this.state.chosenOne)
         return (
@@ -126,13 +146,32 @@ class Employee extends React.Component {
                                 [{this.state.chosenOne.mesas.map(mesa => mesa+', ')}]
                             </h6>
                         </div>
+                        <div align='left'>
+                            <label style={{marginLeft: '5px', }}> Asignar mesa al empleado </label>
+                            <div className='row' style={{margin:'1%', }}>
+                                <div className='col'>
+                                    <input type="number" className="form-control" 
+                                        style={{}}
+                                        value={this.state.mesaAsignar}
+                                        onChange={ event => this.handleChange(event.target.value, 'mesaAsignar') }
+                                        placeholder="Numero de mesa a asignar"/>
+                                </div>
+                                <div className='col'>
+                                    <button className='btn btn-success' onClick={() => this.doAssign()}>
+                                        Asignar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button type='button' style={{borderRadius: "25px", marginTop: '1%', marginBottom: '1%'}}
-                    className='btn btn-danger' 
-                    onClick={() => this.delete()}
-                    >
-                        Borrar empleado
-                    </button>
+                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <button type='button' style={{borderRadius: "25px", marginTop: '1%', marginBottom: '1%'}}
+                        className='btn btn-danger' 
+                        onClick={() => this.delete()}
+                        >
+                            Borrar empleado
+                        </button>
+                    </div>
                 </div>
             </div>
         )
@@ -158,7 +197,7 @@ class Employee extends React.Component {
         <div style={{position:'fixed', left:200, height:'100vh', 
                 width: '100%', backgroundColor:'lightgray'}}>
             <div className='card' style={{zIndex:'2',marginLeft:'1%', width: '100%', backgroundColor:'lightgray', border:'none'}}> 
-                    <div className='row'>
+                    <div className='row' style={{marginLeft: '1px'}}>
                         <div className='col'>
                         <input 
                             className="form-control" 

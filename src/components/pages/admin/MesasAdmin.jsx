@@ -13,6 +13,7 @@ class MesasAdmin extends React.Component {
             email:  "",
             direccion:  "",
             tel: "",
+            menu: {},
             empleados: [],
             mesas: [],
             ordenes: [],
@@ -33,6 +34,7 @@ class MesasAdmin extends React.Component {
             this.setState(state => ({email: this.props.content.email}));
             this.setState(state => ({direccion: this.props.content.direccion}));
             this.setState(state => ({tel: this.props.content.tel}));
+            this.setState(state => ({menu: this.props.content.menu}));
             this.setState(state => ({empleados: this.props.content.empleados}));
             this.setState(state => ({mesas: this.props.content.mesas}));
             this.setState(state => ({ordenes: this.props.content.ordenes}));
@@ -42,6 +44,7 @@ class MesasAdmin extends React.Component {
             //this.props.history.push('/admin/');
         }
     }
+
         
     handleChange(value, prop) {
         this.setState(prevState => ({ ...prevState, [prop]: value }));
@@ -54,6 +57,7 @@ class MesasAdmin extends React.Component {
             email: this.state.email,
             direccion: this.state.direccion,
             tel: this.state.tel,
+            menu: this.state.menu,
             empleados: this.state.empleados,
             mesas: this.state.mesas,
             ordenes: this.state.ordenes,
@@ -70,6 +74,22 @@ class MesasAdmin extends React.Component {
             this.setState(state => ({chosenOne: res}));
             this.setState(state => ({open: true}));
         }).catch(err => console.log(err));
+    }
+
+    desasignarMesa(){
+        console.log(this.state.empleados.filter(emp => emp.mesas.includes(this.state.chosenOne.id))[0])
+        const body = {
+            admin: this.state.email,
+            empleadoId: (this.state.empleados.filter(emp => emp.mesas.includes(this.state.chosenOne.id))[0]).id,
+            mesaId: this.state.chosenOne.id
+        }
+        console.log(body);
+        API.postAdmin('restaurante/desasignar', body)
+        .then(res => {
+            this.setState(state => ({mesas: res.data.mesas}))
+            this.setState(state => ({empleados: res.data.empleados}))
+        }).then(res => this.setState(state => ({open: false})))
+        .catch(err => console.log(err))
     }
 
     listTables(){
@@ -131,6 +151,7 @@ class MesasAdmin extends React.Component {
                                     </div>
                                     
                             }
+                            <h6 className="card-subtitle mb-2 text-muted">Esta mesa {this.state.chosenOne.estaAsignada? "": " no "} esta asignada</h6>
                         </div>
                     </div>
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -143,7 +164,7 @@ class MesasAdmin extends React.Component {
                             style={{borderRadius: "25px", marginTop: '1%', marginBottom: '1%', borderColor:'yellow'}}
                             disabled={this.state.chosenOne.orden !== null}
                             class="btn btn-warning"
-                            onClick={() => console.log(this.state.chosenOne)}
+                            onClick={() => this.desasignarMesa()}
                             >Desasignar la mesa</button>
                     </div>
                 </div>
@@ -227,7 +248,7 @@ class MesasAdmin extends React.Component {
             <div style={{position:'fixed', left:200, height:'100vh', 
                 width: '100%', backgroundColor:'lightgray'}}>
                 <div className='card' style={{zIndex:'2',marginLeft:'1%', width: '100%', backgroundColor:'lightgray', border:'none'}}> 
-                    <div className='row'>
+                    <div className='row' style={{marginLeft:'1px'}}>
                         <div className='col'>
                         <input 
                             className="form-control" 
