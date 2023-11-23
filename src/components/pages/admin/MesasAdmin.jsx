@@ -13,6 +13,7 @@ class MesasAdmin extends React.Component {
             email:  "",
             direccion:  "",
             tel: "",
+            menu: {},
             empleados: [],
             mesas: [],
             ordenes: [],
@@ -33,6 +34,7 @@ class MesasAdmin extends React.Component {
             this.setState(state => ({email: this.props.content.email}));
             this.setState(state => ({direccion: this.props.content.direccion}));
             this.setState(state => ({tel: this.props.content.tel}));
+            this.setState(state => ({menu: this.props.content.menu}));
             this.setState(state => ({empleados: this.props.content.empleados}));
             this.setState(state => ({mesas: this.props.content.mesas}));
             this.setState(state => ({ordenes: this.props.content.ordenes}));
@@ -42,6 +44,7 @@ class MesasAdmin extends React.Component {
             //this.props.history.push('/admin/');
         }
     }
+
         
     handleChange(value, prop) {
         this.setState(prevState => ({ ...prevState, [prop]: value }));
@@ -54,6 +57,7 @@ class MesasAdmin extends React.Component {
             email: this.state.email,
             direccion: this.state.direccion,
             tel: this.state.tel,
+            menu: this.state.menu,
             empleados: this.state.empleados,
             mesas: this.state.mesas,
             ordenes: this.state.ordenes,
@@ -72,19 +76,35 @@ class MesasAdmin extends React.Component {
         }).catch(err => console.log(err));
     }
 
+    desasignarMesa(){
+        console.log(this.state.empleados.filter(emp => emp.mesas.includes(this.state.chosenOne.id))[0])
+        const body = {
+            admin: this.state.email,
+            empleadoId: (this.state.empleados.filter(emp => emp.mesas.includes(this.state.chosenOne.id))[0]).id,
+            mesaId: this.state.chosenOne.id
+        }
+        console.log(body);
+        API.postAdmin('restaurante/desasignar', body)
+        .then(res => {
+            this.setState(state => ({mesas: res.data.mesas}))
+            this.setState(state => ({empleados: res.data.empleados}))
+        }).then(res => this.setState(state => ({open: false})))
+        .catch(err => console.log(err))
+    }
+
     listTables(){
         return (
             <div className='flex-wrap' style={{ display: 'flex',flexDirection: 'row', width: '100%'}}>
                 {this.state.mesas.filter(mesa => (mesa.id+'').includes(this.state.search)).map((elem, k) => {
                     return (
-                        <div className="card" key={k} style={{width: "18rem", margin:'1%',marginRight:'3%', borderRadius: '20px'}}>
+                        <div key={k} style={{width: "18rem", margin:'1%',marginRight:'3%'}}>
                             <button 
                                 type='button' 
-                                style={{borderRadius: '20px', height: '100px'}}
+                                style={{borderRadius: '50%', height: '100px'}}
                                 onClick={() => this.doRequest(elem)}
                             >
-                                <div className="card-body" align='left'>
-                                    <h5 className="card-title">Identificador de mesa: {elem.id}</h5>
+                                <div className="card-body" align='center'>
+                                    <h5 className="card-title">Mesa Nro: {elem.id}</h5>
                                     <h6 className="card-subtitle mb-2 text-muted">capacidad: {elem.capacidad}</h6>
                                 </div>
                             </button>
@@ -131,14 +151,22 @@ class MesasAdmin extends React.Component {
                                     </div>
                                     
                             }
+                            <h6 className="card-subtitle mb-2 text-muted">Esta mesa {this.state.chosenOne.estaAsignada? "": " no "} esta asignada</h6>
                         </div>
                     </div>
-                    <button type='button' style={{borderRadius: "25px", marginTop: '1%', marginBottom: '1%'}}
-                    className='btn btn-danger' 
-                    onClick={() => this.delete()}
-                    >
-                        Borrar mesa
-                    </button>
+                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <button type='button' style={{borderRadius: "25px", marginTop: '1%', marginBottom: '1%', marginRight:'5px', borderColor:'red'}}
+                            className='btn btn-danger' 
+                            onClick={() => this.delete()}
+                        > Borrar mesa </button>
+                        <button 
+                            type="button" 
+                            style={{borderRadius: "25px", marginTop: '1%', marginBottom: '1%', borderColor:'yellow'}}
+                            disabled={this.state.chosenOne.orden !== null}
+                            class="btn btn-warning"
+                            onClick={() => this.desasignarMesa()}
+                            >Desasignar la mesa</button>
+                    </div>
                 </div>
             </div>
         );
@@ -164,6 +192,7 @@ class MesasAdmin extends React.Component {
                 <div className='card' style={{marginLeft: '15%', marginRight: '15%'}}>
                     <form>
                         <div class="form-group" style={{margin: '2%'}}>
+                            <div align='left'><label> Cantidad de personas para la mesa </label></div>
                             {this.state.cap === ''? 
                                 <div>
                                     <input type='number'
@@ -219,7 +248,7 @@ class MesasAdmin extends React.Component {
             <div style={{position:'fixed', left:200, height:'100vh', 
                 width: '100%', backgroundColor:'lightgray'}}>
                 <div className='card' style={{zIndex:'2',marginLeft:'1%', width: '100%', backgroundColor:'lightgray', border:'none'}}> 
-                    <div className='row'>
+                    <div className='row' style={{marginLeft:'1px'}}>
                         <div className='col'>
                         <input 
                             className="form-control" 

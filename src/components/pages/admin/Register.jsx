@@ -20,7 +20,27 @@ class Register extends React.Component{
         this.setState(prevState => ({ ...prevState, [prop]: value }));
     }
 
+    checkMail() {
+        return this.state.email !==""&&
+        (
+            this.state.email.includes("@gmail.com") ||
+            this.state.email.includes("@outlook.es") ||
+            this.state.email.includes("@mail.com")
+        )
+    }
+
+    checkPass(){return this.state.password.length > 7;}
+    checkName(){return this.state.name !=="";}
+    checkLast(){return this.state.lastname !=="";}
+    checkResto(){return this.state.restoName !=="";}
+    checkDir(){return this.state.direction !=="";}
+    checkPhone(){return this.state.phone !=="";}
+
     doRegister(){
+        this.doReq()
+    }
+
+    doReq(){
         const body = {
             adminName: this.state.name+ ", "+ this.state.lastname,
             direction: this.state.direction,
@@ -39,7 +59,11 @@ class Register extends React.Component{
 
     render(){
         return(
-            <div style={{backgroundColor:'darkblue', height: '100vh'}}>
+            <div style={{
+                backgroundColor:'darkblue', 
+                overflow:'scroll',
+                height: 'calc(100% - 155px)'
+            }}>
                 <div className='card' align="center" 
                     style={{top: '5%', marginLeft: '5%', marginRight: '5%', backgroundColor: 'lightgray', borderRadius: '25px'}}>
                     <h1>
@@ -51,7 +75,12 @@ class Register extends React.Component{
                             <div className='row' style={{margin: '1%', marginLeft: '10%', marginRight: '10%',}}>
                                 <div className='col'>
                                     <div className="form-group">
+                                        <div align='left'><label> E-mail </label></div>
                                         <input type="email" className="form-control" 
+                                            style={{
+                                                borderColor: this.checkMail()? 'gray': 'red',
+                                                outline: this.checkMail()? '1px solid gray': '1px solid red'
+                                            }}
                                             value={this.state.email}
                                             onChange={ event => this.handleChange(event.target.value, 'email') }
                                             placeholder="Ingrese el email del administrador de la cuenta"/>
@@ -59,7 +88,12 @@ class Register extends React.Component{
                                 </div>
                                 <div className='col'>
                                     <div className="form-group">
+                                        <div align='left'><label> Contraseña </label></div>
                                         <input type="password" className="form-control"
+                                            style={{
+                                                borderColor: this.checkPass()? 'gray': 'red',
+                                                outline: this.checkPass()? '1px solid gray': '1px solid red'
+                                            }}
                                             value={this.state.password}
                                             onChange={ event => this.handleChange(event.target.value, 'password') }
                                             placeholder="Ingrese la contraseña del administrador de la cuenta"/>
@@ -72,7 +106,12 @@ class Register extends React.Component{
                             <div className='row' style={{margin: '1%', marginLeft: '10%', marginRight: '10%',}}>
                                 <div className='col'>
                                     <div className="form-group">
+                                        <div align='left'><label> Nombre/s </label></div>
                                         <input type="text" className="form-control" 
+                                            style={{
+                                                borderColor: this.checkName()? 'gray': 'red',
+                                                outline: this.checkName()? '1px solid gray': '1px solid red'
+                                            }}
                                             value={this.state.name}
                                             onChange={ event => this.handleChange(event.target.value, 'name') }
                                             placeholder="Nombre/s del administrador de la cuenta"/>
@@ -80,7 +119,12 @@ class Register extends React.Component{
                                 </div>
                                 <div className='col'>
                                     <div className="form-group">
+                                        <div align='left'><label> Apellido/s </label></div>
                                         <input type="text" className="form-control"
+                                            style={{
+                                                borderColor: this.checkLast()? 'gray': 'red',
+                                                outline: this.checkLast()? '1px solid gray': '1px solid red'
+                                            }}
                                             value={this.state.lastname}
                                             onChange={ event => this.handleChange(event.target.value, 'lastname') }
                                             placeholder="Apellido/s del administrador de la cuenta"/>
@@ -88,21 +132,36 @@ class Register extends React.Component{
                                 </div>
 
                                 <div className="form-group" style={{marginTop: '1%',}}>
-                                    <input type="text" className="form-control" 
+                                    <div align='left'><label> Nombre del establecimiento </label></div>
+                                    <input type="text" className="form-control"
+                                            style={{
+                                                borderColor: this.checkResto()? 'gray': 'red',
+                                                outline: this.checkResto()? '1px solid gray': '1px solid red'
+                                            }}
                                         value={this.state.restoName}
                                         onChange={ event => this.handleChange(event.target.value, 'restoName') }
                                         placeholder="Nombre del local"/>
                                 </div>
 
                                 <div className="form-group" style={{marginTop: '1%',}}>
-                                    <input type="text" className="form-control" 
+                                    <div align='left'><label> Telefono del establecimiento</label></div>
+                                    <input type="tel" className="form-control" 
+                                        style={{
+                                            borderColor: this.checkPhone()? 'gray': 'red',
+                                            outline: this.checkPhone()? '1px solid gray': '1px solid red'
+                                        }}
                                         value={this.state.phone}
                                         onChange={ event => this.handleChange(event.target.value, 'phone') }
                                         placeholder="Telefono del local"/>
                                 </div>
 
                                 <div className="form-group" style={{marginTop: '1%',}}>
-                                    <input type="text" className="form-control" 
+                                    <div align='left'><label> Direccion del establecimiento </label></div>
+                                    <input type="text" className="form-control"
+                                        style={{
+                                            borderColor: this.checkDir()? 'gray': 'red',
+                                            outline: this.checkDir()? '1px solid gray': '1px solid red'
+                                        }} 
                                         value={this.state.direction}
                                         onChange={ event => this.handleChange(event.target.value, 'direction') }
                                         placeholder="Direccion del local"/>

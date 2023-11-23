@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { MemoryRouter, Router } from 'react-router';
 
 import LogInForm from './components/component/LogInForm';
-//import LogIn from './components/pages/LogIn';
+import LogIn from './components/pages/LogIn';
 
 
 import { createMemoryHistory } from 'history'

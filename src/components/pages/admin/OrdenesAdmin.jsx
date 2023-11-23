@@ -17,6 +17,7 @@ class OrdenesAdmin extends React.Component {
             email:  "",
             direccion:  "",
             tel: "",
+            menu: {},
             empleados: [],
             mesas: [],
             ordenes: [],
@@ -37,6 +38,7 @@ class OrdenesAdmin extends React.Component {
             this.setState(state => ({email: this.props.content.email}));
             this.setState(state => ({direccion: this.props.content.direccion}));
             this.setState(state => ({tel: this.props.content.tel}));
+            this.setState(state => ({menu: this.props.content.menu}));
             this.setState(state => ({empleados: this.props.content.empleados}));
             this.setState(state => ({mesas: this.props.content.mesas}));
             this.setState(state => ({ordenes: this.props.content.ordenes}));
@@ -54,6 +56,7 @@ class OrdenesAdmin extends React.Component {
             email: this.state.email,
             direccion: this.state.direccion,
             tel: this.state.tel,
+            menu: this.state.menu,
             empleados: this.state.empleados,
             mesas: this.state.mesas,
             ordenes: this.state.ordenes,
