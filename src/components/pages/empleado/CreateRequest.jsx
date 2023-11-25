@@ -105,16 +105,19 @@ class CreateRquest extends React.Component{
                             >
                                 <form style={{margin: '2%'}}>
                                     <div className="form-group">
+                                        <div align='left' style={{marginLeft: '10px'}}>Asunto</div>
                                         <input type="text" 
                                             className="form-control" 
-                                            placeholder="Asunto" 
+                                            placeholder="Razon de la solicitud" 
                                             onChange={event => this.handleChange(event.target.value, 'asunto')}
                                             style={{borderRadius:'20px', marginBottom:'2%'}}/>
                                         <div className="form-group">
+                                        <div align='left' style={{marginLeft: '10px'}}
+                                        >Cuerpo de la solicitud</div>
                                             <textarea 
                                                 className="form-control"
                                                 rows="6" 
-                                                placeholder="Cuerpo de la solicitud" 
+                                                placeholder="ejemplo: El dia 'd' del actual mes..."
                                                 onChange={event => this.handleChange(event.target.value, 'text')}
                                                 style={{borderRadius:'20px'}}></textarea>
                                         </div>

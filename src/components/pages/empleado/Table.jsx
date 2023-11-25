@@ -55,7 +55,7 @@ class Table extends React.Component {
                 this.setState(state => ({orden: res.data.orden}));
                 this.setState(state => ({cuenta: res.data.cuenta}));
                 console.log(this.state);
-                wait(2000).then(res => this.setState(state => ({flag: false})))
+                wait(1000).then(res => this.setState(state => ({flag: false})))
             })
             .catch(error => {
                 console.log(error)
@@ -85,7 +85,7 @@ class Table extends React.Component {
                 console.log(this.state);
                 this.setState(state => ({orden: res.data.orden}));
                 this.setState(state => ({cuenta: res.data.cuenta}));
-                wait(2000).then(res => this.setState(state => ({flag: false})))
+                wait(1000).then(res => this.setState(state => ({flag: false})))
             })
             .catch(error => {
                 console.log(error)
@@ -127,7 +127,7 @@ class Table extends React.Component {
             .then(res => {
                 console.log(res.status)
                 this.setState(state => ({orden: undefined}))
-                wait(2000).then(res => {
+                wait(1000).then(res => {
                     this.setState(state => ({flag: false}))
                 })
             })

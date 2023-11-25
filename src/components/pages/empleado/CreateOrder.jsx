@@ -52,7 +52,7 @@ class CreateOrder extends React.Component{
         }, headers)
         .then(res => {
             console.log(res);
-            wait(3000).then(res => {
+            wait(1000).then(res => {
                 this.setState(state => ({checkFlag: true}));
             }).then(res2 => 
                 wait(2000).then(res2 => {
