@@ -68,15 +68,11 @@ class Menu extends React.Component{
         return (
             <div style={{zIndex:'2',margin:'1%', marginLeft: '2%', width: '100%', backgroundColor:'lightgray', border:'none'}}>
                 <button type='button' className='btn btn-primary'
-                    style={{borderRadius: '50%'}}
+                    style={{borderRadius: '50%', marginBottom: '20px'}}
                     onClick={() => this.setState(state => ({open: false}))}
                 >
                     <AiOutlineArrowLeft/>
                 </button>
-
-                <div align='center' style={{width: 'calc(100% - 220px)',}}>
-                    <h2> Formulario de creacion de Plato </h2>
-                </div>
 
                 <div>
                     <PlateForm setM={this.setMenu} admin={this.state.email}/>
@@ -133,6 +129,15 @@ class Menu extends React.Component{
                         zIndex:'1', backgroundColor: 'gray'}}
                     >
                         {this.state.menu.platosR?
+                            this.state.menu.platosR.length === 0 && this.state.menu.bebidasR.length === 0?
+                            <div className='card' style={{
+                                margin: '3%',
+                                borderColor: 'red',
+                                backgroundColor: '#F48FB1'
+                            }}>
+                                    <h3> No hay consumibles registrados</h3>
+                            </div>
+                            :
                             <div>
                                 <ul style={{listStyleType: 'none'}}>
                                     {
