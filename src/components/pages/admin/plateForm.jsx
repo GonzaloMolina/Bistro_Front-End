@@ -51,6 +51,40 @@ class PlateForm extends React.Component{
         }
     }
 
+    crearB(){
+        const body = {
+            admin: this.props.admin,
+            cost: this.state.costo,
+            nombre: this.state.nombre,
+            precio: this.state.precio,
+            tamanio: this.state.tamanio.toLowerCase()
+        }
+        if(body.admin === "" || body.nombre === "" || body.tamanio === "" || body.precio < 0 || body.cost < 0 || this.verificarTamanio()){
+            this.setState(state => ({success: 0}));
+        }
+        else{
+            API.postAdmin('restaurante/newBebida', body)
+            .then(res => {
+                this.props.setM(res.data.menu);
+                this.setState(state => ({
+                    success: 1
+                }));
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState(state => ({
+                    success: 0
+                }));
+            })
+        }
+    }
+
+    verificarTamanio(){
+        return this.state.tamanio.toLowerCase() !== "chico" &&
+        this.state.tamanio.toLowerCase() !== "mediano" &&
+        this.state.tamanio.toLowerCase() !== "grande"
+    }
+
     formP(){
         return (
             <div>
@@ -172,11 +206,19 @@ class PlateForm extends React.Component{
                             <label style={{fontSize: '18px'}}> Nombre: </label>
                         </div>
                         <div style={{width: '30%'}}>
-                            <input type="text" className="form-control" 
-                                style={{}}
-                                value={this.state.nombre}
-                                onChange={ event => this.handleChange(event.target.value, 'nombre') }
-                                placeholder="ejemplo: Red Bull"/>
+                            {this.state.success === 0 && this.state.nombre === ""?
+                                <input type="text" className="form-control" 
+                                    style={{ borderColor:'red' }}
+                                    value={this.state.nombre}
+                                    onChange={ event => this.handleChange(event.target.value, 'nombre') }
+                                    placeholder="ejemplo: Tallarines"/>
+                            :
+                                <input type="text" className="form-control" 
+                                    style={{}}
+                                    value={this.state.nombre}
+                                    onChange={ event => this.handleChange(event.target.value, 'nombre') }
+                                    placeholder="ejemplo: Tallarines"/>
+                            }
                         </div>
                     </div>
 
@@ -185,21 +227,37 @@ class PlateForm extends React.Component{
                             <label style={{fontSize: '18px'}}> Precio: </label>
                         </div>
                         <div style={{width: '30%'}}>
-                            <input type="number" step="0.01" className="form-control" 
+                            {this.state.success === 0 && this.state.precio < 0?
+                                <input type="number" step="0.01" className="form-control" 
+                                style={{borderColor: 'red'}}
+                                value={this.state.precio}
+                                onChange={ event => this.handleChange(event.target.value, 'precio') }
+                                placeholder="ejemplo: 800.5"/>
+                            :
+                                <input type="number" step="0.01" className="form-control" 
                                 style={{}}
                                 value={this.state.precio}
                                 onChange={ event => this.handleChange(event.target.value, 'precio') }
-                                placeholder="ejemplo: 799.99"/>
+                                placeholder="ejemplo: 500.5"/>
+                            }
                         </div>
                         <div style={{width: '10%', marginLeft: '5px', display: 'flex', justifyContent: 'center',alignItems: 'center'}}>
                             <label style={{fontSize: '18px'}}> Costo: </label>
                         </div>
                             <div style={{width: '30%'}}>
-                                <input type="number" step="0.01" className="form-control" 
+                                {this.state.success === 0 && this.state.costo < 0?
+                                    <input type="number" step="0.01" className="form-control" 
+                                    style={{borderColor: 'red'}}
+                                    value={this.state.costo}
+                                    onChange={ event => this.handleChange(event.target.value, 'costo') }
+                                    placeholder="ejemplo: 400.05"/>
+                                :
+                                    <input type="number" step="0.01" className="form-control" 
                                     style={{}}
                                     value={this.state.costo}
                                     onChange={ event => this.handleChange(event.target.value, 'costo') }
-                                    placeholder="ejemplo: 350.0"/>
+                                    placeholder="ejemplo: 400.05"/>
+                                }
                             </div>
                         </div>
 
@@ -208,11 +266,19 @@ class PlateForm extends React.Component{
                                 <label style={{fontSize: '18px'}}> Tamanio: </label>
                             </div>
                             <div style={{width: '30%'}}>
-                                <input type="text" className="form-control" 
-                                    style={{}}
-                                    value={this.state.tamanio}
-                                    onChange={ event => this.handleChange(event.target.value, 'tipo') }
-                                    placeholder="Chico"/>
+                                {this.state.success === 0 && this.verificarTamanio()?
+                                    <input type="text" className="form-control" 
+                                        style={{borderColor: 'red'}}
+                                        value={this.state.tamanio}
+                                        onChange={ event => this.handleChange(event.target.value, 'tamanio') }
+                                        placeholder="Chico"/>
+                                :
+                                    <input type="text" className="form-control" 
+                                        style={{}}
+                                        value={this.state.tamanio}
+                                        onChange={ event => this.handleChange(event.target.value, 'tamanio') }
+                                        placeholder="Chico"/>
+                                }
                                 <small id="sizeHelp" class="form-text text-muted">Tipos de tamanios: Grande, Mediano, Chico.</small>
                             </div>
                         </div>
@@ -220,7 +286,7 @@ class PlateForm extends React.Component{
 
                     <div style={{display: 'flex', justifyContent: 'center',alignItems: 'center', marginBottom: '2%'}}>
                         <button type='button' className='btn btn-success'
-                         onClick={() => 'this.crear()'}
+                         onClick={() => this.crearB()}
                         > Crear bebida </button>
                     </div>
             </div>
