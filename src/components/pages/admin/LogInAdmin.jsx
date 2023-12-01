@@ -31,8 +31,8 @@ class LogInAdmin extends React.Component {
         }
         else{
           if(error.code === 'ERR_BAD_REQUEST'){
-            this.setState(state => ({form: !this.formComponent('error en mail/password')}))
-            this.setState(state => ({form: this.formComponent('error en mail/password')}))
+            this.setState(state => ({form: !this.formComponent('Error en mail/password')}))
+            this.setState(state => ({form: this.formComponent('Error en mail/password')}))
           } else {
             console.log(error);
           }
