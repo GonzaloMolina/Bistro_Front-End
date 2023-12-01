@@ -162,25 +162,14 @@ class Employee extends React.Component {
                     <div className='card' align='center' style={{ width: '50%', marginLeft: '7%', marginTop: '2%', backgroundColor: 'lightgray'}}>
                         <div className="card-body" align='left'>
                             <h5 className="card-title">Identificador:  {this.state.chosenOne.id}</h5>
-<<<<<<< HEAD
-                            <h6 className="card-subtitle mb-2">E-mail:  {this.state.chosenOne.email}</h6>
-                            <h6 className="card-subtitle mb-2">Nombre:  {this.state.chosenOne.nombre}</h6>
-                            <h6 className="card-subtitle mb-2">Apellido:  {this.state.chosenOne.apellido}</h6>
-                            <h6 className="card-subtitle mb-2">Solicitudes:  
-                                [{this.state.chosenOne.peticiones.map(sol => sol.id+', ')}]
-                            </h6>
-                            <h6 className="card-subtitle mb-2">Mesas asignadas:  
-                                [{this.state.chosenOne.mesas.toString()}]
-=======
                             <h6 className="card-subtitle mb-2 text-muted">E-mail:  {this.state.chosenOne.email}</h6>
                             <h6 className="card-subtitle mb-2 text-muted">Nombre:  {this.state.chosenOne.nombre}</h6>
                             <h6 className="card-subtitle mb-2 text-muted">Apellido:  {this.state.chosenOne.apellido}</h6>
                             <h6 className="card-subtitle mb-2 text-muted">Solicitudes:  
-                                {this.state.chosenOne.peticiones.map(sol => ' '+sol.id+', ')}
+                                {this.state.chosenOne.peticiones.map(sol => sol.id).toString()}
                             </h6>
                             <h6 className="card-subtitle mb-2 text-muted">Mesas asignadas:  
-                                {this.state.chosenOne.mesas.map(mesa => ' '+mesa+', ')}
->>>>>>> 36820bc184594979cb78c6732e70d2c0df5f2a50
+                                {this.state.chosenOne.mesas.map(mesa => mesa).toString()}
                             </h6>
                         </div>
                         <div align='left'>
