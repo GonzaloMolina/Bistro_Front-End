@@ -140,10 +140,10 @@ class Employee extends React.Component {
                             <h6 className="card-subtitle mb-2 text-muted">Nombre:  {this.state.chosenOne.nombre}</h6>
                             <h6 className="card-subtitle mb-2 text-muted">Apellido:  {this.state.chosenOne.apellido}</h6>
                             <h6 className="card-subtitle mb-2 text-muted">Solicitudes:  
-                                [{this.state.chosenOne.peticiones.map(sol => sol.id+', ')}]
+                                {this.state.chosenOne.peticiones.map(sol => ' '+sol.id+', ')}
                             </h6>
                             <h6 className="card-subtitle mb-2 text-muted">Mesas asignadas:  
-                                [{this.state.chosenOne.mesas.map(mesa => mesa+', ')}]
+                                {this.state.chosenOne.mesas.map(mesa => ' '+mesa+', ')}
                             </h6>
                         </div>
                         <div align='left'>

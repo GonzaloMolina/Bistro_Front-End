@@ -14,7 +14,7 @@ const secciones =
             seccion: 'Empleados',
             icono: <BsPersonBoundingBox />,
             link: '/empleados',
-            descripcion: 'administra a tus empleados',
+            descripcion: 'Administra a tus empleados',
             sub: []
         },
         {
