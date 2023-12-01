@@ -263,7 +263,7 @@ class PlateForm extends React.Component{
 
                         <div style={{display: 'flex', margin: '1%'}}>
                             <div style={{width: '10%', display: 'flex', justifyContent: 'center',alignItems: 'center'}}>
-                                <label style={{fontSize: '18px'}}> Tamanio: </label>
+                                <label style={{fontSize: '18px'}}> Tamaño: </label>
                             </div>
                             <div style={{width: '30%'}}>
                                 {this.state.success === 0 && this.verificarTamanio()?
