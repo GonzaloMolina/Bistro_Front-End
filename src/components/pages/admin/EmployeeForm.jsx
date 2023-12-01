@@ -56,9 +56,9 @@ class EmployeeForm extends React.Component{
 
     render(){
         return (
-            <div>
+            <div style={{backgroundColor:'lightgray'}}>
                 <h4 style={{marginTop:'10px', marginBottom:'10px'}}>Formulario de Registro de empleado</h4>
-                <div className='card' style={{marginLeft: '15%', marginRight: '15%'}}>
+                <div className='card' style={{marginLeft: '15%', marginRight: '15%', backgroundColor: 'lightgray'}}>
                     <form>
                         <div className="form-group" style={{margin: '2%', marginBottom: '3%'}}>
                             <div align='left'><label> Nombre del empleado </label></div>

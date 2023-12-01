@@ -92,10 +92,26 @@ class MesasAdmin extends React.Component {
         .catch(err => console.log(err))
     }
 
+    emptyList(){
+        return (
+            <div className='card' style={{
+                margin: '3%',
+                borderColor: 'red',
+                width: '100%',
+                backgroundColor: '#F48FB1'
+            }}>
+                    <h3> No hay mesas registrados</h3>
+            </div>
+        )
+    }
+
     listTables(){
         return (
             <div className='flex-wrap' style={{ display: 'flex',flexDirection: 'row', width: '100%'}}>
-                {this.state.mesas.filter(mesa => (mesa.id+'').includes(this.state.search)).map((elem, k) => {
+                {this.state.mesas.length === 0?
+                    this.emptyList()
+                :
+                    this.state.mesas.filter(mesa => (mesa.id+'').includes(this.state.search)).map((elem, k) => {
                     return (
                         <div key={k} style={{width: "18rem", margin:'1%',marginRight:'3%'}}>
                             <button 
@@ -137,21 +153,21 @@ class MesasAdmin extends React.Component {
                     < AiOutlineArrowLeft />
                 </button>
                 <div align='center'>
-                    <div className='card' align='center' style={{ width: '50%', marginLeft: '7%', marginTop: '2%'}}>
+                    <div className='card' align='center' style={{ width: '50%', marginLeft: '7%', marginTop: '2%',backgroundColor: 'lightgray'}}>
                         <div className="card-body" align='left'>
                             <h5 className="card-title">Nro de mesa:  {this.state.chosenOne.id}</h5>
-                            <h6 className="card-subtitle mb-2 text-muted">Capacidad:  {this.state.chosenOne.capacidad}</h6>
+                            <h6 className="card-subtitle mb-2">Capacidad:  {this.state.chosenOne.capacidad}</h6>
                             {
                                 this.state.chosenOne.orden === null? 
-                                    <h6 className="card-subtitle mb-2 text-muted">La mesa no cuenta con una orden</h6>
+                                    <h6 className="card-subtitle mb-2">La mesa no cuenta con una orden</h6>
                                 :
                                     <div>
-                                        <h6 className="card-subtitle mb-2 text-muted">Orden Id: {this.state.chosenOne.orden.id}</h6>
-                                        <h6 className="card-subtitle mb-2 text-muted">Cuenta: ${this.state.chosenOne.cuenta}</h6>
+                                        <h6 className="card-subtitle mb-2">Orden Id: {this.state.chosenOne.orden.id}</h6>
+                                        <h6 className="card-subtitle mb-2">Cuenta: ${this.state.chosenOne.cuenta}</h6>
                                     </div>
                                     
                             }
-                            <h6 className="card-subtitle mb-2 text-muted">Esta mesa {this.state.chosenOne.estaAsignada? "": " no "} esta asignada</h6>
+                            <h6 className="card-subtitle mb-2">Esta mesa {this.state.chosenOne.estaAsignada? "": " no "} esta asignada</h6>
                         </div>
                     </div>
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -187,9 +203,9 @@ class MesasAdmin extends React.Component {
 
     showForm(){
         return (
-            <div className='card' style={{margin: '15%', marginTop: '3%', marginBottom:'0px'}}>
+            <div className='card' style={{margin: '15%', marginTop: '3%', marginBottom:'0px', backgroundColor: 'lightgray'}}>
                 <h4 style={{marginTop:'15px', marginBottom:'15px'}}>Formulario de creacion de mesa</h4>
-                <div className='card' style={{marginLeft: '15%', marginRight: '15%'}}>
+                <div className='card' style={{marginLeft: '15%', marginRight: '15%', backgroundColor: '#bec4be'}}>
                     <form>
                         <div class="form-group" style={{margin: '2%'}}>
                             <div align='left'><label> Cantidad de personas para la mesa </label></div>

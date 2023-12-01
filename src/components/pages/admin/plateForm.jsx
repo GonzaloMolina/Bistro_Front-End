@@ -87,7 +87,7 @@ class PlateForm extends React.Component{
 
     formP(){
         return (
-            <div>
+            <div style={{backgroundColor: 'lightgray'}}>
                 <div align='center'>
                     <h2> Formulario de creacion de Plato </h2>
                 </div>
@@ -172,7 +172,7 @@ class PlateForm extends React.Component{
                                     placeholder="Pasta"/>
 
                                 }
-                                <small id="typeHelp" class="form-text text-muted">Tipos de platos: Carne, Pasta, Pescado, Postre.</small>
+                                <small id="typeHelp" className="form-text text-muted">Tipos de platos: Carne, Pasta, Pescado, Postre.</small>
                             </div>
                         </div>
                     </form>
@@ -195,12 +195,12 @@ class PlateForm extends React.Component{
 
     formB(){
         return (
-            <div>
+            <div style={{backgroundColor: 'lightgray'}}>
                 <div align='center'>
                     <h2> Formulario de creacion de Bebida </h2>
                 </div>
 
-                <form>
+                <form style={{backgroundColor: 'lightgray'}}>
                     <div style={{display: 'flex', margin: '1%'}}>
                         <div style={{width: '10%', display: 'flex', justifyContent: 'center',alignItems: 'center'}}>
                             <label style={{fontSize: '18px'}}> Nombre: </label>
@@ -211,13 +211,13 @@ class PlateForm extends React.Component{
                                     style={{ borderColor:'red' }}
                                     value={this.state.nombre}
                                     onChange={ event => this.handleChange(event.target.value, 'nombre') }
-                                    placeholder="ejemplo: Tallarines"/>
+                                    placeholder="ejemplo: Tang de naranja"/>
                             :
                                 <input type="text" className="form-control" 
                                     style={{}}
                                     value={this.state.nombre}
                                     onChange={ event => this.handleChange(event.target.value, 'nombre') }
-                                    placeholder="ejemplo: Tallarines"/>
+                                    placeholder="ejemplo: Tang de naranja"/>
                             }
                         </div>
                     </div>
@@ -279,7 +279,7 @@ class PlateForm extends React.Component{
                                         onChange={ event => this.handleChange(event.target.value, 'tamanio') }
                                         placeholder="Chico"/>
                                 }
-                                <small id="sizeHelp" class="form-text text-muted">Tipos de tamanios: Grande, Mediano, Chico.</small>
+                                <small id="sizeHelp" className="form-text text-muted">Tipos de tamanios: Grande, Mediano, Chico.</small>
                             </div>
                         </div>
                     </form>
@@ -307,18 +307,16 @@ class PlateForm extends React.Component{
                         <h6>{this.state.success? 'Success' : 'Fail'}</h6>
                     </div>
                 }
-                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                <div className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div className="btn-group mr-2" role="group" aria-label="First group">
                         <button type="button" 
-                            class={this.state.flag? 'btn btn-outline-secondary' : 'btn btn-secondary'}
-                            disabled={this.state.flag}
+                            className={this.state.flag? 'btn btn-secondary' : 'btn btn-outline-secondary'}
                             onClick={() => this.setState(state => ({flag: true}))}
                         >
                             Crear un plato
                         </button>
                         <button type="button" 
-                            class={!this.state.flag? 'btn btn-outline-secondary' : 'btn btn-secondary'}
-                            disabled={!this.state.flag}
+                            className={!this.state.flag? 'btn btn-secondary' : 'btn btn-outline-secondary'}
                             onClick={() => this.setState(state => ({flag: false}))}
                         >
                             Crear una bebida
@@ -326,7 +324,7 @@ class PlateForm extends React.Component{
                     </div>
                 </div>
 
-                <div className='card' style={{ width: 'calc(100% - 240px)', borderColor: 'gray'}}>
+                <div className='card' style={{ width: 'calc(100% - 240px)', borderColor: 'gray', borderWidth:'1,9px'}}>
                     {this.state.flag? this.formP() : this.formB()}
                 </div>
             </React.Fragment>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router';
+import { IoMdArrowBack } from "react-icons/io";
 import API from '../../../service/api';
 
 class Register extends React.Component{
@@ -13,11 +14,13 @@ class Register extends React.Component{
             password: "",
             phone: "",
             restoName: "",
+            flag: true,
         }
     }
 
     handleChange(value, prop) {
         this.setState(prevState => ({ ...prevState, [prop]: value }));
+        this.setState(state => ({flag: true}))
     }
 
     checkMail() {
@@ -37,7 +40,15 @@ class Register extends React.Component{
     checkPhone(){return this.state.phone !=="";}
 
     doRegister(){
-        this.doReq()
+        if(this.checkMail() && this.checkPass() && this.checkName() && this.checkLast()&&
+            this.checkResto() && this.checkDir() && this.checkPhone()){
+                console.log('do', this.state.flag)
+                this.doReq()
+        }
+        else{
+            console.log('fail', this.state.flag)
+            this.setState(state => ({flag: false}))
+        }
     }
 
     doReq(){
@@ -59,10 +70,19 @@ class Register extends React.Component{
 
     render(){
         return(
+        <div style={{backgroundColor:'darkblue', 
+        overflow:'scroll',
+        height: 'calc(100% - 155px)'}}>
+            <div style={{margin:'1%', borderRadius:'50%'}}>
+                <button type='button' 
+                    className='btn btn-primary'
+                    onClick={() => this.props.history.push('/admin')}
+                >
+                    <IoMdArrowBack/>
+                </button>
+            </div>
+
             <div style={{
-                backgroundColor:'darkblue', 
-                overflow:'scroll',
-                height: 'calc(100% - 155px)'
             }}>
                 <div className='card' align="center" 
                     style={{top: '5%', marginLeft: '5%', marginRight: '5%', backgroundColor: 'lightgray', borderRadius: '25px'}}>
@@ -71,15 +91,15 @@ class Register extends React.Component{
                     </h1>
 
                     <form>
-                        <div className='card' style={{margin: '3%', borderRadius: '25px'}}>
+                        <div className='card' style={{margin: '3%', borderRadius: '25px', backgroundColor: '#bec4be' }}>
                             <div className='row' style={{margin: '1%', marginLeft: '10%', marginRight: '10%',}}>
                                 <div className='col'>
                                     <div className="form-group">
                                         <div align='left'><label> E-mail </label></div>
                                         <input type="email" className="form-control" 
                                             style={{
-                                                borderColor: this.checkMail()? 'gray': 'red',
-                                                outline: this.checkMail()? '1px solid gray': '1px solid red'
+                                                borderColor: this.state.flag && this.checkMail()? 'gray': 'red',
+                                                outline: this.state.flag && this.checkMail()? '1px solid gray': '1px solid red'
                                             }}
                                             value={this.state.email}
                                             onChange={ event => this.handleChange(event.target.value, 'email') }
@@ -91,8 +111,8 @@ class Register extends React.Component{
                                         <div align='left'><label> Contraseña </label></div>
                                         <input type="password" className="form-control"
                                             style={{
-                                                borderColor: this.checkPass()? 'gray': 'red',
-                                                outline: this.checkPass()? '1px solid gray': '1px solid red'
+                                                borderColor: this.state.flag && this.checkPass()? 'gray': 'red',
+                                                outline: this.state.flag &&  this.checkPass()? '1px solid gray': '1px solid red'
                                             }}
                                             value={this.state.password}
                                             onChange={ event => this.handleChange(event.target.value, 'password') }
@@ -102,15 +122,15 @@ class Register extends React.Component{
                             </div>
                         </div>
 
-                        <div className='card' style={{margin: '3%', borderRadius: '25px'}}>
+                        <div className='card' style={{margin: '3%', borderRadius: '25px', backgroundColor:'#bec4be'}}>
                             <div className='row' style={{margin: '1%', marginLeft: '10%', marginRight: '10%',}}>
                                 <div className='col'>
                                     <div className="form-group">
                                         <div align='left'><label> Nombre/s </label></div>
                                         <input type="text" className="form-control" 
                                             style={{
-                                                borderColor: this.checkName()? 'gray': 'red',
-                                                outline: this.checkName()? '1px solid gray': '1px solid red'
+                                                borderColor: this.state.flag && this.checkName()? 'gray': 'red',
+                                                outline: this.state.flag &&  this.checkName()? '1px solid gray': '1px solid red'
                                             }}
                                             value={this.state.name}
                                             onChange={ event => this.handleChange(event.target.value, 'name') }
@@ -122,8 +142,8 @@ class Register extends React.Component{
                                         <div align='left'><label> Apellido/s </label></div>
                                         <input type="text" className="form-control"
                                             style={{
-                                                borderColor: this.checkLast()? 'gray': 'red',
-                                                outline: this.checkLast()? '1px solid gray': '1px solid red'
+                                                borderColor: this.state.flag &&  this.checkLast()? 'gray': 'red',
+                                                outline: this.state.flag &&  this.checkLast()? '1px solid gray': '1px solid red'
                                             }}
                                             value={this.state.lastname}
                                             onChange={ event => this.handleChange(event.target.value, 'lastname') }
@@ -135,8 +155,8 @@ class Register extends React.Component{
                                     <div align='left'><label> Nombre del establecimiento </label></div>
                                     <input type="text" className="form-control"
                                             style={{
-                                                borderColor: this.checkResto()? 'gray': 'red',
-                                                outline: this.checkResto()? '1px solid gray': '1px solid red'
+                                                borderColor: this.state.flag && this.checkResto()? 'gray': 'red',
+                                                outline: this.state.flag && this.checkResto()? '1px solid gray': '1px solid red'
                                             }}
                                         value={this.state.restoName}
                                         onChange={ event => this.handleChange(event.target.value, 'restoName') }
@@ -159,8 +179,8 @@ class Register extends React.Component{
                                     <div align='left'><label> Direccion del establecimiento </label></div>
                                     <input type="text" className="form-control"
                                         style={{
-                                            borderColor: this.checkDir()? 'gray': 'red',
-                                            outline: this.checkDir()? '1px solid gray': '1px solid red'
+                                            borderColor: this.state.flag && this.checkDir()? 'gray': 'red',
+                                            outline: this.state.flag && this.checkDir()? '1px solid gray': '1px solid red'
                                         }} 
                                         value={this.state.direction}
                                         onChange={ event => this.handleChange(event.target.value, 'direction') }
@@ -177,6 +197,7 @@ class Register extends React.Component{
                     </form>
                 </div>
             </div>
+        </div>
         );
     }
 }
