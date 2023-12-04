@@ -92,7 +92,7 @@ class Employee extends React.Component {
                 width: '100%',
                 backgroundColor: '#F48FB1'
             }}>
-                    <h3> No hay emplleados registrados</h3>
+                    <h3> No hay empleados registrados</h3>
             </div>
         )
     }
@@ -216,6 +216,7 @@ class Employee extends React.Component {
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                         <button type='button' style={{borderRadius: "25px", marginTop: '1%', marginBottom: '1%'}}
                         className='btn btn-danger' 
+                        disabled={this.state.chosenOne.mesas.length > 0}
                         onClick={() => this.delete()}
                         >
                             Borrar empleado
