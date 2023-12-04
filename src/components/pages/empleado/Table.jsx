@@ -123,7 +123,8 @@ class Table extends React.Component {
                 auth: {username: this.state.email, password: this.state.pass}
             }
             const path = "orden/"+this.state.mesaId+"/"+this.state.orden.id;
-            API.deleteAuth(path, headers)
+            const body = {"email": this.state.jefe,"password": "string"}
+            API.postAdmin(path, body)
             .then(res => {
                 console.log(res.status)
                 this.setState(state => ({orden: undefined}))

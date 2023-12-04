@@ -23,9 +23,9 @@ const OrdenesTable = ({ ordenes }) => {
             <td>{orden.date[1]}</td>
             <td>{orden.date[0]}</td>
             <td>{orden.id}</td>
-            <td>{orden.price}</td>
-            <td>{orden.cost}</td>
-            <td>{orden.price - orden.cost}</td>
+            <td>{orden.price.toFixed(2)}</td>
+            <td>{orden.cost.toFixed(2)}</td>
+            <td>{(orden.price - orden.cost).toFixed(2)}</td>
           </tr>
         ))}
       </tbody>
